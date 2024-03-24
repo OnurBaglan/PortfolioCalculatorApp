@@ -48,18 +48,18 @@ partial class MainAppForm
 		statusStrip2 = new StatusStrip();
 		ToolStripStatusLabel_MainMenu = new ToolStripStatusLabel();
 		TabPage2 = new TabPage();
-		Button_APIKeySave2 = new Button();
-		Button_APIKeySave1 = new Button();
-		Label_APIKey2Status = new Label();
-		Label_APIKey1Status = new Label();
+		Button_SaveApiKey2 = new Button();
+		Button_SaveApiKey1 = new Button();
+		Label_StatusApiKey2 = new Label();
+		Label_StatusApiKey1 = new Label();
 		statusStrip1 = new StatusStrip();
 		ToolStripStatusLabel_APIKey = new ToolStripStatusLabel();
-		Button_APIKeyValidate2 = new Button();
-		Button_APIKeyValidate1 = new Button();
-		FixedLabel_APIKey2 = new Label();
-		FixedLabel_APIKey1 = new Label();
-		TextBox_APIKey2 = new TextBox();
-		TextBox_APIKey1 = new TextBox();
+		Button_ValidateApiKey2 = new Button();
+		Button_ValidateApiKey1 = new Button();
+		FixedLabel_ApiKey2 = new Label();
+		FixedLabel_ApiKey1 = new Label();
+		TextBox_ApiKey2 = new TextBox();
+		TextBox_ApiKey1 = new TextBox();
 		GroupBox_EarnLossInfo.SuspendLayout();
 		TabControl.SuspendLayout();
 		TabPage1.SuspendLayout();
@@ -260,17 +260,17 @@ partial class MainAppForm
 		// 
 		// TabPage2
 		// 
-		TabPage2.Controls.Add(Button_APIKeySave2);
-		TabPage2.Controls.Add(Button_APIKeySave1);
-		TabPage2.Controls.Add(Label_APIKey2Status);
-		TabPage2.Controls.Add(Label_APIKey1Status);
+		TabPage2.Controls.Add(Button_SaveApiKey2);
+		TabPage2.Controls.Add(Button_SaveApiKey1);
+		TabPage2.Controls.Add(Label_StatusApiKey2);
+		TabPage2.Controls.Add(Label_StatusApiKey1);
 		TabPage2.Controls.Add(statusStrip1);
-		TabPage2.Controls.Add(Button_APIKeyValidate2);
-		TabPage2.Controls.Add(Button_APIKeyValidate1);
-		TabPage2.Controls.Add(FixedLabel_APIKey2);
-		TabPage2.Controls.Add(FixedLabel_APIKey1);
-		TabPage2.Controls.Add(TextBox_APIKey2);
-		TabPage2.Controls.Add(TextBox_APIKey1);
+		TabPage2.Controls.Add(Button_ValidateApiKey2);
+		TabPage2.Controls.Add(Button_ValidateApiKey1);
+		TabPage2.Controls.Add(FixedLabel_ApiKey2);
+		TabPage2.Controls.Add(FixedLabel_ApiKey1);
+		TabPage2.Controls.Add(TextBox_ApiKey2);
+		TabPage2.Controls.Add(TextBox_ApiKey1);
 		TabPage2.Location = new Point(4, 24);
 		TabPage2.Name = "TabPage2";
 		TabPage2.Padding = new Padding(3);
@@ -279,41 +279,39 @@ partial class MainAppForm
 		TabPage2.Text = "API Key";
 		TabPage2.UseVisualStyleBackColor = true;
 		// 
-		// Button_APIKeySave2
+		// Button_SaveApiKey2
 		// 
-		Button_APIKeySave2.Location = new Point(643, 87);
-		Button_APIKeySave2.Name = "Button_APIKeySave2";
-		Button_APIKeySave2.Size = new Size(75, 23);
-		Button_APIKeySave2.TabIndex = 10;
-		Button_APIKeySave2.Text = "Save";
-		Button_APIKeySave2.UseVisualStyleBackColor = true;
+		Button_SaveApiKey2.Location = new Point(643, 87);
+		Button_SaveApiKey2.Name = "Button_SaveApiKey2";
+		Button_SaveApiKey2.Size = new Size(75, 23);
+		Button_SaveApiKey2.TabIndex = 10;
+		Button_SaveApiKey2.Text = "Save";
+		Button_SaveApiKey2.UseVisualStyleBackColor = true;
 		// 
-		// Button_APIKeySave1
+		// Button_SaveApiKey1
 		// 
-		Button_APIKeySave1.Location = new Point(643, 47);
-		Button_APIKeySave1.Name = "Button_APIKeySave1";
-		Button_APIKeySave1.Size = new Size(75, 23);
-		Button_APIKeySave1.TabIndex = 9;
-		Button_APIKeySave1.Text = "Save";
-		Button_APIKeySave1.UseVisualStyleBackColor = true;
+		Button_SaveApiKey1.Location = new Point(643, 47);
+		Button_SaveApiKey1.Name = "Button_SaveApiKey1";
+		Button_SaveApiKey1.Size = new Size(75, 23);
+		Button_SaveApiKey1.TabIndex = 9;
+		Button_SaveApiKey1.Text = "Save";
+		Button_SaveApiKey1.UseVisualStyleBackColor = true;
 		// 
-		// Label_APIKey2Status
+		// Label_StatusApiKey2
 		// 
-		Label_APIKey2Status.AutoSize = true;
-		Label_APIKey2Status.Location = new Point(747, 94);
-		Label_APIKey2Status.Name = "Label_APIKey2Status";
-		Label_APIKey2Status.Size = new Size(61, 15);
-		Label_APIKey2Status.TabIndex = 8;
-		Label_APIKey2Status.Text = "Key Status";
+		Label_StatusApiKey2.AutoSize = true;
+		Label_StatusApiKey2.Location = new Point(747, 94);
+		Label_StatusApiKey2.Name = "Label_StatusApiKey2";
+		Label_StatusApiKey2.Size = new Size(0, 15);
+		Label_StatusApiKey2.TabIndex = 8;
 		// 
-		// Label_APIKey1Status
+		// Label_StatusApiKey1
 		// 
-		Label_APIKey1Status.AutoSize = true;
-		Label_APIKey1Status.Location = new Point(748, 51);
-		Label_APIKey1Status.Name = "Label_APIKey1Status";
-		Label_APIKey1Status.Size = new Size(60, 15);
-		Label_APIKey1Status.TabIndex = 7;
-		Label_APIKey1Status.Text = "Key status";
+		Label_StatusApiKey1.AutoSize = true;
+		Label_StatusApiKey1.Location = new Point(748, 51);
+		Label_StatusApiKey1.Name = "Label_StatusApiKey1";
+		Label_StatusApiKey1.Size = new Size(0, 15);
+		Label_StatusApiKey1.TabIndex = 7;
 		// 
 		// statusStrip1
 		// 
@@ -329,57 +327,57 @@ partial class MainAppForm
 		ToolStripStatusLabel_APIKey.Size = new Size(117, 17);
 		ToolStripStatusLabel_APIKey.Text = "API Keys status show";
 		// 
-		// Button_APIKeyValidate2
+		// Button_ValidateApiKey2
 		// 
-		Button_APIKeyValidate2.Location = new Point(495, 86);
-		Button_APIKeyValidate2.Name = "Button_APIKeyValidate2";
-		Button_APIKeyValidate2.Size = new Size(132, 23);
-		Button_APIKeyValidate2.TabIndex = 5;
-		Button_APIKeyValidate2.Text = "Validate";
-		Button_APIKeyValidate2.UseVisualStyleBackColor = true;
-		Button_APIKeyValidate2.Click += Button_APIKeyValidate2_Click;
+		Button_ValidateApiKey2.Location = new Point(495, 86);
+		Button_ValidateApiKey2.Name = "Button_ValidateApiKey2";
+		Button_ValidateApiKey2.Size = new Size(132, 23);
+		Button_ValidateApiKey2.TabIndex = 5;
+		Button_ValidateApiKey2.Text = "Validate";
+		Button_ValidateApiKey2.UseVisualStyleBackColor = true;
+		Button_ValidateApiKey2.Click += Button_ValidateApiKey_Click;
 		// 
-		// Button_APIKeyValidate1
+		// Button_ValidateApiKey1
 		// 
-		Button_APIKeyValidate1.Location = new Point(495, 47);
-		Button_APIKeyValidate1.Name = "Button_APIKeyValidate1";
-		Button_APIKeyValidate1.Size = new Size(132, 23);
-		Button_APIKeyValidate1.TabIndex = 4;
-		Button_APIKeyValidate1.Text = "Validate";
-		Button_APIKeyValidate1.UseVisualStyleBackColor = true;
-		Button_APIKeyValidate1.Click += Button_APIKeyValidate1_Click;
+		Button_ValidateApiKey1.Location = new Point(495, 47);
+		Button_ValidateApiKey1.Name = "Button_ValidateApiKey1";
+		Button_ValidateApiKey1.Size = new Size(132, 23);
+		Button_ValidateApiKey1.TabIndex = 4;
+		Button_ValidateApiKey1.Text = "Validate";
+		Button_ValidateApiKey1.UseVisualStyleBackColor = true;
+		Button_ValidateApiKey1.Click += Button_ValidateApiKey_Click;
 		// 
-		// FixedLabel_APIKey2
+		// FixedLabel_ApiKey2
 		// 
-		FixedLabel_APIKey2.AutoSize = true;
-		FixedLabel_APIKey2.Location = new Point(19, 95);
-		FixedLabel_APIKey2.Name = "FixedLabel_APIKey2";
-		FixedLabel_APIKey2.Size = new Size(137, 15);
-		FixedLabel_APIKey2.TabIndex = 3;
-		FixedLabel_APIKey2.Text = "CurrencyBeacon API Key";
+		FixedLabel_ApiKey2.AutoSize = true;
+		FixedLabel_ApiKey2.Location = new Point(19, 95);
+		FixedLabel_ApiKey2.Name = "FixedLabel_ApiKey2";
+		FixedLabel_ApiKey2.Size = new Size(137, 15);
+		FixedLabel_ApiKey2.TabIndex = 3;
+		FixedLabel_ApiKey2.Text = "CurrencyBeacon API Key";
 		// 
-		// FixedLabel_APIKey1
+		// FixedLabel_ApiKey1
 		// 
-		FixedLabel_APIKey1.AutoSize = true;
-		FixedLabel_APIKey1.Location = new Point(19, 50);
-		FixedLabel_APIKey1.Name = "FixedLabel_APIKey1";
-		FixedLabel_APIKey1.Size = new Size(111, 15);
-		FixedLabel_APIKey1.TabIndex = 2;
-		FixedLabel_APIKey1.Text = "MarketData API Key";
+		FixedLabel_ApiKey1.AutoSize = true;
+		FixedLabel_ApiKey1.Location = new Point(19, 50);
+		FixedLabel_ApiKey1.Name = "FixedLabel_ApiKey1";
+		FixedLabel_ApiKey1.Size = new Size(111, 15);
+		FixedLabel_ApiKey1.TabIndex = 2;
+		FixedLabel_ApiKey1.Text = "MarketData API Key";
 		// 
-		// TextBox_APIKey2
+		// TextBox_ApiKey2
 		// 
-		TextBox_APIKey2.Location = new Point(168, 87);
-		TextBox_APIKey2.Name = "TextBox_APIKey2";
-		TextBox_APIKey2.Size = new Size(311, 23);
-		TextBox_APIKey2.TabIndex = 1;
+		TextBox_ApiKey2.Location = new Point(168, 87);
+		TextBox_ApiKey2.Name = "TextBox_ApiKey2";
+		TextBox_ApiKey2.Size = new Size(311, 23);
+		TextBox_ApiKey2.TabIndex = 1;
 		// 
-		// TextBox_APIKey1
+		// TextBox_ApiKey1
 		// 
-		TextBox_APIKey1.Location = new Point(168, 47);
-		TextBox_APIKey1.Name = "TextBox_APIKey1";
-		TextBox_APIKey1.Size = new Size(311, 23);
-		TextBox_APIKey1.TabIndex = 0;
+		TextBox_ApiKey1.Location = new Point(168, 47);
+		TextBox_ApiKey1.Name = "TextBox_ApiKey1";
+		TextBox_ApiKey1.Size = new Size(311, 23);
+		TextBox_ApiKey1.TabIndex = 0;
 		// 
 		// MainAppForm
 		// 
@@ -429,17 +427,17 @@ partial class MainAppForm
 	private TabPage TabPage2;
 	private StatusStrip statusStrip1;
 	private ToolStripStatusLabel ToolStripStatusLabel_APIKey;
-	private Button Button_APIKeyValidate2;
-	private Button Button_APIKeyValidate1;
-	private Label FixedLabel_APIKey2;
-	private Label FixedLabel_APIKey1;
-	private TextBox TextBox_APIKey2;
-	private TextBox TextBox_APIKey1;
+	private Button Button_ValidateApiKey2;
+	private Button Button_ValidateApiKey1;
+	private Label FixedLabel_ApiKey2;
+	private Label FixedLabel_ApiKey1;
+	private TextBox TextBox_ApiKey2;
+	private TextBox TextBox_ApiKey1;
 	private StatusStrip statusStrip2;
 	private ToolStripStatusLabel ToolStripStatusLabel_MainMenu;
-	private Label Label_APIKey2Status;
-	private Label Label_APIKey1Status;
+	private Label Label_StatusApiKey2;
+	private Label Label_StatusApiKey1;
 	private LinkLabel linkLabel1;
-	private Button Button_APIKeySave2;
-	private Button Button_APIKeySave1;
+	private Button Button_SaveApiKey2;
+	private Button Button_SaveApiKey1;
 }

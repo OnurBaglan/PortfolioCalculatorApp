@@ -128,7 +128,6 @@ partial class AddPortfolioForm
 		button4.TabIndex = 10;
 		button4.Text = "Save portfolio";
 		button4.UseVisualStyleBackColor = true;
-		button4.Click += this.button4_Click;
 		// 
 		// numericUpDown1
 		// 

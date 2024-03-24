@@ -1,4 +1,7 @@
-﻿namespace PortfolioCalculatorApp.Views.Interfaces;
+﻿using System.Windows.Forms;
+using PortfolioCalculatorApp.EventArguments;
+
+namespace PortfolioCalculatorApp.Views.Interfaces;
 
 public interface IApiKeyTabView
 {
@@ -11,5 +14,5 @@ public interface IApiKeyTabView
 	public string ApiKey1Status { get; set; }
 	public string ApiKey2Status { get; set; }
 
-	event EventHandler ValidateApiKey1;
+	public event EventHandler<ValidateApiEventArgs> ValidateApiKey;
 }
