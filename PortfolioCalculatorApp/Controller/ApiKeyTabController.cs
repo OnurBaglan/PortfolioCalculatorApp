@@ -12,79 +12,83 @@ public class ApiKeyTabController
 		_view = view;
 		_model = model;
 		_view.ValidateApiKey += OnValidateApiKeyAsync;
+
+	}
+
+
+
+	public async void OnValidateApiKeyAsync(object sender, EventArgs e)
+	{
+
+		ApiSources apiSource = GetApiSource(sender);
+
+		string apiKey = GetApiKeyValue(apiSource);
+
+		var isKeyValid = await _model.IsKeyValid(apiKey, apiSource);
+
+		SetApiKeyStatus(apiSource, isKeyValid);
+
+		SetApiKeyStatusLabel(apiSource, isKeyValid);
+
+		SetApiKeyStatusStrip();
+
+		SetMainMenuBlockerStatus();
+
+	}
+
+	private void SetMainMenuBlockerStatus()
+	{
+		if (_view.IsApiKey1Valid && _view.IsApiKey2Valid)
+		{
+			_view.MainMenuBlockerLabel.Visible = false;
+			_view.MainMenuBlockerPanel.Visible = false;
+		}
+		else
+		{
+			_view.MainMenuBlockerLabel.Visible = true;
+			_view.MainMenuBlockerPanel.Visible = true;
+
+		}
+	
 		
-
-
 	}
 
-	//TODO: a total mess of a code needs refactoring
-
-	public async void OnValidateApiKeyAsync(object sender, ValidateApiEventArgs e)
+	private void SetApiKeyStatusStrip()
 	{
-		if (e.ApiSource == ApiSources.MarketDataApp)
+		if (_view.IsApiKey1Valid && _view.IsApiKey2Valid)
 		{
-			var apiKey = _view.ApiKey1;
-			var isValid = await _model.IsKeyValid(apiKey, e.ApiSource);
-
-			if (isValid)
-			{
-				_view.IsApiKey1Valid = true;
-				
-			}
-			else
-			{
-				_view.IsApiKey1Valid = false;
-			}
-			UpdateApiKeyStatus(e, _view.IsApiKey1Valid);
+			_view.ApiKeyStatusStrip = "Api keys are valid.";
+			_view.MainMenuStatusStrip = _view.ApiKeyStatusStrip;
 		}
-
-		if (e.ApiSource == ApiSources.CurrencyBeacon)
+		else
 		{
-			var apiKey = _view.ApiKey2;
-			var isValid = await _model.IsKeyValid(apiKey, e.ApiSource);
-
-			if (isValid)
-			{
-				_view.IsApiKey2Valid = true;
-				
-			}
-			else
-			{
-				_view.IsApiKey2Valid = false;
-			}
-			UpdateApiKeyStatus(e, _view.IsApiKey2Valid);
-
+			_view.ApiKeyStatusStrip = "Please enter valid api keys.";
+			_view.MainMenuStatusStrip = _view.ApiKeyStatusStrip;
 		}
 	}
 
-	private void UpdateApiKeyStatus(ValidateApiEventArgs e, bool isApiKeyValid)
+	private void SetApiKeyStatusLabel(ApiSources apiSource, bool isKeyValid)
 	{
-		if (e.ApiSource==ApiSources.MarketDataApp)
-		{
-			if (isApiKeyValid)
-			{
-			_view.ApiKey1Status = "Api key is valid.";
-
-			}
-			else
-			{
-				_view.ApiKey1Status = "Please enter a valid api key";
-
-			}
-		}
-
-		if(e.ApiSource == ApiSources.CurrencyBeacon)
-		{
-			if (isApiKeyValid)
-			{
-				_view.ApiKey2Status = "Api key is valid.";
-
-			}
-			else
-			{
-				_view.ApiKey2Status = "Please enter a valid api key";
-
-			}
-		}
+		_view.GetType().GetProperty(string.Format("ApiKey{0}Status", (int)apiSource)).SetValue(_view, string.Format("Api key status correct: {0}", isKeyValid));
 	}
+
+	private void SetApiKeyStatus(ApiSources apiSource, bool isKeyValid)
+	{
+		_view.GetType().GetProperty(string.Format("IsApiKey{0}Valid", (int)apiSource)).SetValue(_view, isKeyValid);
+	}
+
+	private string GetApiKeyValue(ApiSources apiSource)
+	{
+		return (string)_view.GetType().GetProperty(string.Format("ApiKey{0}", (int)apiSource)).GetValue(_view);
+	}
+
+	private ApiSources GetApiSource(object sender)
+	{
+		int apiSourceId = int.Parse(((string)sender.GetType().GetProperty("Name").GetValue(sender)).Last().ToString());
+
+		var result = (ApiSources)apiSourceId;
+
+		return result;
+	}
+
 }

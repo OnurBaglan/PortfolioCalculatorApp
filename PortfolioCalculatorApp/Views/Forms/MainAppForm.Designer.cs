@@ -33,7 +33,6 @@ partial class MainAppForm
 		Button_DeleteSelectedPortfolio = new Button();
 		FixedLabel_PortfolioList = new Label();
 		GroupBox_PortfolioDetails = new GroupBox();
-		linkLabel1 = new LinkLabel();
 		GroupBox_EarnLossInfo = new GroupBox();
 		Label_CurrentValue = new Label();
 		FixedTable_CurrentValue = new Label();
@@ -45,6 +44,8 @@ partial class MainAppForm
 		ComboBox_SelectedCurrency = new ComboBox();
 		TabControl = new TabControl();
 		TabPage1 = new TabPage();
+		MainMenuBlockPanel = new Panel();
+		MainMenuBlockLabel = new Label();
 		statusStrip2 = new StatusStrip();
 		ToolStripStatusLabel_MainMenu = new ToolStripStatusLabel();
 		TabPage2 = new TabPage();
@@ -52,8 +53,8 @@ partial class MainAppForm
 		Button_SaveApiKey1 = new Button();
 		Label_StatusApiKey2 = new Label();
 		Label_StatusApiKey1 = new Label();
-		statusStrip1 = new StatusStrip();
-		ToolStripStatusLabel_APIKey = new ToolStripStatusLabel();
+		ToolStripStatusLabel_ApiKeyTab = new StatusStrip();
+		ToolStripStatusLabel_ApiKey = new ToolStripStatusLabel();
 		Button_ValidateApiKey2 = new Button();
 		Button_ValidateApiKey1 = new Button();
 		FixedLabel_ApiKey2 = new Label();
@@ -63,9 +64,10 @@ partial class MainAppForm
 		GroupBox_EarnLossInfo.SuspendLayout();
 		TabControl.SuspendLayout();
 		TabPage1.SuspendLayout();
+		MainMenuBlockPanel.SuspendLayout();
 		statusStrip2.SuspendLayout();
 		TabPage2.SuspendLayout();
-		statusStrip1.SuspendLayout();
+		ToolStripStatusLabel_ApiKeyTab.SuspendLayout();
 		SuspendLayout();
 		// 
 		// ListBox_Portfolios
@@ -113,21 +115,8 @@ partial class MainAppForm
 		GroupBox_PortfolioDetails.TabStop = false;
 		GroupBox_PortfolioDetails.Text = "Portfolio Details";
 		// 
-		// linkLabel1
-		// 
-		linkLabel1.AutoSize = true;
-		linkLabel1.Font = new Font("Segoe UI", 48F, FontStyle.Regular, GraphicsUnit.Point, 162);
-		linkLabel1.Location = new Point(308, -55);
-		linkLabel1.Name = "linkLabel1";
-		linkLabel1.Size = new Size(784, 86);
-		linkLabel1.TabIndex = 1;
-		linkLabel1.TabStop = true;
-		linkLabel1.Text = "Please enter valid API keys";
-		linkLabel1.Visible = false;
-		// 
 		// GroupBox_EarnLossInfo
 		// 
-		GroupBox_EarnLossInfo.Controls.Add(linkLabel1);
 		GroupBox_EarnLossInfo.Controls.Add(Label_CurrentValue);
 		GroupBox_EarnLossInfo.Controls.Add(FixedTable_CurrentValue);
 		GroupBox_EarnLossInfo.Controls.Add(Label_TotalInvested);
@@ -229,6 +218,7 @@ partial class MainAppForm
 		// TabPage1
 		// 
 		TabPage1.BackColor = Color.Transparent;
+		TabPage1.Controls.Add(MainMenuBlockPanel);
 		TabPage1.Controls.Add(statusStrip2);
 		TabPage1.Controls.Add(GroupBox_EarnLossInfo);
 		TabPage1.Controls.Add(FixedLabel_PortfolioList);
@@ -243,6 +233,24 @@ partial class MainAppForm
 		TabPage1.TabIndex = 0;
 		TabPage1.Text = "Main Menu";
 		// 
+		// MainMenuBlockPanel
+		// 
+		MainMenuBlockPanel.Controls.Add(MainMenuBlockLabel);
+		MainMenuBlockPanel.Location = new Point(3, 3);
+		MainMenuBlockPanel.Name = "MainMenuBlockPanel";
+		MainMenuBlockPanel.Size = new Size(1362, 507);
+		MainMenuBlockPanel.TabIndex = 0;
+		// 
+		// MainMenuBlockLabel
+		// 
+		MainMenuBlockLabel.AutoSize = true;
+		MainMenuBlockLabel.Font = new Font("Segoe UI", 36F, FontStyle.Bold);
+		MainMenuBlockLabel.Location = new Point(125, 202);
+		MainMenuBlockLabel.Name = "MainMenuBlockLabel";
+		MainMenuBlockLabel.Size = new Size(1066, 65);
+		MainMenuBlockLabel.TabIndex = 0;
+		MainMenuBlockLabel.Text = "Please enter valid api keys to use the program";
+		// 
 		// statusStrip2
 		// 
 		statusStrip2.Items.AddRange(new ToolStripItem[] { ToolStripStatusLabel_MainMenu });
@@ -255,8 +263,8 @@ partial class MainAppForm
 		// ToolStripStatusLabel_MainMenu
 		// 
 		ToolStripStatusLabel_MainMenu.Name = "ToolStripStatusLabel_MainMenu";
-		ToolStripStatusLabel_MainMenu.Size = new Size(117, 17);
-		ToolStripStatusLabel_MainMenu.Text = "API Keys status show";
+		ToolStripStatusLabel_MainMenu.Size = new Size(10, 17);
+		ToolStripStatusLabel_MainMenu.Text = " ";
 		// 
 		// TabPage2
 		// 
@@ -264,7 +272,7 @@ partial class MainAppForm
 		TabPage2.Controls.Add(Button_SaveApiKey1);
 		TabPage2.Controls.Add(Label_StatusApiKey2);
 		TabPage2.Controls.Add(Label_StatusApiKey1);
-		TabPage2.Controls.Add(statusStrip1);
+		TabPage2.Controls.Add(ToolStripStatusLabel_ApiKeyTab);
 		TabPage2.Controls.Add(Button_ValidateApiKey2);
 		TabPage2.Controls.Add(Button_ValidateApiKey1);
 		TabPage2.Controls.Add(FixedLabel_ApiKey2);
@@ -313,19 +321,19 @@ partial class MainAppForm
 		Label_StatusApiKey1.Size = new Size(0, 15);
 		Label_StatusApiKey1.TabIndex = 7;
 		// 
-		// statusStrip1
+		// ToolStripStatusLabel_ApiKeyTab
 		// 
-		statusStrip1.Items.AddRange(new ToolStripItem[] { ToolStripStatusLabel_APIKey });
-		statusStrip1.Location = new Point(3, 505);
-		statusStrip1.Name = "statusStrip1";
-		statusStrip1.Size = new Size(1356, 22);
-		statusStrip1.TabIndex = 6;
+		ToolStripStatusLabel_ApiKeyTab.Items.AddRange(new ToolStripItem[] { ToolStripStatusLabel_ApiKey });
+		ToolStripStatusLabel_ApiKeyTab.Location = new Point(3, 505);
+		ToolStripStatusLabel_ApiKeyTab.Name = "ToolStripStatusLabel_ApiKeyTab";
+		ToolStripStatusLabel_ApiKeyTab.Size = new Size(1356, 22);
+		ToolStripStatusLabel_ApiKeyTab.TabIndex = 6;
 		// 
-		// ToolStripStatusLabel_APIKey
+		// ToolStripStatusLabel_ApiKey
 		// 
-		ToolStripStatusLabel_APIKey.Name = "ToolStripStatusLabel_APIKey";
-		ToolStripStatusLabel_APIKey.Size = new Size(117, 17);
-		ToolStripStatusLabel_APIKey.Text = "API Keys status show";
+		ToolStripStatusLabel_ApiKey.Name = "ToolStripStatusLabel_ApiKey";
+		ToolStripStatusLabel_ApiKey.Size = new Size(10, 17);
+		ToolStripStatusLabel_ApiKey.Text = " ";
 		// 
 		// Button_ValidateApiKey2
 		// 
@@ -397,12 +405,14 @@ partial class MainAppForm
 		TabControl.ResumeLayout(false);
 		TabPage1.ResumeLayout(false);
 		TabPage1.PerformLayout();
+		MainMenuBlockPanel.ResumeLayout(false);
+		MainMenuBlockPanel.PerformLayout();
 		statusStrip2.ResumeLayout(false);
 		statusStrip2.PerformLayout();
 		TabPage2.ResumeLayout(false);
 		TabPage2.PerformLayout();
-		statusStrip1.ResumeLayout(false);
-		statusStrip1.PerformLayout();
+		ToolStripStatusLabel_ApiKeyTab.ResumeLayout(false);
+		ToolStripStatusLabel_ApiKeyTab.PerformLayout();
 		ResumeLayout(false);
 	}
 
@@ -425,8 +435,8 @@ partial class MainAppForm
 	private TabControl TabControl;
 	private TabPage TabPage1;
 	private TabPage TabPage2;
-	private StatusStrip statusStrip1;
-	private ToolStripStatusLabel ToolStripStatusLabel_APIKey;
+	private StatusStrip ToolStripStatusLabel_ApiKeyTab;
+	private ToolStripStatusLabel ToolStripStatusLabel_ApiKey;
 	private Button Button_ValidateApiKey2;
 	private Button Button_ValidateApiKey1;
 	private Label FixedLabel_ApiKey2;
@@ -440,4 +450,6 @@ partial class MainAppForm
 	private LinkLabel linkLabel1;
 	private Button Button_SaveApiKey2;
 	private Button Button_SaveApiKey1;
+	private Panel MainMenuBlockPanel;
+	private Label MainMenuBlockLabel;
 }

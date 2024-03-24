@@ -11,13 +11,12 @@ public partial class MainAppForm : Form, IApiKeyTabView
 
 	private readonly ApiKeyTabController _apiKeyTabController;
 
-	public event EventHandler<ValidateApiEventArgs> ValidateApiKey;
+	public event EventHandler ValidateApiKey;
 
 	public MainAppForm()
 	{
 		InitializeComponent();
 		_apiKeyTabController = new ApiKeyTabController(this, new ApiKeyValidatorModel());
-
 
 	}
 
@@ -45,12 +44,28 @@ public partial class MainAppForm : Form, IApiKeyTabView
 		set => Label_StatusApiKey2.Text = value;
 
 	}
+	public string ApiKeyStatusStrip
+	{
+		get => ToolStripStatusLabel_ApiKey.Text;
+
+		set => ToolStripStatusLabel_ApiKey.Text = value;
+	}
+	public string MainMenuStatusStrip
+	{
+		get => ToolStripStatusLabel_MainMenu.Text;
+
+		set => ToolStripStatusLabel_MainMenu.Text = value;
+	}
+
+	public Label MainMenuBlockerLabel { get => MainMenuBlockLabel; set => MainMenuBlockLabel = value; }
+
+	public Panel MainMenuBlockerPanel { get => MainMenuBlockPanel; set => MainMenuBlockPanel = value; }
+
 
 	private void Button_ValidateApiKey_Click(object sender, EventArgs e)
 	{
-		int apiSourceId = int.Parse(((string)sender.GetType().GetProperty("Name").GetValue(sender)).Last().ToString());
 
-		ValidateApiKey?.Invoke(this, new ValidateApiEventArgs(apiSourceId));
+		ValidateApiKey?.Invoke(sender, e);
 
 	}
 }

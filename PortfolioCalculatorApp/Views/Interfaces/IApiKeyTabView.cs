@@ -14,5 +14,12 @@ public interface IApiKeyTabView
 	public string ApiKey1Status { get; set; }
 	public string ApiKey2Status { get; set; }
 
-	public event EventHandler<ValidateApiEventArgs> ValidateApiKey;
+	public string ApiKeyStatusStrip { get; set; }
+	public string MainMenuStatusStrip { get; set; }
+	
+	public Label MainMenuBlockerLabel { get; set; }
+	public Panel MainMenuBlockerPanel { get; set; }
+
+
+public event EventHandler ValidateApiKey;
 }
