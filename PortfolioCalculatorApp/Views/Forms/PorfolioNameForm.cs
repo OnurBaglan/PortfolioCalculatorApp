@@ -8,13 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PortfolioCalculatorApp
+namespace PortfolioCalculatorApp;
+
+public partial class PorfolioNameForm : Form
 {
-	public partial class PorfolioNameForm : Form
+	public PorfolioNameForm()
 	{
-		public PorfolioNameForm()
-		{
-			InitializeComponent();
-		}
+		InitializeComponent();
 	}
 }

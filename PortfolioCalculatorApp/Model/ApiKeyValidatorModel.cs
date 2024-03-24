@@ -1,11 +1,9 @@
-﻿namespace APIKeyOperations;
-
-public class ApiKeyValidator
+﻿public class ApiKeyValidatorModel
 {
 
 	private readonly Dictionary<int, string> _urls;
 
-	public ApiKeyValidator()
+	public ApiKeyValidatorModel()
 	{
 		_urls = new Dictionary<int, string>()
 	{
@@ -16,14 +14,14 @@ public class ApiKeyValidator
 	}
 
 
-	public async Task<bool> IsKeyValid(string apiKey, APISources apiSource)
+	public async Task<bool> IsKeyValid(string apiKey, ApiSources apiSource)
 	{
 		var statusCode = await MakeRandomRequest(apiKey, apiSource);
 
 		return statusCode == 401 ? false : true;
 	}
 
-	private async Task<int> MakeRandomRequest(string apiKey, APISources apiSource)
+	private async Task<int> MakeRandomRequest(string apiKey, ApiSources apiSource)
 	{
 
 		var url = _urls[(int)apiSource];
@@ -41,14 +39,14 @@ public class ApiKeyValidator
 	}
 
 
-	public void SaveApiKey(string apiKey, APISources apiSource)
+	public void SaveApiKey(string apiKey, ApiSources apiSource)
 	{
 
 		File.WriteAllText(string.Format("/apiKey{0}", (int)apiSource), apiKey);
 
 	}
 
-	public string? LoadApiKey(APISources apiSource)
+	public string? LoadApiKey(ApiSources apiSource)
 	{
 		if (File.Exists(string.Format("/apiKey{0}", (int)apiSource)))
 		{
