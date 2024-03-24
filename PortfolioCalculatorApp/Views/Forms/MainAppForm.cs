@@ -13,12 +13,25 @@ public partial class MainAppForm : Form, IApiKeyTabView
 
 	public event EventHandler ValidateApiKey;
 
+	public event EventHandler SaveApiKey;
+
+	public event EventHandler LoadApiKeys;
+
 	public MainAppForm()
 	{
 		InitializeComponent();
 		_apiKeyTabController = new ApiKeyTabController(this, new ApiKeyValidatorModel());
 
+
+		//Todo: this section is painfully awful, even though it works. Think of better way.
+		LoadApiKeys?.Invoke(this, EventArgs.Empty);
+		Button_ValidateApiKey_Click(Button_ValidateApiKey1, EventArgs.Empty);
+		Button_ValidateApiKey_Click(Button_ValidateApiKey2, EventArgs.Empty);
+
 	}
+
+
+
 
 	public string ApiKey1
 	{
@@ -68,4 +81,11 @@ public partial class MainAppForm : Form, IApiKeyTabView
 		ValidateApiKey?.Invoke(sender, e);
 
 	}
+
+	private void Button_SaveApiKey_Click(object sender, EventArgs e)
+	{
+		SaveApiKey?.Invoke(sender, e);
+	}
+
+
 }

@@ -236,7 +236,7 @@ partial class MainAppForm
 		// MainMenuBlockPanel
 		// 
 		MainMenuBlockPanel.Controls.Add(MainMenuBlockLabel);
-		MainMenuBlockPanel.Location = new Point(3, 3);
+		MainMenuBlockPanel.Location = new Point(0, 0);
 		MainMenuBlockPanel.Name = "MainMenuBlockPanel";
 		MainMenuBlockPanel.Size = new Size(1362, 507);
 		MainMenuBlockPanel.TabIndex = 0;
@@ -295,6 +295,7 @@ partial class MainAppForm
 		Button_SaveApiKey2.TabIndex = 10;
 		Button_SaveApiKey2.Text = "Save";
 		Button_SaveApiKey2.UseVisualStyleBackColor = true;
+		Button_SaveApiKey2.Click += Button_SaveApiKey_Click;
 		// 
 		// Button_SaveApiKey1
 		// 
@@ -304,6 +305,7 @@ partial class MainAppForm
 		Button_SaveApiKey1.TabIndex = 9;
 		Button_SaveApiKey1.Text = "Save";
 		Button_SaveApiKey1.UseVisualStyleBackColor = true;
+		Button_SaveApiKey1.Click += Button_SaveApiKey_Click;
 		// 
 		// Label_StatusApiKey2
 		// 

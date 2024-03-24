@@ -41,8 +41,9 @@
 
 	public void SaveApiKey(string apiKey, ApiSources apiSource)
 	{
+		var path = Path.Combine(Environment.CurrentDirectory, string.Format("apiKey{0}.txt", (int)apiSource));
 
-		File.WriteAllText(string.Format("/apiKey{0}", (int)apiSource), apiKey);
+		File.WriteAllText(path, apiKey);
 
 	}
 
