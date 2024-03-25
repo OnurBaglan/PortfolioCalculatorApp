@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioCalculatorApp", "PortfolioCalculatorApp\PortfolioCalculatorApp.csproj", "{2999F3AE-338E-4C36-ABA4-BB8918482690}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioCalculatorApp", "PortfolioCalculatorApp\PortfolioCalculatorApp.csproj", "{2999F3AE-338E-4C36-ABA4-BB8918482690}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
