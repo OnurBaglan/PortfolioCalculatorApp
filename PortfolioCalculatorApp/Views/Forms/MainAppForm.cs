@@ -4,6 +4,7 @@ using PortfolioCalculatorApp.Controller;
 using PortfolioCalculatorApp.Model.BusinessModel;
 using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
+using System.Text.Json;
 
 
 namespace PortfolioCalculatorApp;
@@ -34,10 +35,23 @@ public partial class MainAppForm : Form, IMainAppFormView
 
         InitializeControllers();
 
-        
+        InitializePortfolioLoad();
 
+    }
 
+    private void InitializePortfolioLoad()
+    {
+        if (File.Exists("portfolios.json"))
+        {
+            var data = File.ReadAllText("portfolios.json");
+            //when serializing it messes the format hence it is unable to deserialize.
+            var collection = JsonSerializer.Deserialize<List<Portfolio>>(data);
 
+            var result = collection.Select(x => (object)x).ToArray();
+
+            ListBox_Portfolios.Items.AddRange(result);
+
+        }
     }
 
     private void InitializeControllers()
