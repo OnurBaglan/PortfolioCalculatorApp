@@ -1,4 +1,7 @@
-﻿using System;
+﻿using PortfolioCalculatorApp.Controller;
+using PortfolioCalculatorApp.Views.Interfaces;
+using PortfolioCalculatorApp.Model.BusinessModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,40 +13,30 @@ using System.Windows.Forms;
 
 namespace PortfolioCalculatorApp;
 
-public partial class AddPortfolioForm : Form
+public partial class AddPortfolioForm : Form, IAddPortfolioView
 {
-    private readonly string[] _stockList;
+    private readonly AddPortfolioController _controller;
+
+
+    public event EventHandler InitializeComboBox;
+    public event EventHandler SearchStock;
 
     public AddPortfolioForm()
     {
         InitializeComponent();
+        _controller = new AddPortfolioController(this, new AddPortfolioModel());
 
-        _stockList = File.ReadAllLines("stocks.txt");
-
-        InitializeComboBox_StockSymbols();
+        InitializeComboBox?.Invoke(this, EventArgs.Empty);
 
     }
 
-    private async Task InitializeComboBox_StockSymbols()
-    {
-        ComboBox_StockSymbols.Items.AddRange(_stockList);
-        ComboBox_StockSymbols.DropDownStyle = ComboBoxStyle.DropDownList;
-    }
+    public ComboBox ComboBoxStockSymbols { get => ComboBox_StockSymbols; set => ComboBox_StockSymbols = value; }
 
- 
+
     private void TextBox_StockSearch_TextChanged(object sender, EventArgs e)
     {
-        ComboBox_StockSymbols.Items.Clear();
+        SearchStock?.Invoke(sender, EventArgs.Empty);
 
-        var data = _stockList.Where(item => item.ToUpper().Contains(TextBox_StockSearch.Text.ToUpper())).ToArray();
 
-        ComboBox_StockSymbols.Items.AddRange(data);
-
-        ComboBox_StockSymbols.SelectedItem = data.FirstOrDefault();
-
-        if (string.IsNullOrEmpty(TextBox_StockSearch.Text))
-        {
-            ComboBox_StockSymbols.SelectedItem = null;
-        }
     }
 }
