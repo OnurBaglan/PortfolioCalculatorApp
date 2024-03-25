@@ -1,21 +1,11 @@
-﻿using PortfolioCalculatorApp.Controller;
-using PortfolioCalculatorApp.Views.Interfaces;
-using PortfolioCalculatorApp.Model.BusinessModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using PortfolioCalculatorApp.Views.Interfaces;
+
 
 namespace PortfolioCalculatorApp;
 
-public partial class AddPortfolioForm : Form, IAddPortfolioView
+public partial class AddPortfolioForm : Form, IAddPortfolioFormView
 {
-   
+
     public event EventHandler InitializeComboBox;
     public event EventHandler SearchStock;
     public event EventHandler ResetSelections;
@@ -25,8 +15,8 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
     public AddPortfolioForm()
     {
         InitializeComponent();
-       
-        InitializeComboBox?.Invoke(this, EventArgs.Empty);
+
+        
 
     }
 
@@ -67,5 +57,11 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
     private void Button_SavePortfolio_Click(object sender, EventArgs e)
     {
 
+    }
+
+    public void ShowDialogWrapper()
+    {
+        InitializeComboBox?.Invoke(this, EventArgs.Empty);
+        ShowDialog();
     }
 }

@@ -16,9 +16,7 @@ internal static class Program
 		ApplicationConfiguration.Initialize();
 
 
-        IAddPortfolioView addPortfolioForm  = new AddPortfolioForm();
-
-
+        IAddPortfolioFormView addPortfolioForm  = new AddPortfolioForm();
 
 
 		Application.Run(new MainAppForm(addPortfolioForm));

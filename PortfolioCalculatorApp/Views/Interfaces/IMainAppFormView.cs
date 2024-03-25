@@ -3,7 +3,7 @@ using PortfolioCalculatorApp.EventArguments;
 
 namespace PortfolioCalculatorApp.Views.Interfaces;
 
-public interface IApiKeyTabView
+public interface IMainAppFormView
 {
 	string ApiKey1 { get; set; }
 	string ApiKey2 { get; set; }

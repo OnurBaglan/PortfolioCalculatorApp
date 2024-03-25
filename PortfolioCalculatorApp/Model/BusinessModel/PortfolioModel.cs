@@ -15,7 +15,4 @@ internal class PortfolioModel
     }
 
 
-
-
-
 }

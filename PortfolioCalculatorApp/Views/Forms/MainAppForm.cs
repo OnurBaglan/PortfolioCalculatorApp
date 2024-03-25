@@ -7,22 +7,19 @@ using PortfolioCalculatorApp.Views.Interfaces;
 
 namespace PortfolioCalculatorApp;
 
-public partial class MainAppForm : Form, IApiKeyTabView, IPortfolioListView
+public partial class MainAppForm : Form, IMainAppFormView
 {
 
-    private readonly ApiController _apiKeyTabController;
-    private readonly PortfolioController _addPortfolioController;
-    private readonly IAddPortfolioView _addPortfolioForm;
-    
-
-
-
+    private readonly MainAppFormController _mainAppFormController;
+    private readonly AddPortfolioFormController _addPortfolioFormController;
+    private readonly IAddPortfolioFormView _addPortfolioForm;
 
     public event EventHandler ValidateApiKey;
     public event EventHandler SaveApiKey;
     public event EventHandler LoadApiKeys;
 
-    public MainAppForm(IAddPortfolioView addPortfolioForm)
+
+    public MainAppForm(IAddPortfolioFormView addPortfolioForm)
     {
         InitializeComponent();
 
@@ -35,14 +32,13 @@ public partial class MainAppForm : Form, IApiKeyTabView, IPortfolioListView
 
 
         _addPortfolioForm = addPortfolioForm;
-
-        _apiKeyTabController = new ApiController(this,new ApiModel());
-        _addPortfolioController = new PortfolioController(_addPortfolioForm, this);
+        _mainAppFormController = new MainAppFormController(this,_addPortfolioForm);
+        _addPortfolioFormController = new AddPortfolioFormController(_addPortfolioForm);
     }
 
 
 
-    //IApiKeyTabView properties
+
     public string ApiKey1
     {
         get => TextBox_ApiKey1.Text;
@@ -82,7 +78,7 @@ public partial class MainAppForm : Form, IApiKeyTabView, IPortfolioListView
     public Label MainMenuBlockerLabel { get => MainMenuBlockLabel; set => MainMenuBlockLabel = value; }
     public Panel MainMenuBlockerPanel { get => MainMenuBlockPanel; set => MainMenuBlockPanel = value; }
 
-    //IPortfolioListView properties
+    
     public ListBox ListBoxPortfolios { get => ListBox_Portfolios; set => ListBox_Portfolios = value; }
     public Button ButtonAddNewPortfolio { get => Button_AddNewPortfolio; set => Button_AddNewPortfolio = value; }
     public Button ButtonDeleteSelectedPortfolio { get => Button_DeleteSelectedPortfolio; set => Button_DeleteSelectedPortfolio = value; }
@@ -101,7 +97,6 @@ public partial class MainAppForm : Form, IApiKeyTabView, IPortfolioListView
 
     private void Button_AddNewPortfolio_Click(object sender, EventArgs e)
     {
-        var portfolioForm = new AddPortfolioForm();
-        portfolioForm.ShowDialog();
+        _addPortfolioForm.ShowDialogWrapper();
     }
 }

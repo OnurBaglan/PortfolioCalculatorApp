@@ -1,7 +1,7 @@
 ﻿
 namespace PortfolioCalculatorApp.Views.Interfaces;
 
-public interface IAddPortfolioView
+public interface IAddPortfolioFormView
 {
     ComboBox ComboBoxStockSymbols { get; set; }
     NumericUpDown NumericUpDownLots { get; set; }
@@ -13,4 +13,6 @@ public interface IAddPortfolioView
     event EventHandler ResetSelections;
     event EventHandler AddPurchase;
     event EventHandler RemovePurchase;
+
+    public void ShowDialogWrapper();
 }
