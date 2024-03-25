@@ -1,7 +1,6 @@
 ﻿using PortfolioCalculatorApp.Model.BusinessModel;
 using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
-using System.Windows.Forms;
 
 namespace PortfolioCalculatorApp.Controller;
 
@@ -9,6 +8,9 @@ internal class AddPortfolioFormController
 {
     private readonly IAddPortfolioFormView _addPortfolioFormView;
     private readonly PortfolioModel _portfolioModel;
+    private readonly List<Purchase> _purchases = new();
+
+    public event EventHandler<Portfolio> SaveValidPortfolio;
 
     public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView)
     {
@@ -21,7 +23,31 @@ internal class AddPortfolioFormController
         _addPortfolioFormView.ResetSelections += OnResetSelections;
         _addPortfolioFormView.AddPurchase += OnAddPurchase;
         _addPortfolioFormView.RemovePurchase += OnRemovePurchase;
+        _addPortfolioFormView.SavePortfolio += OnSavePortfolio;
 
+    }
+
+    private void OnSavePortfolio(object? sender, EventArgs e)
+    {
+        while (!IsPortfolioDataValid())
+        {
+            MessageBox.Show(@"Make sure you entered a valid portfolio name");
+            return;
+        }
+
+        var portfolio = new Portfolio()
+        {
+            Purchases = _purchases,
+            Name = _addPortfolioFormView.TextBoxPortfolioName.Text
+        };
+
+        SaveValidPortfolio?.Invoke(this, portfolio);
+    }
+
+    private bool IsPortfolioDataValid()
+    {
+        //a more in depth validation is needed in future not to duplicate names
+        return !string.IsNullOrEmpty(_addPortfolioFormView.TextBoxPortfolioName.Text);
     }
 
     private void OnRemovePurchase(object? sender, EventArgs e)
@@ -49,6 +75,8 @@ and a date not in the future.");
             PurchaseDate = _addPortfolioFormView.DateTimePickerPurchaseDate.Value
 
         };
+
+        _purchases.Add(newPurchase);
 
         _addPortfolioFormView.ListBoxAddedPurchases.Items.Add(newPurchase.ToString());
 

@@ -1,5 +1,6 @@
-﻿using PortfolioCalculatorApp.EventArguments;
+﻿using PortfolioCalculatorApp.Controller;
 using PortfolioCalculatorApp.Model.BusinessModel;
+using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Data;
 
@@ -7,6 +8,7 @@ public class MainAppFormController
 {
 	private readonly IMainAppFormView _mainAppFormView;
 	private readonly IAddPortfolioFormView _addPortfolioFormView;
+	private readonly AddPortfolioFormController _addPortfolioFormController;
 
 	private readonly ApiModel _apiModel;
 
@@ -15,15 +17,27 @@ public class MainAppFormController
 		_mainAppFormView = mainAppFormView;
 		_addPortfolioFormView = addPortfolioFormView;
 
-		_apiModel = new ApiModel();
+		_addPortfolioFormController = new AddPortfolioFormController(_addPortfolioFormView);
+
+        _apiModel = new ApiModel();
 
 		_mainAppFormView.ValidateApiKey += OnValidateApiKeyAsync;
 		_mainAppFormView.SaveApiKey += OnSaveApiKey;
 		_mainAppFormView.LoadApiKeys += OnLoadApiKey;
 
-	}
+		_addPortfolioFormController.SaveValidPortfolio += OnShowPortfolioInMainList;
+	
 
-	private void OnLoadApiKey(object? sender, EventArgs e)
+
+	}
+    private void OnShowPortfolioInMainList(object? sender, Portfolio e)
+    {
+		_mainAppFormView.ListBoxPortfolios.Items.Add(e);
+
+    }
+   
+
+    private void OnLoadApiKey(object? sender, EventArgs e)
 	{
 
 

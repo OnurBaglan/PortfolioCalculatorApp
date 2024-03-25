@@ -1,5 +1,4 @@
 ﻿using System.Windows.Forms;
-using PortfolioCalculatorApp.EventArguments;
 
 namespace PortfolioCalculatorApp.Views.Interfaces;
 
@@ -19,9 +18,9 @@ public interface IMainAppFormView
 
 	public Label MainMenuBlockerLabel { get; set; }
 	public Panel MainMenuBlockerPanel { get; set; }
+    ListBox ListBoxPortfolios { get; set; }
 
-
-	public event EventHandler ValidateApiKey;
+    public event EventHandler ValidateApiKey;
 	public event EventHandler SaveApiKey;
 	public event EventHandler LoadApiKeys;
 }
