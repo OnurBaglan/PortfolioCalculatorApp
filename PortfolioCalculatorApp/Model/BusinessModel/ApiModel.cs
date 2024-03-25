@@ -1,11 +1,11 @@
 ﻿namespace PortfolioCalculatorApp.Model.BusinessModel;
 
-public class ApiKeyValidatorModel
+public class ApiModel
 {
 
     private readonly Dictionary<int, string> _urls;
 
-    public ApiKeyValidatorModel()
+    public ApiModel()
     {
         _urls = new Dictionary<int, string>()
 {

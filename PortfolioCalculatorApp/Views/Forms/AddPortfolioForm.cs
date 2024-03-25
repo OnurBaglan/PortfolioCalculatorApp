@@ -15,19 +15,17 @@ namespace PortfolioCalculatorApp;
 
 public partial class AddPortfolioForm : Form, IAddPortfolioView
 {
-    private readonly AddPortfolioController _controller;
-
-
+   
     public event EventHandler InitializeComboBox;
     public event EventHandler SearchStock;
     public event EventHandler ResetSelections;
     public event EventHandler AddPurchase;
+    public event EventHandler RemovePurchase;
 
     public AddPortfolioForm()
     {
         InitializeComponent();
-        _controller = new AddPortfolioController(this, new AddPortfolioModel());
-
+       
         InitializeComboBox?.Invoke(this, EventArgs.Empty);
 
     }
@@ -38,7 +36,7 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
 
     public DateTimePicker DateTimePickerPurchaseDate { get => DateTimePicker_PurchaseDate; set => DateTimePicker_PurchaseDate = value; }
 
-    public ListView ListViewAddedPurchases { get => ListView_AddedPurchases; set => ListView_AddedPurchases = value; }
+    public ListBox ListBoxAddedPurchases { get => ListBox_AddedPurchases; set => ListBox_AddedPurchases = value; }
 
 
     private void TextBox_StockSearch_TextChanged(object sender, EventArgs e)
@@ -52,7 +50,7 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
     {
         ResetSelections?.Invoke(this, EventArgs.Empty);
 
-        MessageBox.Show("LOL");
+
     }
 
     private void Button_AddPurchase_Click(object sender, EventArgs e)
@@ -60,4 +58,14 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
         AddPurchase?.Invoke(this, EventArgs.Empty);
     }
 
+    private void Button_DeleteSelectedPurchase_Click(object sender, EventArgs e)
+    {
+        RemovePurchase?.Invoke(this, EventArgs.Empty);
+
+    }
+
+    private void Button_SavePortfolio_Click(object sender, EventArgs e)
+    {
+
+    }
 }

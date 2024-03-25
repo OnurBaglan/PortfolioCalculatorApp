@@ -37,7 +37,6 @@ partial class AddPortfolioForm
         label3 = new Label();
         Button_AddPurchase = new Button();
         Button_ResetSelections = new Button();
-        ListView_AddedPurchases = new ListView();
         Button_DeleteSelectedPurchase = new Button();
         Button_SavePortfolio = new Button();
         NumericUpDown_Lots = new NumericUpDown();
@@ -45,6 +44,7 @@ partial class AddPortfolioForm
         TextBox_PortfolioName = new TextBox();
         FixedLabelPortfolioName = new Label();
         errorProvider1 = new ErrorProvider(components);
+        ListBox_AddedPurchases = new ListBox();
         ((System.ComponentModel.ISupportInitialize)NumericUpDown_Lots).BeginInit();
         ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
         SuspendLayout();
@@ -111,22 +111,15 @@ partial class AddPortfolioForm
         Button_ResetSelections.UseVisualStyleBackColor = true;
         Button_ResetSelections.Click += Button_ResetSelections_Click;
         // 
-        // ListView_AddedPurchases
-        // 
-        ListView_AddedPurchases.Location = new Point(81, 181);
-        ListView_AddedPurchases.Name = "ListView_AddedPurchases";
-        ListView_AddedPurchases.Size = new Size(676, 97);
-        ListView_AddedPurchases.TabIndex = 8;
-        ListView_AddedPurchases.UseCompatibleStateImageBehavior = false;
-        // 
         // Button_DeleteSelectedPurchase
         // 
-        Button_DeleteSelectedPurchase.Location = new Point(0, 181);
+        Button_DeleteSelectedPurchase.Location = new Point(0, 151);
         Button_DeleteSelectedPurchase.Name = "Button_DeleteSelectedPurchase";
         Button_DeleteSelectedPurchase.Size = new Size(75, 59);
         Button_DeleteSelectedPurchase.TabIndex = 9;
         Button_DeleteSelectedPurchase.Text = "Delete selected purchase";
         Button_DeleteSelectedPurchase.UseVisualStyleBackColor = true;
+        Button_DeleteSelectedPurchase.Click += Button_DeleteSelectedPurchase_Click;
         // 
         // Button_SavePortfolio
         // 
@@ -136,6 +129,7 @@ partial class AddPortfolioForm
         Button_SavePortfolio.TabIndex = 10;
         Button_SavePortfolio.Text = "Save portfolio";
         Button_SavePortfolio.UseVisualStyleBackColor = true;
+        Button_SavePortfolio.Click += Button_SavePortfolio_Click;
         // 
         // NumericUpDown_Lots
         // 
@@ -172,18 +166,27 @@ partial class AddPortfolioForm
         // 
         errorProvider1.ContainerControl = this;
         // 
+        // ListBox_AddedPurchases
+        // 
+        ListBox_AddedPurchases.FormattingEnabled = true;
+        ListBox_AddedPurchases.ItemHeight = 15;
+        ListBox_AddedPurchases.Location = new Point(81, 151);
+        ListBox_AddedPurchases.Name = "ListBox_AddedPurchases";
+        ListBox_AddedPurchases.Size = new Size(676, 124);
+        ListBox_AddedPurchases.TabIndex = 15;
+        // 
         // AddPortfolioForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         ClientSize = new Size(800, 450);
+        Controls.Add(ListBox_AddedPurchases);
         Controls.Add(FixedLabelPortfolioName);
         Controls.Add(TextBox_PortfolioName);
         Controls.Add(TextBox_StockSearch);
         Controls.Add(NumericUpDown_Lots);
         Controls.Add(Button_SavePortfolio);
         Controls.Add(Button_DeleteSelectedPurchase);
-        Controls.Add(ListView_AddedPurchases);
         Controls.Add(Button_ResetSelections);
         Controls.Add(Button_AddPurchase);
         Controls.Add(label3);
@@ -210,7 +213,6 @@ partial class AddPortfolioForm
 	private Label label3;
 	private Button Button_AddPurchase;
 	private Button Button_ResetSelections;
-	private ListView ListView_AddedPurchases;
 	private Button Button_DeleteSelectedPurchase;
 	private Button Button_SavePortfolio;
 	private NumericUpDown NumericUpDown_Lots;
@@ -218,4 +220,5 @@ partial class AddPortfolioForm
     private TextBox TextBox_PortfolioName;
     private Label FixedLabelPortfolioName;
     private ErrorProvider errorProvider1;
+    private ListBox ListBox_AddedPurchases;
 }

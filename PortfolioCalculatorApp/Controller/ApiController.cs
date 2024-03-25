@@ -3,12 +3,12 @@ using PortfolioCalculatorApp.Model.BusinessModel;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Data;
 
-public class ApiKeyTabController
+public class ApiController
 {
 	private readonly IApiKeyTabView _view;
-	private readonly ApiKeyValidatorModel _model;
+	private readonly ApiModel _model;
 
-	public ApiKeyTabController(IApiKeyTabView view, ApiKeyValidatorModel model)
+	public ApiController(IApiKeyTabView view, ApiModel model)
 	{
 		_view = view;
 		_model = model;
