@@ -18,5 +18,6 @@ namespace PortfolioCalculatorApp.Model.DTO
 
         public decimal PurchaseCost { get; set; }
 
+        
     }
 }

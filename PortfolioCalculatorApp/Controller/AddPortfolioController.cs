@@ -15,6 +15,16 @@ internal class AddPortfolioController
         _model = model;
         _view.InitializeComboBox += OnInitializeComboBox;
         _view.SearchStock += OnSearchStock;
+        _view.ResetSelections += OnResetSelections;
+    }
+
+    private void OnResetSelections(object? sender, EventArgs e)
+    {
+        _view.ComboBoxStockSymbols.SelectedItem = null;
+
+        _view.NumericUpDownLots.Value = 0;
+
+        _view.DateTimePickerPurchaseDate.Value = DateTime.Now;
     }
 
     public void OnInitializeComboBox(object? sender, EventArgs? e)

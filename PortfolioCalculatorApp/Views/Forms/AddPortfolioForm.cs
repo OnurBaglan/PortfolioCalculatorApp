@@ -20,6 +20,7 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
 
     public event EventHandler InitializeComboBox;
     public event EventHandler SearchStock;
+    public event EventHandler ResetSelections;
 
     public AddPortfolioForm()
     {
@@ -32,11 +33,21 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
 
     public ComboBox ComboBoxStockSymbols { get => ComboBox_StockSymbols; set => ComboBox_StockSymbols = value; }
 
+    public NumericUpDown NumericUpDownLots { get => NumericUpDown_Lots; set => NumericUpDown_Lots = value; }
+
+    public DateTimePicker DateTimePickerPurchaseDate { get => DateTimePicker_PurchaseDate; set => DateTimePicker_PurchaseDate = value; }
+
 
     private void TextBox_StockSearch_TextChanged(object sender, EventArgs e)
     {
         SearchStock?.Invoke(sender, EventArgs.Empty);
 
+
+    }
+
+    private void Button_ResetSelections_Click(object sender, EventArgs e)
+    {
+        ResetSelections?.Invoke(this, EventArgs.Empty);
 
     }
 }
