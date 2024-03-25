@@ -1,4 +1,5 @@
 ﻿using PortfolioCalculatorApp.EventArguments;
+using PortfolioCalculatorApp.Model.BusinessModel;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Data;
 
