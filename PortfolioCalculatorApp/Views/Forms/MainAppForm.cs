@@ -10,8 +10,8 @@ namespace PortfolioCalculatorApp;
 public partial class MainAppForm : Form, IMainAppFormView
 {
 
-    private readonly MainAppFormController _mainAppFormController;
-    private readonly AddPortfolioFormController _addPortfolioFormController;
+    private MainAppFormController _mainAppFormController;
+    private AddPortfolioFormController _addPortfolioFormController;
     private readonly IAddPortfolioFormView _addPortfolioFormView;
 
     public event EventHandler ValidateApiKey;
@@ -23,13 +23,27 @@ public partial class MainAppForm : Form, IMainAppFormView
     {
         InitializeComponent();
 
+        //todo: there needs to be a better way to 'initialize services'
+        //initialize api keys is all over the place (half the job done by controller and the other is by view)
+        InitializeApiKeys();
 
-        LoadApiKeys?.Invoke(this, EventArgs.Empty);
-        ValidateApiKeys();
+        InitializeControllers();
+
 
         _addPortfolioFormView = addPortfolioFormView;
+
+    }
+
+    private void InitializeControllers()
+    {
         _mainAppFormController = new MainAppFormController(this, _addPortfolioFormView);
         _addPortfolioFormController = new AddPortfolioFormController(_addPortfolioFormView);
+    }
+
+    private void InitializeApiKeys()
+    {
+        LoadApiKeys?.Invoke(this, EventArgs.Empty);
+        ValidateApiKeys();
     }
 
     private void ValidateApiKeys()
@@ -52,7 +66,7 @@ public partial class MainAppForm : Form, IMainAppFormView
     public Button ButtonAddNewPortfolio { get => Button_AddNewPortfolio; set => Button_AddNewPortfolio = value; }
     public Button ButtonDeleteSelectedPortfolio { get => Button_DeleteSelectedPortfolio; set => Button_DeleteSelectedPortfolio = value; }
 
-    
+
 
     private void Button_ValidateApiKey_Click(object sender, EventArgs e)
     {
