@@ -29,6 +29,7 @@ partial class AddPortfolioForm
     /// </summary>
     private void InitializeComponent()
     {
+        components = new System.ComponentModel.Container();
         DateTimePicker_PurchaseDate = new DateTimePicker();
         ComboBox_StockSymbols = new ComboBox();
         label1 = new Label();
@@ -43,7 +44,9 @@ partial class AddPortfolioForm
         TextBox_StockSearch = new TextBox();
         TextBox_PortfolioName = new TextBox();
         FixedLabelPortfolioName = new Label();
+        errorProvider1 = new ErrorProvider(components);
         ((System.ComponentModel.ISupportInitialize)NumericUpDown_Lots).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
         SuspendLayout();
         // 
         // DateTimePicker_PurchaseDate
@@ -96,6 +99,7 @@ partial class AddPortfolioForm
         Button_AddPurchase.TabIndex = 6;
         Button_AddPurchase.Text = "Add the purchase";
         Button_AddPurchase.UseVisualStyleBackColor = true;
+        Button_AddPurchase.Click += Button_AddPurchase_Click;
         // 
         // Button_ResetSelections
         // 
@@ -164,6 +168,10 @@ partial class AddPortfolioForm
         FixedLabelPortfolioName.TabIndex = 14;
         FixedLabelPortfolioName.Text = "Name of portfolio";
         // 
+        // errorProvider1
+        // 
+        errorProvider1.ContainerControl = this;
+        // 
         // AddPortfolioForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -186,6 +194,7 @@ partial class AddPortfolioForm
         Name = "AddPortfolioForm";
         Text = "Add a portfolio";
         ((System.ComponentModel.ISupportInitialize)NumericUpDown_Lots).EndInit();
+        ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
         ResumeLayout(false);
         PerformLayout();
     }
@@ -208,4 +217,5 @@ partial class AddPortfolioForm
     private TextBox TextBox_StockSearch;
     private TextBox TextBox_PortfolioName;
     private Label FixedLabelPortfolioName;
+    private ErrorProvider errorProvider1;
 }

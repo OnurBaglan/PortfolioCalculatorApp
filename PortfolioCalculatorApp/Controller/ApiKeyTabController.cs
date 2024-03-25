@@ -47,7 +47,7 @@ public class ApiKeyTabController
 		SetApiKeyStatusLabel(apiSource, "Key is saved");
 	}
 
-	public async void OnValidateApiKeyAsync(object sender, EventArgs e)
+	public async void OnValidateApiKeyAsync(object? sender, EventArgs? e)
 	{
 
 		ApiSources apiSource = GetApiSource(sender);

@@ -1,4 +1,5 @@
 ﻿using PortfolioCalculatorApp.Model.BusinessModel;
+using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Windows.Forms;
 
@@ -16,6 +17,35 @@ internal class AddPortfolioController
         _view.InitializeComboBox += OnInitializeComboBox;
         _view.SearchStock += OnSearchStock;
         _view.ResetSelections += OnResetSelections;
+        _view.AddPurchase += OnAddPurchase;
+    }
+
+    private void OnAddPurchase(object? sender, EventArgs e)
+    {
+        while (!IsPurchaseSelectionsValid())
+        {
+            MessageBox.Show(@"Please make sure you selected a stock symbol, at least one lot
+and a date not in the future.");
+            return;
+        }
+
+        var newPurchase = new Purchase()
+        {
+            StockSymbol = (string)_view.ComboBoxStockSymbols.SelectedItem,
+            Lots = (int)_view.NumericUpDownLots.Value,
+            PurchaseDate = _view.DateTimePickerPurchaseDate.Value
+
+        };
+
+        _view.ListViewAddedPurchases.Items.Add(newPurchase.ToString());
+
+    }
+
+    private bool IsPurchaseSelectionsValid()
+    {
+        return _view.ComboBoxStockSymbols.SelectedItem is not null &&
+            _view.DateTimePickerPurchaseDate.Value < DateTime.Now &&
+            _view.NumericUpDownLots.Value != 0;
     }
 
     private void OnResetSelections(object? sender, EventArgs e)

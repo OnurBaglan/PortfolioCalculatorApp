@@ -21,6 +21,7 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
     public event EventHandler InitializeComboBox;
     public event EventHandler SearchStock;
     public event EventHandler ResetSelections;
+    public event EventHandler AddPurchase;
 
     public AddPortfolioForm()
     {
@@ -37,6 +38,8 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
 
     public DateTimePicker DateTimePickerPurchaseDate { get => DateTimePicker_PurchaseDate; set => DateTimePicker_PurchaseDate = value; }
 
+    public ListView ListViewAddedPurchases { get => ListView_AddedPurchases; set => ListView_AddedPurchases = value; }
+
 
     private void TextBox_StockSearch_TextChanged(object sender, EventArgs e)
     {
@@ -49,5 +52,12 @@ public partial class AddPortfolioForm : Form, IAddPortfolioView
     {
         ResetSelections?.Invoke(this, EventArgs.Empty);
 
+        MessageBox.Show("LOL");
     }
+
+    private void Button_AddPurchase_Click(object sender, EventArgs e)
+    {
+        AddPurchase?.Invoke(this, EventArgs.Empty);
+    }
+
 }

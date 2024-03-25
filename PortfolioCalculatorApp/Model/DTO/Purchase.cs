@@ -14,10 +14,14 @@ namespace PortfolioCalculatorApp.Model.DTO
 
         public DateTime PurchaseDate { get; set; }
 
-        public string CurrencySymbol { get; set; }
+        public string? CurrencySymbol { get; set; }
 
-        public decimal PurchaseCost { get; set; }
+        public decimal? PurchaseCost { get; set; }
 
-        
+        public override string ToString()
+        {
+            return $"Stock symbol: {StockSymbol}, {Lots} lots, bought on {PurchaseDate.ToString("d")} ";
+        }
+
     }
 }
