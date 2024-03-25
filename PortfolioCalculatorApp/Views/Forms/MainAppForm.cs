@@ -2,6 +2,7 @@
 
 using PortfolioCalculatorApp.Controller;
 using PortfolioCalculatorApp.Model.BusinessModel;
+using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
 
 
@@ -17,10 +18,14 @@ public partial class MainAppForm : Form, IMainAppFormView
     public event EventHandler ValidateApiKey;
     public event EventHandler SaveApiKey;
     public event EventHandler LoadApiKeys;
+    public event EventHandler<List<Portfolio>> SavePortfolios;
 
 
     public MainAppForm(IAddPortfolioFormView addPortfolioFormView)
     {
+        _addPortfolioFormView = addPortfolioFormView;
+
+
         InitializeComponent();
 
         //todo: there needs to be a better way to 'initialize services'
@@ -29,8 +34,9 @@ public partial class MainAppForm : Form, IMainAppFormView
 
         InitializeControllers();
 
+        
 
-        _addPortfolioFormView = addPortfolioFormView;
+
 
     }
 
@@ -85,8 +91,36 @@ public partial class MainAppForm : Form, IMainAppFormView
         ShowAddPortfolioView();
     }
 
+
+    private void Button_DeleteSelectedPortfolio_Click(object sender, EventArgs e)
+    {
+
+        var itemToDelete = ListBoxPortfolios.SelectedItem;
+
+        if (itemToDelete == null) return;
+
+        ListBoxPortfolios.Items.Remove(itemToDelete);
+
+
+    }
+
     private void ShowAddPortfolioView()
     {
         _addPortfolioFormView.ShowDialogWrapper();
+    }
+
+    private void Button_SavePortfolios_Click(object sender, EventArgs e)
+    {
+        List<Portfolio> portfoliosToSave = new();
+
+        foreach(var item in ListBox_Portfolios.Items)
+        {
+            portfoliosToSave.Add((Portfolio)item);
+        }
+
+        if(portfoliosToSave.Count==0) { return; }
+
+        SavePortfolios?.Invoke(this, portfoliosToSave);
+
     }
 }

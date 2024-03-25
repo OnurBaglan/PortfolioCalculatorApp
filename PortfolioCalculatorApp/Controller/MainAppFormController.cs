@@ -3,6 +3,7 @@ using PortfolioCalculatorApp.Model.BusinessModel;
 using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Data;
+using System.Text.Json;
 
 public class MainAppFormController
 {
@@ -22,10 +23,19 @@ public class MainAppFormController
 		_mainAppFormView.ValidateApiKey += OnValidateApiKeyAsync;
 		_mainAppFormView.SaveApiKey += OnSaveApiKey;
 		_mainAppFormView.LoadApiKeys += OnLoadApiKey;
+		_mainAppFormView.SavePortfolios += OnSavePortfolios;
 
-        AddPortfolioFormController.SaveValidPortfolio += OnShowPortfolioInMainList;
+        AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
 	
 	}
+
+    private void OnSavePortfolios(object? sender, List<Portfolio> e)
+    {
+       var jsonText = JsonSerializer.Serialize(e);
+
+		File.AppendAllText("portfolios.json", jsonText);
+    }
+
     private void OnShowPortfolioInMainList(object? sender, Portfolio e)
     {
 		_mainAppFormView.ListBoxPortfolios.Items.Add(e);

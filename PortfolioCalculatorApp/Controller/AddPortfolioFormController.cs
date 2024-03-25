@@ -10,7 +10,7 @@ internal class AddPortfolioFormController
     private readonly PortfolioModel _portfolioModel;
     private readonly List<Purchase> _purchases = new();
 
-    public static event EventHandler<Portfolio> SaveValidPortfolio;
+    public static event EventHandler<Portfolio> AddValidPortfolio;
 
     public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView)
     {
@@ -35,17 +35,19 @@ internal class AddPortfolioFormController
         _addPortfolioFormView.NumericUpDownLots.Value = 0;
         _addPortfolioFormView.DateTimePickerPurchaseDate.Value = DateTime.Now;
         _addPortfolioFormView.ListBoxAddedPurchases.Items.Clear();
-        
+
 
     }
 
     private void OnSavePortfolio(object? sender, EventArgs e)
     {
-        while (!IsPortfolioDataValid())
+        while (!DoesAddingMakeSense())
         {
-            MessageBox.Show(@"Make sure you entered a valid portfolio name");
+            MessageBox.Show(@"Make sure you entered a valid portfolio name and have at least one purchase added");
             return;
         }
+
+
 
         var portfolio = new Portfolio()
         {
@@ -53,14 +55,18 @@ internal class AddPortfolioFormController
             Name = _addPortfolioFormView.TextBoxPortfolioName.Text
         };
 
-        SaveValidPortfolio?.Invoke(this, portfolio);
-        
+        _addPortfolioFormView.CloseWrapperWithMessage("Portfolio added.");
+
+        AddValidPortfolio?.Invoke(this, portfolio);
+
     }
 
-    private bool IsPortfolioDataValid()
+   
+    private bool DoesAddingMakeSense()
     {
         //a more in depth validation is needed in future not to duplicate names
-        return !string.IsNullOrEmpty(_addPortfolioFormView.TextBoxPortfolioName.Text);
+        return !string.IsNullOrEmpty(_addPortfolioFormView.TextBoxPortfolioName.Text) &&
+            _addPortfolioFormView.ListBoxAddedPurchases.Items.Count != 0;
     }
 
     private void OnRemovePurchase(object? sender, EventArgs e)

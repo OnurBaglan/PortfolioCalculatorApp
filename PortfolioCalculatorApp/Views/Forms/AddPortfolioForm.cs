@@ -33,8 +33,7 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
     private void TextBox_StockSearch_TextChanged(object sender, EventArgs e)
     {
         SearchStock?.Invoke(sender, EventArgs.Empty);
-
-
+              
     }
 
     private void Button_AddPurchase_Click(object sender, EventArgs e)
@@ -62,14 +61,27 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
         SavePortfolio?.Invoke(this, EventArgs.Empty);
     }
 
-    public void ShowDialogWrapper()
-    {
-        InitializeComboBox?.Invoke(this, EventArgs.Empty);
-        ShowDialog();
-    }
+   
 
     private void AddPortfolioForm_FormClosed(object sender, FormClosedEventArgs e)
     {
         AddPortfolioFormClosed?.Invoke(this, e);
     }
+
+
+
+    public void ShowDialogWrapper()
+    {
+        InitializeComboBox?.Invoke(this, EventArgs.Empty);
+        ShowDialog();
+    }
+    public void CloseWrapperWithMessage(string message)
+    {
+        MessageBox.Show(message);
+        Close();
+    }
+
+
+
+
 }

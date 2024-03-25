@@ -18,4 +18,5 @@ public interface IAddPortfolioFormView
     event EventHandler AddPortfolioFormClosed;
 
     public void ShowDialogWrapper();
+    void CloseWrapperWithMessage(string message);
 }
