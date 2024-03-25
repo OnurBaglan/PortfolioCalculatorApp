@@ -17,29 +17,23 @@ public class MainAppFormController
 		_mainAppFormView = mainAppFormView;
 		_addPortfolioFormView = addPortfolioFormView;
 
-		_addPortfolioFormController = new AddPortfolioFormController(_addPortfolioFormView);
-
         _apiModel = new ApiModel();
 
 		_mainAppFormView.ValidateApiKey += OnValidateApiKeyAsync;
 		_mainAppFormView.SaveApiKey += OnSaveApiKey;
 		_mainAppFormView.LoadApiKeys += OnLoadApiKey;
 
-		_addPortfolioFormController.SaveValidPortfolio += OnShowPortfolioInMainList;
+        AddPortfolioFormController.SaveValidPortfolio += OnShowPortfolioInMainList;
 	
-
-
 	}
     private void OnShowPortfolioInMainList(object? sender, Portfolio e)
     {
 		_mainAppFormView.ListBoxPortfolios.Items.Add(e);
-
+		
     }
    
-
     private void OnLoadApiKey(object? sender, EventArgs e)
 	{
-
 
 		if (File.Exists("apiKey1.txt"))
 		{
@@ -118,7 +112,10 @@ public class MainAppFormController
 
 	private void SetApiKeyStatusLabel(ApiSources apiSource, bool isKeyValid)
 	{
-		_mainAppFormView.GetType().GetProperty(string.Format("ApiKey{0}Status", (int)apiSource)).SetValue(_mainAppFormView, string.Format("Api key status correct: {0}", isKeyValid));
+		_mainAppFormView
+			.GetType()
+			.GetProperty(string.Format("ApiKey{0}Status", (int)apiSource))
+			.SetValue(_mainAppFormView, string.Format("Api key status correct: {0}", isKeyValid));
 	}
 
 	private void SetApiKeyStatusLabel(ApiSources apiSource, string text)

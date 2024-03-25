@@ -196,6 +196,7 @@ partial class AddPortfolioForm
         Controls.Add(DateTimePicker_PurchaseDate);
         Name = "AddPortfolioForm";
         Text = "Add a portfolio";
+        FormClosed += AddPortfolioForm_FormClosed;
         ((System.ComponentModel.ISupportInitialize)NumericUpDown_Lots).EndInit();
         ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
         ResumeLayout(false);

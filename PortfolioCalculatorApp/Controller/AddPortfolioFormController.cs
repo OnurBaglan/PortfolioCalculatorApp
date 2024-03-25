@@ -10,11 +10,11 @@ internal class AddPortfolioFormController
     private readonly PortfolioModel _portfolioModel;
     private readonly List<Purchase> _purchases = new();
 
-    public event EventHandler<Portfolio> SaveValidPortfolio;
+    public static event EventHandler<Portfolio> SaveValidPortfolio;
 
     public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView)
     {
-       
+
         _portfolioModel = new PortfolioModel();
 
         _addPortfolioFormView = addPortfolioFormView;
@@ -24,6 +24,18 @@ internal class AddPortfolioFormController
         _addPortfolioFormView.AddPurchase += OnAddPurchase;
         _addPortfolioFormView.RemovePurchase += OnRemovePurchase;
         _addPortfolioFormView.SavePortfolio += OnSavePortfolio;
+        _addPortfolioFormView.AddPortfolioFormClosed += OnFormClosed;
+
+    }
+
+    private void OnFormClosed(object? sender, EventArgs e)
+    {
+        _addPortfolioFormView.ComboBoxStockSymbols.SelectedItem = null;
+        _addPortfolioFormView.TextBoxPortfolioName.Text = null;
+        _addPortfolioFormView.NumericUpDownLots.Value = 0;
+        _addPortfolioFormView.DateTimePickerPurchaseDate.Value = DateTime.Now;
+        _addPortfolioFormView.ListBoxAddedPurchases.Items.Clear();
+        
 
     }
 
@@ -42,6 +54,7 @@ internal class AddPortfolioFormController
         };
 
         SaveValidPortfolio?.Invoke(this, portfolio);
+        
     }
 
     private bool IsPortfolioDataValid()
@@ -54,7 +67,9 @@ internal class AddPortfolioFormController
     {
         if (_addPortfolioFormView.ListBoxAddedPurchases.SelectedItem is not null)
         {
-            _addPortfolioFormView.ListBoxAddedPurchases.Items.Remove(_addPortfolioFormView.ListBoxAddedPurchases.SelectedItem);
+            var purchaseToDelete = (Purchase)_addPortfolioFormView.ListBoxAddedPurchases.SelectedItem;
+            _addPortfolioFormView.ListBoxAddedPurchases.Items.Remove(purchaseToDelete);
+            _purchases.Remove(purchaseToDelete);
 
         }
     }
@@ -78,7 +93,7 @@ and a date not in the future.");
 
         _purchases.Add(newPurchase);
 
-        _addPortfolioFormView.ListBoxAddedPurchases.Items.Add(newPurchase.ToString());
+        _addPortfolioFormView.ListBoxAddedPurchases.Items.Add(newPurchase);
 
     }
 

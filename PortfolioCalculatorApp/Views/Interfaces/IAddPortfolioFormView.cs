@@ -12,9 +12,10 @@ public interface IAddPortfolioFormView
     event EventHandler InitializeComboBox;
     event EventHandler SearchStock;
     event EventHandler ResetSelections;
-    event EventHandler AddPurchase;
     event EventHandler RemovePurchase;
     event EventHandler SavePortfolio;
+    event EventHandler AddPurchase;
+    event EventHandler AddPortfolioFormClosed;
 
     public void ShowDialogWrapper();
 }

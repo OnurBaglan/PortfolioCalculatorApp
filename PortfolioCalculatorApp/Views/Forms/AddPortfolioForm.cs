@@ -9,9 +9,10 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
     public event EventHandler InitializeComboBox;
     public event EventHandler SearchStock;
     public event EventHandler ResetSelections;
-    public event EventHandler AddPurchase;
     public event EventHandler RemovePurchase;
     public event EventHandler SavePortfolio;
+    public event EventHandler AddPurchase;
+    public event EventHandler AddPortfolioFormClosed;
 
     public AddPortfolioForm()
     {
@@ -36,17 +37,18 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
 
     }
 
-    private void Button_ResetSelections_Click(object sender, EventArgs e)
-    {
-        ResetSelections?.Invoke(this, EventArgs.Empty);
-
-
-    }
-
     private void Button_AddPurchase_Click(object sender, EventArgs e)
     {
         AddPurchase?.Invoke(this, EventArgs.Empty);
     }
+
+    private void Button_ResetSelections_Click(object sender, EventArgs e)
+    {
+        ResetSelections?.Invoke(this, EventArgs.Empty);
+
+    }
+
+
 
     private void Button_DeleteSelectedPurchase_Click(object sender, EventArgs e)
     {
@@ -64,5 +66,10 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
     {
         InitializeComboBox?.Invoke(this, EventArgs.Empty);
         ShowDialog();
+    }
+
+    private void AddPortfolioForm_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        AddPortfolioFormClosed?.Invoke(this, e);
     }
 }
