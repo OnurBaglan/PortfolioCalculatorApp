@@ -54,11 +54,10 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
         RemovePurchase?.Invoke(this, EventArgs.Empty);
 
     }
-
-
-    private void AddPortfolioForm_FormClosed(object sender, FormClosedEventArgs e)
+    private void Button_AddPortfolio_Click(object sender, EventArgs e)
     {
-        AddPortfolioFormClosed?.Invoke(this, e);
+        AddPortfolio?.Invoke(this, EventArgs.Empty);
+
     }
 
 
@@ -74,9 +73,11 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
         Close();
     }
 
-    private void Button_AddPortfolio_Click(object sender, EventArgs e)
-    {
-        AddPortfolio?.Invoke(this, EventArgs.Empty);
+   
 
+    private void AddPortfolioForm_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        AddPortfolioFormClosed?.Invoke(this, e);
     }
+
 }

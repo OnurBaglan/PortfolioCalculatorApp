@@ -85,7 +85,7 @@ internal class AddPortfolioFormController
         while (!IsPurchaseSelectionsValid())
         {
             MessageBox.Show(@"Please make sure you selected a stock symbol, at least one lot
-and a date not in the future.");
+and a valid weekday date");
             return;
         }
 
@@ -106,8 +106,15 @@ and a date not in the future.");
     private bool IsPurchaseSelectionsValid()
     {
         return _addPortfolioFormView.ComboBoxStockSymbols.SelectedItem is not null &&
-            _addPortfolioFormView.DateTimePickerPurchaseDate.Value < DateTime.Now &&
-            _addPortfolioFormView.NumericUpDownLots.Value != 0;
+            _addPortfolioFormView.DateTimePickerPurchaseDate.Value <= DateTime.Now &&
+            _addPortfolioFormView.NumericUpDownLots.Value != 0 &&
+            IsDateWeekday(_addPortfolioFormView.DateTimePickerPurchaseDate.Value);
+    }
+
+    private bool IsDateWeekday(DateTime value)
+    {
+        return value.DayOfWeek != DayOfWeek.Sunday &&
+            value.DayOfWeek != DayOfWeek.Saturday;
     }
 
     private void OnResetSelections(object? sender, EventArgs e)
