@@ -71,10 +71,17 @@ public partial class MainAppForm : Form, IMainAppFormView
 
     public string ApiKey1 { get => TextBox_ApiKey1.Text; set => TextBox_ApiKey1.Text = value; }
     public string ApiKey2 { get => TextBox_ApiKey2.Text; set => TextBox_ApiKey2.Text = value; }
+    public string ApiKey3 { get => TextBox_ApiKey3.Text; set => TextBox_ApiKey3.Text = value; }
+
+
     public bool IsApiKey1Valid { get; set; }
     public bool IsApiKey2Valid { get; set; }
+    public bool IsApiKey3Valid { get; set; }
+
     public string ApiKey1Status { get => Label_StatusApiKey1.Text; set => Label_StatusApiKey1.Text = value; }
     public string ApiKey2Status { get => Label_StatusApiKey2.Text; set => Label_StatusApiKey2.Text = value; }
+    public string ApiKey3Status { get => Label_StatusApiKey3.Text; set => Label_StatusApiKey3.Text = value; }
+
     public string ApiKeyStatusStrip { get => ToolStripStatusLabel_ApiKey.Text; set => ToolStripStatusLabel_ApiKey.Text = value; }
     public string MainMenuStatusStrip { get => ToolStripStatusLabel_MainMenu.Text; set => ToolStripStatusLabel_MainMenu.Text = value; }
     public Label MainMenuBlockerLabel { get => MainMenuBlockLabel; set => MainMenuBlockLabel = value; }
@@ -124,13 +131,23 @@ public partial class MainAppForm : Form, IMainAppFormView
     {
         List<Portfolio> portfoliosToSave = new();
 
-        foreach(var item in ListBoxPortfolios.Items)
+        foreach (var item in ListBoxPortfolios.Items)
         {
             portfoliosToSave.Add((Portfolio)item);
         }
 
 
         SavePortfolios?.Invoke(this, portfoliosToSave);
+
+    }
+
+    private void TextBox_ApiKey3_TextChanged(object sender, EventArgs e)
+    {
+
+    }
+
+    private void TabPage2_Click(object sender, EventArgs e)
+    {
 
     }
 }
