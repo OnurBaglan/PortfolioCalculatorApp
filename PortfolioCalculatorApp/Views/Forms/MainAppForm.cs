@@ -2,7 +2,9 @@
 
 using PortfolioCalculatorApp.Controller;
 using PortfolioCalculatorApp.Model.BusinessModel;
+using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
+using System.Text.Json;
 
 
 namespace PortfolioCalculatorApp;
@@ -10,26 +12,58 @@ namespace PortfolioCalculatorApp;
 public partial class MainAppForm : Form, IMainAppFormView
 {
 
-    private readonly MainAppFormController _mainAppFormController;
-    private readonly AddPortfolioFormController _addPortfolioFormController;
+    private MainAppFormController _mainAppFormController;
+    private AddPortfolioFormController _addPortfolioFormController;
     private readonly IAddPortfolioFormView _addPortfolioFormView;
 
     public event EventHandler ValidateApiKey;
     public event EventHandler SaveApiKey;
     public event EventHandler LoadApiKeys;
+    public event EventHandler<List<Portfolio>> SavePortfolios;
 
 
     public MainAppForm(IAddPortfolioFormView addPortfolioFormView)
     {
+        _addPortfolioFormView = addPortfolioFormView;
+
+
         InitializeComponent();
 
+        //todo: there needs to be a better way to 'initialize services'
+        //initialize api keys is all over the place (half the job done by controller and the other is by view)
+        InitializeApiKeys();
 
-        LoadApiKeys?.Invoke(this, EventArgs.Empty);
-        ValidateApiKeys();
+        InitializeControllers();
 
-        _addPortfolioFormView = addPortfolioFormView;
+        InitializePortfolioLoad();
+
+    }
+
+    private void InitializePortfolioLoad()
+    {
+        if (File.Exists("portfolios.json"))
+        {
+            var data = File.ReadAllText("portfolios.json");
+            //when serializing it messes the format hence it is unable to deserialize.
+            var collection = JsonSerializer.Deserialize<List<Portfolio>>(data);
+
+            var result = collection.Select(x => (object)x).ToArray();
+
+            ListBox_Portfolios.Items.AddRange(result);
+
+        }
+    }
+
+    private void InitializeControllers()
+    {
         _mainAppFormController = new MainAppFormController(this, _addPortfolioFormView);
         _addPortfolioFormController = new AddPortfolioFormController(_addPortfolioFormView);
+    }
+
+    private void InitializeApiKeys()
+    {
+        LoadApiKeys?.Invoke(this, EventArgs.Empty);
+        ValidateApiKeys();
     }
 
     private void ValidateApiKeys()
@@ -52,7 +86,7 @@ public partial class MainAppForm : Form, IMainAppFormView
     public Button ButtonAddNewPortfolio { get => Button_AddNewPortfolio; set => Button_AddNewPortfolio = value; }
     public Button ButtonDeleteSelectedPortfolio { get => Button_DeleteSelectedPortfolio; set => Button_DeleteSelectedPortfolio = value; }
 
-    
+
 
     private void Button_ValidateApiKey_Click(object sender, EventArgs e)
     {
@@ -71,8 +105,36 @@ public partial class MainAppForm : Form, IMainAppFormView
         ShowAddPortfolioView();
     }
 
+
+    private void Button_DeleteSelectedPortfolio_Click(object sender, EventArgs e)
+    {
+
+        var itemToDelete = ListBoxPortfolios.SelectedItem;
+
+        if (itemToDelete == null) return;
+
+        ListBoxPortfolios.Items.Remove(itemToDelete);
+
+
+    }
+
     private void ShowAddPortfolioView()
     {
         _addPortfolioFormView.ShowDialogWrapper();
+    }
+
+    private void Button_SavePortfolios_Click(object sender, EventArgs e)
+    {
+        List<Portfolio> portfoliosToSave = new();
+
+        foreach(var item in ListBox_Portfolios.Items)
+        {
+            portfoliosToSave.Add((Portfolio)item);
+        }
+
+        if(portfoliosToSave.Count==0) { return; }
+
+        SavePortfolios?.Invoke(this, portfoliosToSave);
+
     }
 }

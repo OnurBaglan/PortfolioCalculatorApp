@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using PortfolioCalculatorApp.Model.DTO;
+using System.Windows.Forms;
 
 namespace PortfolioCalculatorApp.Views.Interfaces;
 
@@ -23,4 +24,5 @@ public interface IMainAppFormView
     public event EventHandler ValidateApiKey;
 	public event EventHandler SaveApiKey;
 	public event EventHandler LoadApiKeys;
+    event EventHandler<List<Portfolio>> SavePortfolios;
 }

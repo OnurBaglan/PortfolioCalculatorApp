@@ -61,6 +61,7 @@ partial class MainAppForm
         FixedLabel_ApiKey1 = new Label();
         TextBox_ApiKey2 = new TextBox();
         TextBox_ApiKey1 = new TextBox();
+        Button_SavePortfolios = new Button();
         GroupBox_EarnLossInfo.SuspendLayout();
         TabControl.SuspendLayout();
         TabPage1.SuspendLayout();
@@ -97,6 +98,7 @@ partial class MainAppForm
         Button_DeleteSelectedPortfolio.TabIndex = 2;
         Button_DeleteSelectedPortfolio.Text = "Delete Selected Portfolio";
         Button_DeleteSelectedPortfolio.UseVisualStyleBackColor = true;
+        Button_DeleteSelectedPortfolio.Click += Button_DeleteSelectedPortfolio_Click;
         // 
         // FixedLabel_PortfolioList
         // 
@@ -219,6 +221,7 @@ partial class MainAppForm
         // TabPage1
         // 
         TabPage1.BackColor = Color.Transparent;
+        TabPage1.Controls.Add(Button_SavePortfolios);
         TabPage1.Controls.Add(MainMenuBlockPanel);
         TabPage1.Controls.Add(statusStrip2);
         TabPage1.Controls.Add(GroupBox_EarnLossInfo);
@@ -390,6 +393,16 @@ partial class MainAppForm
         TextBox_ApiKey1.Size = new Size(311, 23);
         TextBox_ApiKey1.TabIndex = 0;
         // 
+        // Button_SavePortfolios
+        // 
+        Button_SavePortfolios.Location = new Point(1133, 269);
+        Button_SavePortfolios.Name = "Button_SavePortfolios";
+        Button_SavePortfolios.Size = new Size(92, 42);
+        Button_SavePortfolios.TabIndex = 7;
+        Button_SavePortfolios.Text = "Save Portfolios";
+        Button_SavePortfolios.UseVisualStyleBackColor = true;
+        Button_SavePortfolios.Click += Button_SavePortfolios_Click;
+        // 
         // MainAppForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -455,4 +468,5 @@ partial class MainAppForm
 	private Button Button_SaveApiKey1;
 	private Panel MainMenuBlockPanel;
 	private Label MainMenuBlockLabel;
+    private Button Button_SavePortfolios;
 }
