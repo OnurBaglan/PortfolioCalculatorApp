@@ -29,8 +29,6 @@ public partial class MainAppForm : Form, IMainAppFormView
 
         InitializeComponent();
 
-        //todo: there needs to be a better way to 'initialize services'
-        //initialize api keys is all over the place (half the job done by controller and the other is by view)
         InitializeApiKeys();
 
         InitializeControllers();
@@ -44,7 +42,6 @@ public partial class MainAppForm : Form, IMainAppFormView
         if (File.Exists("portfolios.json"))
         {
             var data = File.ReadAllText("portfolios.json");
-            //when serializing it messes the format hence it is unable to deserialize.
             var collection = JsonSerializer.Deserialize<List<Portfolio>>(data);
 
             var result = collection.Select(x => (object)x).ToArray();
@@ -127,12 +124,11 @@ public partial class MainAppForm : Form, IMainAppFormView
     {
         List<Portfolio> portfoliosToSave = new();
 
-        foreach(var item in ListBox_Portfolios.Items)
+        foreach(var item in ListBoxPortfolios.Items)
         {
             portfoliosToSave.Add((Portfolio)item);
         }
 
-        if(portfoliosToSave.Count==0) { return; }
 
         SavePortfolios?.Invoke(this, portfoliosToSave);
 
