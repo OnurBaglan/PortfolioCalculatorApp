@@ -13,7 +13,7 @@ public interface IAddPortfolioFormView
     event EventHandler SearchStock;
     event EventHandler ResetSelections;
     event EventHandler RemovePurchase;
-    event EventHandler SavePortfolio;
+    event EventHandler AddPortfolio;
     event EventHandler AddPurchase;
     event EventHandler AddPortfolioFormClosed;
 

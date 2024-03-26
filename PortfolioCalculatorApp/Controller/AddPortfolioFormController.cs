@@ -7,7 +7,7 @@ namespace PortfolioCalculatorApp.Controller;
 internal class AddPortfolioFormController
 {
     private readonly IAddPortfolioFormView _addPortfolioFormView;
-    private readonly PortfolioModel _portfolioModel;
+    private readonly StockListLoader _portfolioModel;
     private readonly List<Purchase> _purchases = new();
 
     public static event EventHandler<Portfolio> AddValidPortfolio;
@@ -15,7 +15,7 @@ internal class AddPortfolioFormController
     public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView)
     {
 
-        _portfolioModel = new PortfolioModel();
+        _portfolioModel = new StockListLoader();
 
         _addPortfolioFormView = addPortfolioFormView;
         _addPortfolioFormView.InitializeComboBox += OnInitializeComboBox;
@@ -23,7 +23,7 @@ internal class AddPortfolioFormController
         _addPortfolioFormView.ResetSelections += OnResetSelections;
         _addPortfolioFormView.AddPurchase += OnAddPurchase;
         _addPortfolioFormView.RemovePurchase += OnRemovePurchase;
-        _addPortfolioFormView.SavePortfolio += OnSavePortfolio;
+        _addPortfolioFormView.AddPortfolio += OnAddPortfolio;
         _addPortfolioFormView.AddPortfolioFormClosed += OnFormClosed;
 
     }
@@ -39,7 +39,7 @@ internal class AddPortfolioFormController
 
     }
 
-    private void OnSavePortfolio(object? sender, EventArgs e)
+    private void OnAddPortfolio(object? sender, EventArgs e)
     {
         while (!DoesAddingMakeSense())
         {

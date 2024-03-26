@@ -1,12 +1,12 @@
 ﻿namespace PortfolioCalculatorApp.Model.BusinessModel;
 
 
-internal class PortfolioModel
+internal class StockListLoader
 {
     private readonly string[] _stocks;
     public IEnumerable<string> StockList { get => _stocks; }
 
-    public PortfolioModel()
+    public StockListLoader()
     {
         var data = File.ReadAllLines("stocks.txt");
 

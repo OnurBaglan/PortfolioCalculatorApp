@@ -38,7 +38,7 @@ partial class AddPortfolioForm
         Button_AddPurchase = new Button();
         Button_ResetSelections = new Button();
         Button_DeleteSelectedPurchase = new Button();
-        Button_SavePortfolio = new Button();
+        Button_AddPortfolio = new Button();
         NumericUpDown_Lots = new NumericUpDown();
         TextBox_StockSearch = new TextBox();
         TextBox_PortfolioName = new TextBox();
@@ -121,15 +121,15 @@ partial class AddPortfolioForm
         Button_DeleteSelectedPurchase.UseVisualStyleBackColor = true;
         Button_DeleteSelectedPurchase.Click += Button_DeleteSelectedPurchase_Click;
         // 
-        // Button_SavePortfolio
+        // Button_AddPortfolio
         // 
-        Button_SavePortfolio.Location = new Point(571, 333);
-        Button_SavePortfolio.Name = "Button_SavePortfolio";
-        Button_SavePortfolio.Size = new Size(186, 23);
-        Button_SavePortfolio.TabIndex = 10;
-        Button_SavePortfolio.Text = "Save portfolio";
-        Button_SavePortfolio.UseVisualStyleBackColor = true;
-        Button_SavePortfolio.Click += Button_SavePortfolio_Click;
+        Button_AddPortfolio.Location = new Point(571, 333);
+        Button_AddPortfolio.Name = "Button_AddPortfolio";
+        Button_AddPortfolio.Size = new Size(186, 23);
+        Button_AddPortfolio.TabIndex = 10;
+        Button_AddPortfolio.Text = "Add portfolio";
+        Button_AddPortfolio.UseVisualStyleBackColor = true;
+        Button_AddPortfolio.Click += Button_AddPortfolio_Click;
         // 
         // NumericUpDown_Lots
         // 
@@ -185,7 +185,7 @@ partial class AddPortfolioForm
         Controls.Add(TextBox_PortfolioName);
         Controls.Add(TextBox_StockSearch);
         Controls.Add(NumericUpDown_Lots);
-        Controls.Add(Button_SavePortfolio);
+        Controls.Add(Button_AddPortfolio);
         Controls.Add(Button_DeleteSelectedPurchase);
         Controls.Add(Button_ResetSelections);
         Controls.Add(Button_AddPurchase);
@@ -215,7 +215,7 @@ partial class AddPortfolioForm
 	private Button Button_AddPurchase;
 	private Button Button_ResetSelections;
 	private Button Button_DeleteSelectedPurchase;
-	private Button Button_SavePortfolio;
+	private Button Button_AddPortfolio;
 	private NumericUpDown NumericUpDown_Lots;
     private TextBox TextBox_StockSearch;
     private TextBox TextBox_PortfolioName;
