@@ -32,11 +32,8 @@ public partial class MainAppForm : Form, IMainAppFormView
 
 
         InitializeComponent();
-
-        InitializeApiKeys();
-
         InitializeControllers();
-
+        InitializeApiKeys();
         InitializePortfolioLoad();
 
 
@@ -151,17 +148,6 @@ public partial class MainAppForm : Form, IMainAppFormView
         SavePortfolios?.Invoke(this, portfoliosToSave);
 
     }
-
-
-    private void ListBox_Portfolios_SelectedIndexChanged(object sender, EventArgs e)
-    {
-    }
-
-    private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-    {
-
-    }
-
 
 
     private void Button_ShowPortfolioDetails_Click(object sender, EventArgs e)

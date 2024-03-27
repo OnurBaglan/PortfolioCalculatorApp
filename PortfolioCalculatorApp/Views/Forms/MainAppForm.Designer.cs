@@ -94,7 +94,6 @@ partial class MainAppForm
         ListBox_Portfolios.Name = "ListBox_Portfolios";
         ListBox_Portfolios.Size = new Size(368, 214);
         ListBox_Portfolios.TabIndex = 0;
-        ListBox_Portfolios.SelectedIndexChanged += ListBox_Portfolios_SelectedIndexChanged;
         // 
         // Button_AddNewPortfolio
         // 
@@ -146,7 +145,6 @@ partial class MainAppForm
         dataGridView1.Name = "dataGridView1";
         dataGridView1.Size = new Size(902, 129);
         dataGridView1.TabIndex = 2;
-        dataGridView1.CellContentClick += dataGridView1_CellContentClick;
         // 
         // column1
         // 
