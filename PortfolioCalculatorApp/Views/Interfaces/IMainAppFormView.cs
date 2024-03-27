@@ -20,10 +20,15 @@ public interface IMainAppFormView
 	public Label MainMenuBlockerLabel { get; set; }
 	public Panel MainMenuBlockerPanel { get; set; }
     ListBox ListBoxPortfolios { get; set; }
+    string ApiKey3 { get; set; }
+    string LabelEarnLossRatio { get; set; }
+    string LabelTotalInvested { get; set; }
+    string LabelCurrentValue { get; set; }
 
     public event EventHandler ValidateApiKey;
 	public event EventHandler SaveApiKey;
 	public event EventHandler LoadApiKeys;
     event EventHandler<List<Portfolio>> SavePortfolios;
     event EventHandler<Portfolio> PortfolioSelected;
+    event EventHandler<Portfolio> PortfolioCalculateValuesDemanded;
 }

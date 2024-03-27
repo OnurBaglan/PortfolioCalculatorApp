@@ -35,6 +35,8 @@ partial class MainAppForm
         FixedLabel_PortfolioList = new Label();
         GroupBox_PortfolioDetails = new GroupBox();
         dataGridView1 = new DataGridView();
+        column1 = new DataGridViewTextBoxColumn();
+        column2 = new DataGridViewTextBoxColumn();
         label1 = new Label();
         portfolioBindingSource1 = new BindingSource(components);
         GroupBox_EarnLossInfo = new GroupBox();
@@ -48,6 +50,7 @@ partial class MainAppForm
         ComboBox_SelectedCurrency = new ComboBox();
         TabControl = new TabControl();
         TabPage1 = new TabPage();
+        Button_ShowPortfolioDetails = new Button();
         MainMenuBlockPanel = new Panel();
         MainMenuBlockLabel = new Label();
         Button_SavePortfolios = new Button();
@@ -71,8 +74,6 @@ partial class MainAppForm
         FixedLabel_ApiKey1 = new Label();
         TextBox_ApiKey2 = new TextBox();
         TextBox_ApiKey1 = new TextBox();
-        column1 = new DataGridViewTextBoxColumn();
-        column2 = new DataGridViewTextBoxColumn();
         GroupBox_PortfolioDetails.SuspendLayout();
         ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
         ((System.ComponentModel.ISupportInitialize)portfolioBindingSource1).BeginInit();
@@ -99,7 +100,7 @@ partial class MainAppForm
         // 
         Button_AddNewPortfolio.Location = new Point(989, 256);
         Button_AddNewPortfolio.Name = "Button_AddNewPortfolio";
-        Button_AddNewPortfolio.Size = new Size(75, 68);
+        Button_AddNewPortfolio.Size = new Size(109, 43);
         Button_AddNewPortfolio.TabIndex = 1;
         Button_AddNewPortfolio.Text = "Add New Portfolio";
         Button_AddNewPortfolio.UseVisualStyleBackColor = true;
@@ -107,9 +108,9 @@ partial class MainAppForm
         // 
         // Button_DeleteSelectedPortfolio
         // 
-        Button_DeleteSelectedPortfolio.Location = new Point(1282, 256);
+        Button_DeleteSelectedPortfolio.Location = new Point(1260, 256);
         Button_DeleteSelectedPortfolio.Name = "Button_DeleteSelectedPortfolio";
-        Button_DeleteSelectedPortfolio.Size = new Size(75, 68);
+        Button_DeleteSelectedPortfolio.Size = new Size(99, 42);
         Button_DeleteSelectedPortfolio.TabIndex = 2;
         Button_DeleteSelectedPortfolio.Text = "Delete Selected Portfolio";
         Button_DeleteSelectedPortfolio.UseVisualStyleBackColor = true;
@@ -141,16 +142,26 @@ partial class MainAppForm
         dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
         dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2 });
         dataGridView1.Cursor = Cursors.Hand;
-        dataGridView1.Location = new Point(128, 74);
+        dataGridView1.Location = new Point(25, 37);
         dataGridView1.Name = "dataGridView1";
-        dataGridView1.Size = new Size(712, 129);
+        dataGridView1.Size = new Size(902, 129);
         dataGridView1.TabIndex = 2;
         dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+        // 
+        // column1
+        // 
+        column1.HeaderText = "Name";
+        column1.Name = "column1";
+        // 
+        // column2
+        // 
+        column2.HeaderText = "Surname";
+        column2.Name = "column2";
         // 
         // label1
         // 
         label1.AutoSize = true;
-        label1.Location = new Point(25, 28);
+        label1.Location = new Point(25, 19);
         label1.Name = "label1";
         label1.Size = new Size(113, 15);
         label1.TabIndex = 0;
@@ -263,6 +274,7 @@ partial class MainAppForm
         // TabPage1
         // 
         TabPage1.BackColor = Color.Transparent;
+        TabPage1.Controls.Add(Button_ShowPortfolioDetails);
         TabPage1.Controls.Add(MainMenuBlockPanel);
         TabPage1.Controls.Add(Button_SavePortfolios);
         TabPage1.Controls.Add(statusStrip2);
@@ -278,6 +290,16 @@ partial class MainAppForm
         TabPage1.Size = new Size(1362, 530);
         TabPage1.TabIndex = 0;
         TabPage1.Text = "Main Menu";
+        // 
+        // Button_ShowPortfolioDetails
+        // 
+        Button_ShowPortfolioDetails.Location = new Point(991, 305);
+        Button_ShowPortfolioDetails.Name = "Button_ShowPortfolioDetails";
+        Button_ShowPortfolioDetails.Size = new Size(368, 74);
+        Button_ShowPortfolioDetails.TabIndex = 3;
+        Button_ShowPortfolioDetails.Text = "Show details of selected portfolio";
+        Button_ShowPortfolioDetails.UseVisualStyleBackColor = true;
+        Button_ShowPortfolioDetails.Click += Button_ShowPortfolioDetails_Click;
         // 
         // MainMenuBlockPanel
         // 
@@ -299,9 +321,9 @@ partial class MainAppForm
         // 
         // Button_SavePortfolios
         // 
-        Button_SavePortfolios.Location = new Point(1133, 269);
+        Button_SavePortfolios.Location = new Point(1104, 256);
         Button_SavePortfolios.Name = "Button_SavePortfolios";
-        Button_SavePortfolios.Size = new Size(92, 42);
+        Button_SavePortfolios.Size = new Size(150, 42);
         Button_SavePortfolios.TabIndex = 7;
         Button_SavePortfolios.Text = "Save Portfolios";
         Button_SavePortfolios.UseVisualStyleBackColor = true;
@@ -494,16 +516,6 @@ partial class MainAppForm
         TextBox_ApiKey1.Size = new Size(311, 23);
         TextBox_ApiKey1.TabIndex = 0;
         // 
-        // column1
-        // 
-        column1.HeaderText = "Name";
-        column1.Name = "column1";
-        // 
-        // column2
-        // 
-        column2.HeaderText = "Surname";
-        column2.Name = "column2";
-        // 
         // MainAppForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -584,4 +596,5 @@ partial class MainAppForm
     private BindingSource portfolioBindingSource1;
     private DataGridViewTextBoxColumn column1;
     private DataGridViewTextBoxColumn column2;
+    private Button Button_ShowPortfolioDetails;
 }

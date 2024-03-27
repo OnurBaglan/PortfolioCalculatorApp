@@ -23,6 +23,7 @@ public partial class MainAppForm : Form, IMainAppFormView
     public event EventHandler LoadApiKeys;
     public event EventHandler<List<Portfolio>> SavePortfolios;
     public event EventHandler<Portfolio> PortfolioSelected;
+    public event EventHandler<Portfolio> PortfolioCalculateValuesDemanded;
 
 
     public MainAppForm(IAddPortfolioFormView addPortfolioFormView)
@@ -40,6 +41,8 @@ public partial class MainAppForm : Form, IMainAppFormView
 
 
     }
+
+
 
     private void InitializePortfolioLoad()
     {
@@ -93,6 +96,10 @@ public partial class MainAppForm : Form, IMainAppFormView
     public ListBox ListBoxPortfolios { get => ListBox_Portfolios; set => ListBox_Portfolios = value; }
     public Button ButtonAddNewPortfolio { get => Button_AddNewPortfolio; set => Button_AddNewPortfolio = value; }
     public Button ButtonDeleteSelectedPortfolio { get => Button_DeleteSelectedPortfolio; set => Button_DeleteSelectedPortfolio = value; }
+
+    public string LabelEarnLossRatio { get => Label_EarnLossRatio.Text; set => Label_EarnLossRatio.Text = value; }
+    public string LabelTotalInvested { get => Label_TotalInvested.Text; set => Label_TotalInvested.Text = value; }
+    public string LabelCurrentValue { get => Label_CurrentValue.Text; set => Label_CurrentValue.Text = value; }
 
 
 
@@ -148,22 +155,6 @@ public partial class MainAppForm : Form, IMainAppFormView
 
     private void ListBox_Portfolios_SelectedIndexChanged(object sender, EventArgs e)
     {
-        //var selectedPortfolio = (Portfolio)ListBoxPortfolios.SelectedItems[0];
-
-        //PortfolioSelected?.Invoke(this, selectedPortfolio);
-
-        //DataTable table = new DataTable();
-        //table.Columns.Add("ID", typeof(int));
-        //table.Columns.Add("NAME", typeof(string));
-        //table.Columns.Add("CITY", typeof(string));
-
-        //table.Rows.Add(111, "Devesh", "Ghaziabad");
-        //table.Rows.Add(222, "ROLI", "KANPUR");
-        //table.Rows.Add(102, "ROLI", "MAINPURI");
-        //table.Rows.Add(212, "DEVESH", "KANPUR");
-
-        //dataGridView1.DataSource = table;
-
     }
 
     private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -171,9 +162,31 @@ public partial class MainAppForm : Form, IMainAppFormView
 
     }
 
-    public class Person
+
+
+    private void Button_ShowPortfolioDetails_Click(object sender, EventArgs e)
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        var item = (Portfolio)ListBoxPortfolios.SelectedItem;
+
+        PortfolioCalculateValuesDemanded?.Invoke(this, item);
     }
 }
+
+
+
+
+//var selectedPortfolio = (Portfolio)ListBoxPortfolios.SelectedItems[0];
+
+//PortfolioSelected?.Invoke(this, selectedPortfolio);
+
+//DataTable table = new DataTable();
+//table.Columns.Add("ID", typeof(int));
+//table.Columns.Add("NAME", typeof(string));
+//table.Columns.Add("CITY", typeof(string));
+
+//table.Rows.Add(111, "Devesh", "Ghaziabad");
+//table.Rows.Add(222, "ROLI", "KANPUR");
+//table.Rows.Add(102, "ROLI", "MAINPURI");
+//table.Rows.Add(212, "DEVESH", "KANPUR");
+
+//dataGridView1.DataSource = table;

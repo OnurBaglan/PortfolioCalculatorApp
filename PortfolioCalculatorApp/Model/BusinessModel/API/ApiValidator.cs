@@ -1,4 +1,4 @@
-﻿namespace PortfolioCalculatorApp.Model.BusinessModel;
+﻿namespace PortfolioCalculatorApp.Model.BusinessModel.API;
 
 public class ApiValidator
 {

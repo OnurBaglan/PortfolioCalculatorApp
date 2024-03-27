@@ -1,5 +1,5 @@
 ﻿using PortfolioCalculatorApp.Controller;
-using PortfolioCalculatorApp.Model.BusinessModel;
+using PortfolioCalculatorApp.Model.BusinessModel.API;
 using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Data;
@@ -12,7 +12,8 @@ public class MainAppFormController
     private readonly AddPortfolioFormController _addPortfolioFormController;
 
     private readonly ApiValidator _apiValidatorModel;
-    private readonly PortfolioCalculator _calculatorModel;
+    private readonly Calculator _calculatorModel;
+    private readonly ApiReader _apiReaderModel;
 
     public MainAppFormController(IMainAppFormView mainAppFormView, IAddPortfolioFormView addPortfolioFormView)
     {
@@ -20,16 +21,28 @@ public class MainAppFormController
         _addPortfolioFormView = addPortfolioFormView;
 
         _apiValidatorModel = new ApiValidator();
-        _calculatorModel = new PortfolioCalculator();
+
+        _apiReaderModel = new ApiReader(_mainAppFormView);
+
+        _calculatorModel = new Calculator(_apiReaderModel);
+
 
         _mainAppFormView.ValidateApiKey += OnValidateApiKeyAsync;
         _mainAppFormView.SaveApiKey += OnSaveApiKey;
         _mainAppFormView.LoadApiKeys += OnLoadApiKey;
         _mainAppFormView.SavePortfolios += OnSavePortfolios;
         _mainAppFormView.PortfolioSelected += OnPresentDataInGrid;
+        _mainAppFormView.PortfolioCalculateValuesDemanded += OnCalculate;
 
         AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
 
+    }
+
+    private async void OnCalculate(object? sender, Portfolio e)
+    {
+        _mainAppFormView.LabelTotalInvested = (await _calculatorModel.CalculatePortfolioCost(e, "USD")).ToString();
+        _mainAppFormView.LabelCurrentValue = (await _calculatorModel.CalculatePortfoliWorthToday(e, "USD")).ToString();
+        _mainAppFormView.LabelEarnLossRatio= (await _calculatorModel.CalculatePortfolioEarnLoss(e, "USD")).ToString();
     }
 
     private async void OnPresentDataInGrid(object? sender, Portfolio e)
@@ -51,7 +64,7 @@ public class MainAppFormController
             existingJsonObject = JsonSerializer.Deserialize<List<Portfolio>>(existingJsonText);
         }
 
-      
+
 
         File.Delete("portfolios.json");
 

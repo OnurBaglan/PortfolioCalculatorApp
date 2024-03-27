@@ -1,4 +1,5 @@
 using PortfolioCalculatorApp.Views.Interfaces;
+using System.Text.Json.Nodes;
 
 namespace PortfolioCalculatorApp;
 
@@ -19,5 +20,10 @@ internal static class Program
         IAddPortfolioFormView addPortfolioForm  = new AddPortfolioForm();
 
 		Application.Run(new MainAppForm(addPortfolioForm));
+
+
+		
+
+		
 	}
 }

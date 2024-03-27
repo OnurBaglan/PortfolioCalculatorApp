@@ -10,6 +10,8 @@ public class Purchase
 
     public decimal? PurchaseCost { get; set; }
 
+
+    
     public override string ToString()
     {
         return $"Stock symbol: {StockSymbol}, {Lots} lots, bought on {PurchaseDate.ToString("d")} ";
