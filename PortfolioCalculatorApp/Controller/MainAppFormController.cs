@@ -11,23 +11,34 @@ public class MainAppFormController
     private readonly IAddPortfolioFormView _addPortfolioFormView;
     private readonly AddPortfolioFormController _addPortfolioFormController;
 
-    private readonly ApiValidator _apiModel;
+    private readonly ApiValidator _apiValidatorModel;
+    private readonly PortfolioCalculator _calculatorModel;
 
     public MainAppFormController(IMainAppFormView mainAppFormView, IAddPortfolioFormView addPortfolioFormView)
     {
         _mainAppFormView = mainAppFormView;
         _addPortfolioFormView = addPortfolioFormView;
 
-        _apiModel = new ApiValidator();
+        _apiValidatorModel = new ApiValidator();
+        _calculatorModel = new PortfolioCalculator();
 
         _mainAppFormView.ValidateApiKey += OnValidateApiKeyAsync;
         _mainAppFormView.SaveApiKey += OnSaveApiKey;
         _mainAppFormView.LoadApiKeys += OnLoadApiKey;
         _mainAppFormView.SavePortfolios += OnSavePortfolios;
+        _mainAppFormView.PortfolioSelected += OnPresentDataInGrid;
 
         AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
 
     }
+
+    private async void OnPresentDataInGrid(object? sender, Portfolio e)
+    {
+        //await _calculatorModel.Calculate(e);
+
+
+    }
+
 
     private void OnSavePortfolios(object? sender, List<Portfolio> e)
     {
@@ -82,7 +93,7 @@ public class MainAppFormController
 
         var apiKey = GetApiKeyValue(apiSource);
 
-        _apiModel.SaveApiKey(apiKey, apiSource);
+        _apiValidatorModel.SaveApiKey(apiKey, apiSource);
 
         SetApiKeyStatusLabel(apiSource, "Key is saved");
     }
@@ -94,7 +105,7 @@ public class MainAppFormController
 
         string apiKey = GetApiKeyValue(apiSource);
 
-        var isKeyValid = await _apiModel.IsKeyValid(apiKey, apiSource);
+        var isKeyValid = await _apiValidatorModel.IsKeyValid(apiKey, apiSource);
 
         SetApiKeyStatus(apiSource, isKeyValid);
 

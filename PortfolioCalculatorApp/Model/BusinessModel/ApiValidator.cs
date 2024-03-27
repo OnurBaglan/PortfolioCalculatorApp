@@ -10,7 +10,8 @@ public class ApiValidator
         _urls = new Dictionary<int, string>()
 {
     {1,"https://api.marketdata.app/v1/stocks/candles/D/MSFT/?from=2020-01-01&to=2020-12-31&token={0}" },
-    {2,"https://api.currencybeacon.com/v1/convert?from=USD&to=EUR&api_key={0}" }
+    {2,"https://api.currencybeacon.com/v1/convert?from=USD&to=EUR&api_key={0}" },
+    {3,"https://api.metals.dev/v1/latest?api_key={0}&currency=USD&unit=toz" }
 
 };
     }

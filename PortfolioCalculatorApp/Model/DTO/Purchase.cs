@@ -8,8 +8,6 @@ public class Purchase
 
     public DateTime PurchaseDate { get; set; }
 
-    public string? CurrencySymbol { get; set; }
-
     public decimal? PurchaseCost { get; set; }
 
     public override string ToString()

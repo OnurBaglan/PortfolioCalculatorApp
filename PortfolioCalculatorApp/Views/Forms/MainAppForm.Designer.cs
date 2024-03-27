@@ -28,11 +28,15 @@ partial class MainAppForm
     /// </summary>
     private void InitializeComponent()
     {
+        components = new System.ComponentModel.Container();
         ListBox_Portfolios = new ListBox();
         Button_AddNewPortfolio = new Button();
         Button_DeleteSelectedPortfolio = new Button();
         FixedLabel_PortfolioList = new Label();
         GroupBox_PortfolioDetails = new GroupBox();
+        dataGridView1 = new DataGridView();
+        label1 = new Label();
+        portfolioBindingSource1 = new BindingSource(components);
         GroupBox_EarnLossInfo = new GroupBox();
         Label_CurrentValue = new Label();
         FixedTable_CurrentValue = new Label();
@@ -46,9 +50,15 @@ partial class MainAppForm
         TabPage1 = new TabPage();
         MainMenuBlockPanel = new Panel();
         MainMenuBlockLabel = new Label();
+        Button_SavePortfolios = new Button();
         statusStrip2 = new StatusStrip();
         ToolStripStatusLabel_MainMenu = new ToolStripStatusLabel();
         TabPage2 = new TabPage();
+        Label_StatusApiKey3 = new Label();
+        Button_SaveApiKey3 = new Button();
+        Button_ValidateApiKey3 = new Button();
+        FixedLabel_ApiKey3 = new Label();
+        TextBox_ApiKey3 = new TextBox();
         Button_SaveApiKey2 = new Button();
         Button_SaveApiKey1 = new Button();
         Label_StatusApiKey2 = new Label();
@@ -61,7 +71,11 @@ partial class MainAppForm
         FixedLabel_ApiKey1 = new Label();
         TextBox_ApiKey2 = new TextBox();
         TextBox_ApiKey1 = new TextBox();
-        Button_SavePortfolios = new Button();
+        column1 = new DataGridViewTextBoxColumn();
+        column2 = new DataGridViewTextBoxColumn();
+        GroupBox_PortfolioDetails.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)portfolioBindingSource1).BeginInit();
         GroupBox_EarnLossInfo.SuspendLayout();
         TabControl.SuspendLayout();
         TabPage1.SuspendLayout();
@@ -79,6 +93,7 @@ partial class MainAppForm
         ListBox_Portfolios.Name = "ListBox_Portfolios";
         ListBox_Portfolios.Size = new Size(368, 214);
         ListBox_Portfolios.TabIndex = 0;
+        ListBox_Portfolios.SelectedIndexChanged += ListBox_Portfolios_SelectedIndexChanged;
         // 
         // Button_AddNewPortfolio
         // 
@@ -111,12 +126,39 @@ partial class MainAppForm
         // 
         // GroupBox_PortfolioDetails
         // 
+        GroupBox_PortfolioDetails.Controls.Add(dataGridView1);
+        GroupBox_PortfolioDetails.Controls.Add(label1);
         GroupBox_PortfolioDetails.Location = new Point(8, 31);
         GroupBox_PortfolioDetails.Name = "GroupBox_PortfolioDetails";
         GroupBox_PortfolioDetails.Size = new Size(952, 219);
         GroupBox_PortfolioDetails.TabIndex = 4;
         GroupBox_PortfolioDetails.TabStop = false;
         GroupBox_PortfolioDetails.Text = "Portfolio Details";
+        // 
+        // dataGridView1
+        // 
+        dataGridView1.BackgroundColor = SystemColors.ButtonFace;
+        dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2 });
+        dataGridView1.Cursor = Cursors.Hand;
+        dataGridView1.Location = new Point(128, 74);
+        dataGridView1.Name = "dataGridView1";
+        dataGridView1.Size = new Size(712, 129);
+        dataGridView1.TabIndex = 2;
+        dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new Point(25, 28);
+        label1.Name = "label1";
+        label1.Size = new Size(113, 15);
+        label1.TabIndex = 0;
+        label1.Text = "Name of portfolio - ";
+        // 
+        // portfolioBindingSource1
+        // 
+        portfolioBindingSource1.DataSource = typeof(Model.DTO.Portfolio);
         // 
         // GroupBox_EarnLossInfo
         // 
@@ -221,8 +263,8 @@ partial class MainAppForm
         // TabPage1
         // 
         TabPage1.BackColor = Color.Transparent;
-        TabPage1.Controls.Add(Button_SavePortfolios);
         TabPage1.Controls.Add(MainMenuBlockPanel);
+        TabPage1.Controls.Add(Button_SavePortfolios);
         TabPage1.Controls.Add(statusStrip2);
         TabPage1.Controls.Add(GroupBox_EarnLossInfo);
         TabPage1.Controls.Add(FixedLabel_PortfolioList);
@@ -240,7 +282,7 @@ partial class MainAppForm
         // MainMenuBlockPanel
         // 
         MainMenuBlockPanel.Controls.Add(MainMenuBlockLabel);
-        MainMenuBlockPanel.Location = new Point(8, 483);
+        MainMenuBlockPanel.Location = new Point(0, 505);
         MainMenuBlockPanel.Name = "MainMenuBlockPanel";
         MainMenuBlockPanel.Size = new Size(1362, 507);
         MainMenuBlockPanel.TabIndex = 0;
@@ -254,6 +296,16 @@ partial class MainAppForm
         MainMenuBlockLabel.Size = new Size(1066, 65);
         MainMenuBlockLabel.TabIndex = 0;
         MainMenuBlockLabel.Text = "Please enter valid api keys to use the program";
+        // 
+        // Button_SavePortfolios
+        // 
+        Button_SavePortfolios.Location = new Point(1133, 269);
+        Button_SavePortfolios.Name = "Button_SavePortfolios";
+        Button_SavePortfolios.Size = new Size(92, 42);
+        Button_SavePortfolios.TabIndex = 7;
+        Button_SavePortfolios.Text = "Save Portfolios";
+        Button_SavePortfolios.UseVisualStyleBackColor = true;
+        Button_SavePortfolios.Click += Button_SavePortfolios_Click;
         // 
         // statusStrip2
         // 
@@ -272,6 +324,11 @@ partial class MainAppForm
         // 
         // TabPage2
         // 
+        TabPage2.Controls.Add(Label_StatusApiKey3);
+        TabPage2.Controls.Add(Button_SaveApiKey3);
+        TabPage2.Controls.Add(Button_ValidateApiKey3);
+        TabPage2.Controls.Add(FixedLabel_ApiKey3);
+        TabPage2.Controls.Add(TextBox_ApiKey3);
         TabPage2.Controls.Add(Button_SaveApiKey2);
         TabPage2.Controls.Add(Button_SaveApiKey1);
         TabPage2.Controls.Add(Label_StatusApiKey2);
@@ -290,6 +347,50 @@ partial class MainAppForm
         TabPage2.TabIndex = 1;
         TabPage2.Text = "API Key";
         TabPage2.UseVisualStyleBackColor = true;
+        // 
+        // Label_StatusApiKey3
+        // 
+        Label_StatusApiKey3.AutoSize = true;
+        Label_StatusApiKey3.Location = new Point(757, 129);
+        Label_StatusApiKey3.Name = "Label_StatusApiKey3";
+        Label_StatusApiKey3.Size = new Size(0, 15);
+        Label_StatusApiKey3.TabIndex = 15;
+        // 
+        // Button_SaveApiKey3
+        // 
+        Button_SaveApiKey3.Location = new Point(643, 128);
+        Button_SaveApiKey3.Name = "Button_SaveApiKey3";
+        Button_SaveApiKey3.Size = new Size(75, 23);
+        Button_SaveApiKey3.TabIndex = 14;
+        Button_SaveApiKey3.Text = "Save";
+        Button_SaveApiKey3.UseVisualStyleBackColor = true;
+        Button_SaveApiKey3.Click += Button_SaveApiKey_Click;
+        // 
+        // Button_ValidateApiKey3
+        // 
+        Button_ValidateApiKey3.Location = new Point(495, 128);
+        Button_ValidateApiKey3.Name = "Button_ValidateApiKey3";
+        Button_ValidateApiKey3.Size = new Size(132, 23);
+        Button_ValidateApiKey3.TabIndex = 13;
+        Button_ValidateApiKey3.Text = "Validate";
+        Button_ValidateApiKey3.UseVisualStyleBackColor = true;
+        Button_ValidateApiKey3.Click += Button_ValidateApiKey_Click;
+        // 
+        // FixedLabel_ApiKey3
+        // 
+        FixedLabel_ApiKey3.AutoSize = true;
+        FixedLabel_ApiKey3.Location = new Point(19, 132);
+        FixedLabel_ApiKey3.Name = "FixedLabel_ApiKey3";
+        FixedLabel_ApiKey3.Size = new Size(105, 15);
+        FixedLabel_ApiKey3.TabIndex = 12;
+        FixedLabel_ApiKey3.Text = "MetalsDev API Key";
+        // 
+        // TextBox_ApiKey3
+        // 
+        TextBox_ApiKey3.Location = new Point(168, 129);
+        TextBox_ApiKey3.Name = "TextBox_ApiKey3";
+        TextBox_ApiKey3.Size = new Size(311, 23);
+        TextBox_ApiKey3.TabIndex = 11;
         // 
         // Button_SaveApiKey2
         // 
@@ -393,15 +494,15 @@ partial class MainAppForm
         TextBox_ApiKey1.Size = new Size(311, 23);
         TextBox_ApiKey1.TabIndex = 0;
         // 
-        // Button_SavePortfolios
+        // column1
         // 
-        Button_SavePortfolios.Location = new Point(1133, 269);
-        Button_SavePortfolios.Name = "Button_SavePortfolios";
-        Button_SavePortfolios.Size = new Size(92, 42);
-        Button_SavePortfolios.TabIndex = 7;
-        Button_SavePortfolios.Text = "Save Portfolios";
-        Button_SavePortfolios.UseVisualStyleBackColor = true;
-        Button_SavePortfolios.Click += Button_SavePortfolios_Click;
+        column1.HeaderText = "Name";
+        column1.Name = "column1";
+        // 
+        // column2
+        // 
+        column2.HeaderText = "Surname";
+        column2.Name = "column2";
         // 
         // MainAppForm
         // 
@@ -416,6 +517,10 @@ partial class MainAppForm
         Name = "MainAppForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Porftolio Calculator App";
+        GroupBox_PortfolioDetails.ResumeLayout(false);
+        GroupBox_PortfolioDetails.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+        ((System.ComponentModel.ISupportInitialize)portfolioBindingSource1).EndInit();
         GroupBox_EarnLossInfo.ResumeLayout(false);
         GroupBox_EarnLossInfo.PerformLayout();
         TabControl.ResumeLayout(false);
@@ -469,4 +574,14 @@ partial class MainAppForm
 	private Panel MainMenuBlockPanel;
 	private Label MainMenuBlockLabel;
     private Button Button_SavePortfolios;
+    private Button Button_SaveApiKey3;
+    private Button Button_ValidateApiKey3;
+    private Label FixedLabel_ApiKey3;
+    private TextBox TextBox_ApiKey3;
+    private Label Label_StatusApiKey3;
+    private Label label1;
+    private DataGridView dataGridView1;
+    private BindingSource portfolioBindingSource1;
+    private DataGridViewTextBoxColumn column1;
+    private DataGridViewTextBoxColumn column2;
 }

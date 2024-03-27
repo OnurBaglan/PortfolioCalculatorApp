@@ -25,4 +25,5 @@ public interface IMainAppFormView
 	public event EventHandler SaveApiKey;
 	public event EventHandler LoadApiKeys;
     event EventHandler<List<Portfolio>> SavePortfolios;
+    event EventHandler<Portfolio> PortfolioSelected;
 }
