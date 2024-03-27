@@ -28,11 +28,15 @@ partial class MainAppForm
     /// </summary>
     private void InitializeComponent()
     {
+        components = new System.ComponentModel.Container();
         ListBox_Portfolios = new ListBox();
         Button_AddNewPortfolio = new Button();
         Button_DeleteSelectedPortfolio = new Button();
         FixedLabel_PortfolioList = new Label();
         GroupBox_PortfolioDetails = new GroupBox();
+        dataGridView1 = new DataGridView();
+        label1 = new Label();
+        portfolioBindingSource1 = new BindingSource(components);
         GroupBox_EarnLossInfo = new GroupBox();
         Label_CurrentValue = new Label();
         FixedTable_CurrentValue = new Label();
@@ -67,6 +71,11 @@ partial class MainAppForm
         FixedLabel_ApiKey1 = new Label();
         TextBox_ApiKey2 = new TextBox();
         TextBox_ApiKey1 = new TextBox();
+        column1 = new DataGridViewTextBoxColumn();
+        column2 = new DataGridViewTextBoxColumn();
+        GroupBox_PortfolioDetails.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+        ((System.ComponentModel.ISupportInitialize)portfolioBindingSource1).BeginInit();
         GroupBox_EarnLossInfo.SuspendLayout();
         TabControl.SuspendLayout();
         TabPage1.SuspendLayout();
@@ -84,6 +93,7 @@ partial class MainAppForm
         ListBox_Portfolios.Name = "ListBox_Portfolios";
         ListBox_Portfolios.Size = new Size(368, 214);
         ListBox_Portfolios.TabIndex = 0;
+        ListBox_Portfolios.SelectedIndexChanged += ListBox_Portfolios_SelectedIndexChanged;
         // 
         // Button_AddNewPortfolio
         // 
@@ -116,12 +126,39 @@ partial class MainAppForm
         // 
         // GroupBox_PortfolioDetails
         // 
+        GroupBox_PortfolioDetails.Controls.Add(dataGridView1);
+        GroupBox_PortfolioDetails.Controls.Add(label1);
         GroupBox_PortfolioDetails.Location = new Point(8, 31);
         GroupBox_PortfolioDetails.Name = "GroupBox_PortfolioDetails";
         GroupBox_PortfolioDetails.Size = new Size(952, 219);
         GroupBox_PortfolioDetails.TabIndex = 4;
         GroupBox_PortfolioDetails.TabStop = false;
         GroupBox_PortfolioDetails.Text = "Portfolio Details";
+        // 
+        // dataGridView1
+        // 
+        dataGridView1.BackgroundColor = SystemColors.ButtonFace;
+        dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2 });
+        dataGridView1.Cursor = Cursors.Hand;
+        dataGridView1.Location = new Point(128, 74);
+        dataGridView1.Name = "dataGridView1";
+        dataGridView1.Size = new Size(712, 129);
+        dataGridView1.TabIndex = 2;
+        dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+        // 
+        // label1
+        // 
+        label1.AutoSize = true;
+        label1.Location = new Point(25, 28);
+        label1.Name = "label1";
+        label1.Size = new Size(113, 15);
+        label1.TabIndex = 0;
+        label1.Text = "Name of portfolio - ";
+        // 
+        // portfolioBindingSource1
+        // 
+        portfolioBindingSource1.DataSource = typeof(Model.DTO.Portfolio);
         // 
         // GroupBox_EarnLossInfo
         // 
@@ -310,7 +347,6 @@ partial class MainAppForm
         TabPage2.TabIndex = 1;
         TabPage2.Text = "API Key";
         TabPage2.UseVisualStyleBackColor = true;
-        TabPage2.Click += TabPage2_Click;
         // 
         // Label_StatusApiKey3
         // 
@@ -355,7 +391,6 @@ partial class MainAppForm
         TextBox_ApiKey3.Name = "TextBox_ApiKey3";
         TextBox_ApiKey3.Size = new Size(311, 23);
         TextBox_ApiKey3.TabIndex = 11;
-        TextBox_ApiKey3.TextChanged += TextBox_ApiKey3_TextChanged;
         // 
         // Button_SaveApiKey2
         // 
@@ -459,6 +494,16 @@ partial class MainAppForm
         TextBox_ApiKey1.Size = new Size(311, 23);
         TextBox_ApiKey1.TabIndex = 0;
         // 
+        // column1
+        // 
+        column1.HeaderText = "Name";
+        column1.Name = "column1";
+        // 
+        // column2
+        // 
+        column2.HeaderText = "Surname";
+        column2.Name = "column2";
+        // 
         // MainAppForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
@@ -472,6 +517,10 @@ partial class MainAppForm
         Name = "MainAppForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Porftolio Calculator App";
+        GroupBox_PortfolioDetails.ResumeLayout(false);
+        GroupBox_PortfolioDetails.PerformLayout();
+        ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+        ((System.ComponentModel.ISupportInitialize)portfolioBindingSource1).EndInit();
         GroupBox_EarnLossInfo.ResumeLayout(false);
         GroupBox_EarnLossInfo.PerformLayout();
         TabControl.ResumeLayout(false);
@@ -530,4 +579,9 @@ partial class MainAppForm
     private Label FixedLabel_ApiKey3;
     private TextBox TextBox_ApiKey3;
     private Label Label_StatusApiKey3;
+    private Label label1;
+    private DataGridView dataGridView1;
+    private BindingSource portfolioBindingSource1;
+    private DataGridViewTextBoxColumn column1;
+    private DataGridViewTextBoxColumn column2;
 }
