@@ -1,12 +1,6 @@
-﻿using PortfolioCalculatorApp.Model.DTO;
-using PortfolioCalculatorApp.Views.Interfaces;
-using System.Net.Http.Json;
-using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿namespace ExternalDataProvider.API;
 
-namespace PortfolioCalculatorApp.Model.BusinessModel.API;
-
-public class ApiReader
+internal class ApiReader
 {
     private readonly Dictionary<int, string> _urls;
     public ApiReader()
@@ -28,22 +22,38 @@ public class ApiReader
         string? currency = request.Currency;
         ApiSources source = request.ApiSource;
 
-        
+
         using HttpClient client = new HttpClient();
         {
             if (source == ApiSources.MarketDataApp)
             {
                 var response = await client.GetAsync
-                    (string.Format(_urls[(int)source], stockSymbol, date, Environment.GetEnvironmentVariable("1")));
+                    (string.Format(_urls[(int)source], stockSymbol, date, Environment.GetEnvironmentVariable(source.ToString())));
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                return result;
             }
             if (source == ApiSources.CurrencyBeacon)
             {
                 var response = await client.GetAsync
-                    (string.Format(_urls[(int)source], stockSymbol, date, Environment.GetEnvironmentVariable("1")));
+                    (string.Format(_urls[(int)source], date, Environment.GetEnvironmentVariable(source.ToString())));
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                return result;
+            }
+            if (source == ApiSources.MetalDev)
+            {
+                var response = await client.GetAsync
+                    (string.Format(_urls[(int)source], date, Environment.GetEnvironmentVariable(source.ToString())));
+                response.EnsureSuccessStatusCode();
+                var result = await response.Content.ReadAsStringAsync();
+                return result;
+
             }
 
         }
 
+        return string.Empty;
 
 
 

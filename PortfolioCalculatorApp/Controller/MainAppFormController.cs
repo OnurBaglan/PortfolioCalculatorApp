@@ -1,77 +1,95 @@
-﻿using PortfolioCalculatorApp.Controller;
+﻿using ExternalDataProvider;
 using PortfolioCalculatorApp.Model.BusinessModel.API;
 using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Data;
 using System.Text.Json;
+using System.Windows.Forms;
+
+namespace PortfolioCalculatorApp.Controller;
 
 public class MainAppFormController
 {
     private readonly IMainAppFormView _mainAppFormView;
     private readonly IAddPortfolioFormView _addPortfolioFormView;
-    private readonly AddPortfolioFormController _addPortfolioFormController;
+    private readonly IApiValidator _apiValidatorModel;
+    private readonly ICalculator _calculatorModel;
 
-    private readonly ApiValidator _apiValidatorModel;
-    private readonly Calculator _calculatorModel;
-    private readonly ApiReader _apiReaderModel;
+    private readonly string PortfoliosPath = "portfolios.json";
 
-    public MainAppFormController(IMainAppFormView mainAppFormView, IAddPortfolioFormView addPortfolioFormView)
+    public MainAppFormController(
+        IMainAppFormView mainAppFormView,
+        IAddPortfolioFormView addPortfolioFormView,
+        IApiValidator apiValidatorModel,
+        ICalculator calculatorModel)
     {
         _mainAppFormView = mainAppFormView;
         _addPortfolioFormView = addPortfolioFormView;
-
-        _apiValidatorModel = new ApiValidator();
-
-        _apiReaderModel = new ApiReader(_mainAppFormView);
-
-        _calculatorModel = new Calculator(_apiReaderModel);
+        _apiValidatorModel = apiValidatorModel;
+        _calculatorModel = calculatorModel;
 
 
         _mainAppFormView.ValidateApiKey += OnValidateApiKeyAsync;
         _mainAppFormView.SaveApiKey += OnSaveApiKey;
         _mainAppFormView.LoadApiKeys += OnLoadApiKey;
         _mainAppFormView.SavePortfolios += OnSavePortfolios;
-        _mainAppFormView.PortfolioSelected += OnPresentDataInGrid;
-        _mainAppFormView.PortfolioCalculateValuesDemanded += OnCalculate;
-
+        _mainAppFormView.LoadSavedPortfolios += OnLoadPortfolios;
+        _mainAppFormView.OpenAddPortfolioForm += OnOpenAddPortfolioForm;
+        _mainAppFormView.DeleteSelectedItem += OnDeleteSelectedItem;
         AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
 
-    }
-
-    private async void OnCalculate(object? sender, Portfolio e)
-    {
-        _mainAppFormView.LabelTotalInvested = (await _calculatorModel.CalculatePortfolioCost(e, "USD")).ToString();
-        _mainAppFormView.LabelCurrentValue = (await _calculatorModel.CalculatePortfoliWorthToday(e, "USD")).ToString();
-        _mainAppFormView.LabelEarnLossRatio= (await _calculatorModel.CalculatePortfolioEarnLoss(e, "USD")).ToString();
-    }
-
-    private async void OnPresentDataInGrid(object? sender, Portfolio e)
-    {
-        //await _calculatorModel.Calculate(e);
-
 
     }
 
-
-    private void OnSavePortfolios(object? sender, List<Portfolio> e)
+    private void OnDeleteSelectedItem(object? sender, ListBox listBox)
     {
-        // check if file exist, if so, read it
-        string existingJsonText = string.Empty;
-        List<Portfolio> existingJsonObject = new List<Portfolio>();
-        if (File.Exists("portfolios.json"))
+
+        
+        var itemToDelete = listBox.SelectedItem;
+
+        if (itemToDelete == null) return;
+
+        listBox.Items.Remove(itemToDelete);
+    }
+
+    private void OnOpenAddPortfolioForm(object? sender, EventArgs e)
+    {
+        _addPortfolioFormView.ShowDialogWrapper();
+        
+    }
+
+    private void OnLoadPortfolios(object? sender, EventArgs e)
+    {
+        if (File.Exists(PortfoliosPath))
         {
-            existingJsonText = File.ReadAllText("portfolios.json");
-            existingJsonObject = JsonSerializer.Deserialize<List<Portfolio>>(existingJsonText);
+            var data = File.ReadAllText(PortfoliosPath);
+            var collection = JsonSerializer.Deserialize<List<Portfolio>>(data);
+
+            if (collection is not null)
+            {
+                var result = collection.Select(x => (object)x).ToArray();
+                _mainAppFormView.ListBoxPortfolios.Items.AddRange(result);
+
+            }
+
+
+
         }
+    }
 
 
+    private void OnSavePortfolios(object? sender, ListBox listBox)
+    {
+        List<Portfolio> portfoliosToSave = new();
 
-        File.Delete("portfolios.json");
+        foreach (var item in listBox.Items)
+        {
+            portfoliosToSave.Add((Portfolio)item);
+        }
+               
+        var newJsonText = JsonSerializer.Serialize(portfoliosToSave);
 
-        var newJsonText = JsonSerializer.Serialize(e);
-
-        File.WriteAllText("portfolios.json", newJsonText);
-
+        File.WriteAllText(PortfoliosPath, newJsonText);
 
     }
 
@@ -96,6 +114,12 @@ public class MainAppFormController
             var apiKey2 = File.ReadAllText("apiKey2.txt");
             _mainAppFormView.ApiKey2 = apiKey2;
         }
+        if (File.Exists("apiKey3.txt"))
+        {
+            var apiKey3 = File.ReadAllText("apiKey3.txt");
+            _mainAppFormView.ApiKey3 = apiKey3;
+        }
+
 
 
     }
@@ -118,7 +142,7 @@ public class MainAppFormController
 
         string apiKey = GetApiKeyValue(apiSource);
 
-        var isKeyValid = await _apiValidatorModel.IsKeyValid(apiKey, apiSource);
+        var isKeyValid = await _apiValidatorModel.IsApiKeyValid(apiKey, apiSource);
 
         SetApiKeyStatus(apiSource, isKeyValid);
 
@@ -128,11 +152,21 @@ public class MainAppFormController
 
         SetMainMenuBlockerStatus();
 
+        SetEnvironmentVariable(apiSource, apiKey, isKeyValid);
+
+    }
+
+    private static void SetEnvironmentVariable(ApiSources apiSource, string apiKey, bool isKeyValid)
+    {
+        if (isKeyValid)
+        {
+            Environment.SetEnvironmentVariable(apiSource.ToString(), apiKey);
+        }
     }
 
     private void SetMainMenuBlockerStatus()
     {
-        if (_mainAppFormView.IsApiKey1Valid && _mainAppFormView.IsApiKey2Valid)
+        if (_mainAppFormView.IsApiKey1Valid && _mainAppFormView.IsApiKey2Valid && _mainAppFormView.IsApiKey3Valid)
         {
             _mainAppFormView.MainMenuBlockerLabel.Visible = false;
             _mainAppFormView.MainMenuBlockerPanel.Visible = false;
@@ -149,7 +183,7 @@ public class MainAppFormController
 
     private void SetApiKeyStatusStrip()
     {
-        if (_mainAppFormView.IsApiKey1Valid && _mainAppFormView.IsApiKey2Valid)
+        if (_mainAppFormView.IsApiKey1Valid && _mainAppFormView.IsApiKey2Valid && _mainAppFormView.IsApiKey3Valid)
         {
             _mainAppFormView.ApiKeyStatusStrip = "Api keys are valid.";
             _mainAppFormView.MainMenuStatusStrip = _mainAppFormView.ApiKeyStatusStrip;

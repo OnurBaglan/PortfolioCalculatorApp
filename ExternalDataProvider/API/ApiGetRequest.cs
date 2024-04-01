@@ -1,8 +1,6 @@
-﻿
+﻿namespace ExternalDataProvider.API;
 
-namespace PortfolioCalculatorApp.Model.BusinessModel.API;
-
-internal class ApiGetRequest
+public class ApiGetRequest
 {
     public ApiSources ApiSource { get; init; }
 
@@ -10,7 +8,7 @@ internal class ApiGetRequest
 
     private readonly DateTime _date;
 
-    public string DateInFormat { get; init; }    
+    public string DateInFormat { get; init; }
 
     public string? Currency { get; init; }
 

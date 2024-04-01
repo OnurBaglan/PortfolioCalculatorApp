@@ -4,7 +4,7 @@ using PortfolioCalculatorApp.Views.Interfaces;
 
 namespace PortfolioCalculatorApp.Controller;
 
-internal class AddPortfolioFormController
+public class AddPortfolioFormController
 {
     private readonly IAddPortfolioFormView _addPortfolioFormView;
     private readonly StockListLoader _portfolioModel;
@@ -25,7 +25,6 @@ internal class AddPortfolioFormController
         _addPortfolioFormView.RemovePurchase += OnRemovePurchase;
         _addPortfolioFormView.AddPortfolio += OnAddPortfolio;
         _addPortfolioFormView.AddPortfolioFormClosed += OnFormClosed;
-
     }
 
     private void OnFormClosed(object? sender, EventArgs e)
@@ -91,7 +90,7 @@ and a valid weekday date");
 
         var newPurchase = new Purchase()
         {
-            StockSymbol = (string)_addPortfolioFormView.ComboBoxStockSymbols.SelectedItem,
+            StockSymbol = ConvertStockSymbolRawToSymbol(_addPortfolioFormView.ComboBoxStockSymbols.SelectedItem),
             Lots = (int)_addPortfolioFormView.NumericUpDownLots.Value,
             PurchaseDate = _addPortfolioFormView.DateTimePickerPurchaseDate.Value
 
@@ -101,6 +100,15 @@ and a valid weekday date");
 
         _addPortfolioFormView.ListBoxAddedPurchases.Items.Add(newPurchase);
 
+    }
+
+    private string ConvertStockSymbolRawToSymbol(object? selectedItem)
+    {
+        var rawText = (string)selectedItem;
+
+        var splitText = rawText.Split("----");
+
+        return splitText[0];
     }
 
     private bool IsPurchaseSelectionsValid()

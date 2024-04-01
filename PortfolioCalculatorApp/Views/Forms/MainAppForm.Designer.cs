@@ -297,7 +297,6 @@ partial class MainAppForm
         Button_ShowPortfolioDetails.TabIndex = 3;
         Button_ShowPortfolioDetails.Text = "Show details of selected portfolio";
         Button_ShowPortfolioDetails.UseVisualStyleBackColor = true;
-        Button_ShowPortfolioDetails.Click += Button_ShowPortfolioDetails_Click;
         // 
         // MainMenuBlockPanel
         // 
@@ -527,6 +526,7 @@ partial class MainAppForm
         Name = "MainAppForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Porftolio Calculator App";
+        Load += MainAppForm_Load;
         GroupBox_PortfolioDetails.ResumeLayout(false);
         GroupBox_PortfolioDetails.PerformLayout();
         ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();

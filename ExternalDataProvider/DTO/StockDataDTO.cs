@@ -1,7 +1,6 @@
-﻿
-namespace PortfolioCalculatorApp.Model.DTO;
+﻿namespace ExternalDataProvider.DTO;
 
-public class StockCandle
+public class StockDataDTO
 {
     public string s { get; set; }
     public List<int> t { get; set; }
