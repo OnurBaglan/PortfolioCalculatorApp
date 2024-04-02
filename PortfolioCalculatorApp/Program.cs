@@ -1,9 +1,10 @@
 using ExternalDataProvider;
+using PortfolioCalculatorApp.BusinessLogic;
+using PortfolioCalculatorApp.BusinessModel;
+using PortfolioCalculatorApp.BusinessModel.API;
 using PortfolioCalculatorApp.Controller;
-using PortfolioCalculatorApp.Model.BusinessModel;
-using PortfolioCalculatorApp.Model.BusinessModel.API;
-using PortfolioCalculatorApp.Views.Interfaces;
-using System.Text.Json.Nodes;
+
+
 
 namespace PortfolioCalculatorApp;
 

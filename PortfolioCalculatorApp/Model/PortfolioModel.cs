@@ -1,11 +1,11 @@
 ﻿
 
-namespace PortfolioCalculatorApp.Model.DTO;
+namespace PortfolioCalculatorApp.Model;
 
-public class Portfolio
+public class PortfolioModel
 {
     public string Name { get; set; }
-    public List<Purchase> Purchases { get; set; }
+    public List<PurchaseModel> Purchases { get; set; }
 
     public decimal? PortfolioCost {  get; set; }
 

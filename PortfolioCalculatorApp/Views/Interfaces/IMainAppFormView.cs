@@ -1,5 +1,4 @@
-﻿using PortfolioCalculatorApp.Model.DTO;
-using System.Windows.Forms;
+﻿using PortfolioCalculatorApp.Model;
 
 namespace PortfolioCalculatorApp.Views.Interfaces;
 
@@ -30,8 +29,8 @@ public interface IMainAppFormView
 	public event EventHandler SaveApiKey;
 	public event EventHandler LoadApiKeys;
     event EventHandler<ListBox> SavePortfolios;
-    event EventHandler<Portfolio> PortfolioSelected;
     event EventHandler LoadSavedPortfolios;
+    event EventHandler<PortfolioModel> PortfolioSelected;
     event EventHandler OpenAddPortfolioForm;
     event EventHandler<ListBox> DeleteSelectedItem;
 }

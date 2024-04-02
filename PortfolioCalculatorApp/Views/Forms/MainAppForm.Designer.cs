@@ -167,7 +167,7 @@ partial class MainAppForm
         // 
         // portfolioBindingSource1
         // 
-        portfolioBindingSource1.DataSource = typeof(Model.DTO.Portfolio);
+        portfolioBindingSource1.DataSource = typeof(Model.PortfolioModel);
         // 
         // GroupBox_EarnLossInfo
         // 

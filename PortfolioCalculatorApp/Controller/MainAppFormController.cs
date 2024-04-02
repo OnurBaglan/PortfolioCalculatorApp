@@ -1,10 +1,8 @@
-﻿using ExternalDataProvider;
-using PortfolioCalculatorApp.Model.BusinessModel.API;
-using PortfolioCalculatorApp.Model.DTO;
+﻿using PortfolioCalculatorApp.BusinessModel.API;
+using PortfolioCalculatorApp.Model;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Data;
 using System.Text.Json;
-using System.Windows.Forms;
 
 namespace PortfolioCalculatorApp.Controller;
 
@@ -63,7 +61,7 @@ public class MainAppFormController
         if (File.Exists(PortfoliosPath))
         {
             var data = File.ReadAllText(PortfoliosPath);
-            var collection = JsonSerializer.Deserialize<List<Portfolio>>(data);
+            var collection = JsonSerializer.Deserialize<List<PortfolioModel>>(data);
 
             if (collection is not null)
             {
@@ -80,11 +78,11 @@ public class MainAppFormController
 
     private void OnSavePortfolios(object? sender, ListBox listBox)
     {
-        List<Portfolio> portfoliosToSave = new();
+        List<PortfolioModel> portfoliosToSave = new();
 
         foreach (var item in listBox.Items)
         {
-            portfoliosToSave.Add((Portfolio)item);
+            portfoliosToSave.Add((PortfolioModel)item);
         }
                
         var newJsonText = JsonSerializer.Serialize(portfoliosToSave);
@@ -95,7 +93,7 @@ public class MainAppFormController
 
 
 
-    private void OnShowPortfolioInMainList(object? sender, Portfolio e)
+    private void OnShowPortfolioInMainList(object? sender, PortfolioModel e)
     {
         _mainAppFormView.ListBoxPortfolios.Items.Add(e);
 

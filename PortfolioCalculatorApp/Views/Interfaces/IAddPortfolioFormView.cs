@@ -1,4 +1,6 @@
 ﻿
+using PortfolioCalculatorApp.Model;
+
 namespace PortfolioCalculatorApp.Views.Interfaces;
 
 public interface IAddPortfolioFormView
@@ -14,9 +16,9 @@ public interface IAddPortfolioFormView
     event EventHandler ResetSelections;
     event EventHandler RemovePurchase;
     event EventHandler AddPortfolio;
-    event EventHandler AddPurchase;
     event EventHandler AddPortfolioFormClosed;
+	event EventHandler<PurchaseModel> AddPurchase;
 
-    public void ShowDialogWrapper();
+	public void ShowDialogWrapper();
     void CloseWrapperWithMessage(string message);
 }

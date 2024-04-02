@@ -1,13 +1,7 @@
 
 
-using PortfolioCalculatorApp.Controller;
-using PortfolioCalculatorApp.Model.DTO;
-using PortfolioCalculatorApp.Model.BusinessModel;
 using PortfolioCalculatorApp.Views.Interfaces;
-using System.Security.Policy;
-using System.Text.Json;
-using System.Data;
-
+using PortfolioCalculatorApp.Model;
 
 namespace PortfolioCalculatorApp;
 
@@ -37,7 +31,7 @@ public partial class MainAppForm : Form, IMainAppFormView
     public event EventHandler SaveApiKey;
     public event EventHandler LoadApiKeys;
     public event EventHandler<ListBox> SavePortfolios;
-    public event EventHandler<Portfolio> PortfolioSelected;
+    public event EventHandler<PortfolioModel> PortfolioSelected;
     public event EventHandler LoadSavedPortfolios;
     public event EventHandler OpenAddPortfolioForm;
     public event EventHandler<ListBox> DeleteSelectedItem;
@@ -52,7 +46,9 @@ public partial class MainAppForm : Form, IMainAppFormView
 
     }
 
-    private void MainAppForm_Load(object sender, EventArgs e)
+
+
+	private void MainAppForm_Load(object sender, EventArgs e)
     {
         LoadSavedPortfolios?.Invoke(this, EventArgs.Empty);
         LoadApiKeys?.Invoke(this, EventArgs.Empty);

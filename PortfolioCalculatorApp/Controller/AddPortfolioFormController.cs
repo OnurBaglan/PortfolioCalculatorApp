@@ -1,4 +1,7 @@
-﻿using PortfolioCalculatorApp.Model.BusinessModel;
+﻿using PortfolioCalculatorApp.BusinessLogic;
+using PortfolioCalculatorApp.BusinessLogic.ModelAnalyzer;
+using PortfolioCalculatorApp.BusinessModel;
+using PortfolioCalculatorApp.Model;
 using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
 
@@ -8,9 +11,10 @@ public class AddPortfolioFormController
 {
     private readonly IAddPortfolioFormView _addPortfolioFormView;
     private readonly IStockListLoader _stockListLoaderModel;
-    private readonly List<Purchase> _purchases = new();
+    private readonly List<PurchaseModel> _purchases = new();
+    private readonly ModelAnalyzer _modelAnalyzer;
 
-    public static event EventHandler<Portfolio> AddValidPortfolio;
+    public static event EventHandler<PortfolioModel> AddValidPortfolio;
 
     public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView, IStockListLoader stockListLoaderModel)
     {
@@ -49,7 +53,7 @@ public class AddPortfolioFormController
 
 
 
-        var portfolio = new Portfolio()
+        var portfolio = new PortfolioModel()
         {
             Purchases = _purchases,
             Name = _addPortfolioFormView.TextBoxPortfolioName.Text
@@ -73,33 +77,30 @@ public class AddPortfolioFormController
     {
         if (_addPortfolioFormView.ListBoxAddedPurchases.SelectedItem is not null)
         {
-            var purchaseToDelete = (Purchase)_addPortfolioFormView.ListBoxAddedPurchases.SelectedItem;
+            var purchaseToDelete = (PurchaseModel)_addPortfolioFormView.ListBoxAddedPurchases.SelectedItem;
             _addPortfolioFormView.ListBoxAddedPurchases.Items.Remove(purchaseToDelete);
             _purchases.Remove(purchaseToDelete);
 
         }
     }
 
-    private void OnAddPurchase(object? sender, EventArgs e)
+    private void OnAddPurchase(object? sender, PurchaseModel purchaseModel)
     {
-        while (!IsPurchaseSelectionsValid())
+        var analyzeResult = _modelAnalyzer.Analyze(purchaseModel);
+
+        if (!analyzeResult.IsModelValid)
         {
-            MessageBox.Show(@"Please make sure you selected a stock symbol, at least one lot
-and a valid weekday date");
+            analyzeResult.ShowErrors();
             return;
         }
+        else
+        {		
 
-        var newPurchase = new Purchase()
-        {
-            StockSymbol = ConvertStockSymbolRawToSymbol(_addPortfolioFormView.ComboBoxStockSymbols.SelectedItem),
-            Lots = (int)_addPortfolioFormView.NumericUpDownLots.Value,
-            PurchaseDate = _addPortfolioFormView.DateTimePickerPurchaseDate.Value
+			_purchases.Add(purchaseModel);
 
-        };
-
-        _purchases.Add(newPurchase);
-
-        _addPortfolioFormView.ListBoxAddedPurchases.Items.Add(newPurchase);
+			_addPortfolioFormView.ListBoxAddedPurchases.Items.Add(purchaseModel);
+		}
+                        
 
     }
 

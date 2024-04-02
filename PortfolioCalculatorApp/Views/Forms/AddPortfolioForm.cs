@@ -1,4 +1,5 @@
-﻿using PortfolioCalculatorApp.Views.Interfaces;
+﻿using PortfolioCalculatorApp.Model;
+using PortfolioCalculatorApp.Views.Interfaces;
 
 
 namespace PortfolioCalculatorApp;
@@ -11,7 +12,7 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
     public event EventHandler ResetSelections;
     public event EventHandler RemovePurchase;
     public event EventHandler AddPortfolio;
-    public event EventHandler AddPurchase;
+    public event EventHandler<PurchaseModel> AddPurchase;
     public event EventHandler AddPortfolioFormClosed;
 
     public AddPortfolioForm()
@@ -20,8 +21,11 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
     }
 
     public ComboBox ComboBoxStockSymbols { get => ComboBox_StockSymbols; set => ComboBox_StockSymbols = value; }
+    public string SelectedStockText { get => ComboBox_StockSymbols.SelectedText; }    
     public NumericUpDown NumericUpDownLots { get => NumericUpDown_Lots; set => NumericUpDown_Lots = value; }
+    public int SelectedLots { get => (int)NumericUpDown_Lots.Value; }
     public DateTimePicker DateTimePickerPurchaseDate { get => DateTimePicker_PurchaseDate; set => DateTimePicker_PurchaseDate = value; }
+    public DateTime SelectedDateTime { get => DateTimePicker_PurchaseDate.Value; }
     public ListBox ListBoxAddedPurchases { get => ListBox_AddedPurchases; set => ListBox_AddedPurchases = value; }
     public TextBox TextBoxPortfolioName { get => TextBox_PortfolioName; set => TextBox_PortfolioName = value; }
 
@@ -34,7 +38,8 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
 
     private void Button_AddPurchase_Click(object sender, EventArgs e)
     {
-        AddPurchase?.Invoke(this, EventArgs.Empty);
+        var purchaseModel = new PurchaseModel(SelectedStockText, SelectedLots, SelectedDateTime);
+        AddPurchase?.Invoke(null, purchaseModel);
     }
 
     private void Button_ResetSelections_Click(object sender, EventArgs e)
