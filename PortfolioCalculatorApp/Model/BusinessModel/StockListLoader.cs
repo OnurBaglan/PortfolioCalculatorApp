@@ -1,7 +1,7 @@
 ﻿namespace PortfolioCalculatorApp.Model.BusinessModel;
 
 
-internal class StockListLoader
+public class StockListLoader : IStockListLoader
 {
     private readonly string[] _stocks;
     public IEnumerable<string> StockList { get => _stocks; }
@@ -11,7 +11,7 @@ internal class StockListLoader
         var data = File.ReadAllLines("stocks.txt");
 
         _stocks = data.ToArray();
-        
+
     }
 
 

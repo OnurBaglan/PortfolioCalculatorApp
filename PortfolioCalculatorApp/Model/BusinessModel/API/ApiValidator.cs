@@ -1,6 +1,6 @@
-﻿namespace PortfolioCalculatorApp.Model.BusinessModel;
+﻿namespace PortfolioCalculatorApp.Model.BusinessModel.API;
 
-public class ApiValidator
+public class ApiValidator : IApiValidator
 {
 
     private readonly Dictionary<int, string> _urls;
@@ -17,7 +17,7 @@ public class ApiValidator
     }
 
 
-    public async Task<bool> IsKeyValid(string apiKey, ApiSources apiSource)
+    public async Task<bool> IsApiKeyValid(string apiKey, ApiSources apiSource)
     {
         var statusCode = await MakeRandomRequest(apiKey, apiSource);
 

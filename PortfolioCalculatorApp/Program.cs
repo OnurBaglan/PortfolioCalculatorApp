@@ -1,4 +1,9 @@
+using ExternalDataProvider;
+using PortfolioCalculatorApp.Controller;
+using PortfolioCalculatorApp.Model.BusinessModel;
+using PortfolioCalculatorApp.Model.BusinessModel.API;
 using PortfolioCalculatorApp.Views.Interfaces;
+using System.Text.Json.Nodes;
 
 namespace PortfolioCalculatorApp;
 
@@ -15,9 +20,20 @@ internal static class Program
 		// see https://aka.ms/applicationconfiguration.
 		ApplicationConfiguration.Initialize();
 		
+		MainAppForm mainAppForm = new MainAppForm();
+		AddPortfolioForm addPortfolioForm = new AddPortfolioForm();
+		IApiValidator apiValidator = new ApiValidator();
+		ICalculator calculator = new Calculator(new CurrencyConverter(), new StockValueProvider());
+		IStockListLoader stockListLoader = new StockListLoader();
 
-        IAddPortfolioFormView addPortfolioForm  = new AddPortfolioForm();
+		AddPortfolioFormController addPortfolioFormController = new AddPortfolioFormController(addPortfolioForm, stockListLoader);
+		MainAppFormController mainAppFormController = new MainAppFormController(mainAppForm, addPortfolioForm, apiValidator, calculator);
 
-		Application.Run(new MainAppForm(addPortfolioForm));
+		Application.Run(mainAppForm);
+
+
+		
+
+		
 	}
 }

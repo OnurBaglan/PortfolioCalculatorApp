@@ -20,13 +20,9 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
     }
 
     public ComboBox ComboBoxStockSymbols { get => ComboBox_StockSymbols; set => ComboBox_StockSymbols = value; }
-
     public NumericUpDown NumericUpDownLots { get => NumericUpDown_Lots; set => NumericUpDown_Lots = value; }
-
     public DateTimePicker DateTimePickerPurchaseDate { get => DateTimePicker_PurchaseDate; set => DateTimePicker_PurchaseDate = value; }
-
     public ListBox ListBoxAddedPurchases { get => ListBox_AddedPurchases; set => ListBox_AddedPurchases = value; }
-
     public TextBox TextBoxPortfolioName { get => TextBox_PortfolioName; set => TextBox_PortfolioName = value; }
 
 
@@ -48,7 +44,6 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
     }
 
 
-
     private void Button_DeleteSelectedPurchase_Click(object sender, EventArgs e)
     {
         RemovePurchase?.Invoke(this, EventArgs.Empty);
@@ -60,7 +55,10 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
 
     }
 
-
+    private void AddPortfolioForm_FormClosed(object sender, FormClosedEventArgs e)
+    {
+        AddPortfolioFormClosed?.Invoke(this, e);
+    }
 
     public void ShowDialogWrapper()
     {
@@ -73,11 +71,8 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
         Close();
     }
 
-   
 
-    private void AddPortfolioForm_FormClosed(object sender, FormClosedEventArgs e)
-    {
-        AddPortfolioFormClosed?.Invoke(this, e);
-    }
+
+    
 
 }
