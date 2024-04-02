@@ -7,17 +7,18 @@ namespace PortfolioCalculatorApp.Controller;
 public class AddPortfolioFormController
 {
     private readonly IAddPortfolioFormView _addPortfolioFormView;
-    private readonly StockListLoader _portfolioModel;
+    private readonly IStockListLoader _stockListLoaderModel;
     private readonly List<Purchase> _purchases = new();
 
     public static event EventHandler<Portfolio> AddValidPortfolio;
 
-    public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView)
+    public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView, IStockListLoader stockListLoaderModel)
     {
 
-        _portfolioModel = new StockListLoader();
 
         _addPortfolioFormView = addPortfolioFormView;
+        _stockListLoaderModel = stockListLoaderModel;
+
         _addPortfolioFormView.InitializeComboBox += OnInitializeComboBox;
         _addPortfolioFormView.SearchStock += OnSearchStock;
         _addPortfolioFormView.ResetSelections += OnResetSelections;
@@ -116,10 +117,10 @@ and a valid weekday date");
         return _addPortfolioFormView.ComboBoxStockSymbols.SelectedItem is not null &&
             _addPortfolioFormView.DateTimePickerPurchaseDate.Value <= DateTime.Now &&
             _addPortfolioFormView.NumericUpDownLots.Value != 0 &&
-            IsDateWeekday(_addPortfolioFormView.DateTimePickerPurchaseDate.Value);
+            IsWeekday(_addPortfolioFormView.DateTimePickerPurchaseDate.Value);
     }
 
-    private bool IsDateWeekday(DateTime value)
+    private bool IsWeekday(DateTime value)
     {
         return value.DayOfWeek != DayOfWeek.Sunday &&
             value.DayOfWeek != DayOfWeek.Saturday;
@@ -136,7 +137,10 @@ and a valid weekday date");
 
     public void OnInitializeComboBox(object? sender, EventArgs? e)
     {
-        var stockList = _portfolioModel.StockList.ToArray();
+
+
+
+        var stockList = _stockListLoaderModel.StockList.ToArray();
         _addPortfolioFormView.ComboBoxStockSymbols.Items.AddRange(stockList);
         _addPortfolioFormView.ComboBoxStockSymbols.DropDownStyle = ComboBoxStyle.DropDownList;
     }
@@ -146,7 +150,7 @@ and a valid weekday date");
 
         _addPortfolioFormView.ComboBoxStockSymbols.Items.Clear();
 
-        var data = _portfolioModel.StockList.Where(item => item.ToUpper().Contains(GetTextOfTextBox(sender).ToUpper())).ToArray();
+        var data = _stockListLoaderModel.StockList.Where(item => item.ToUpper().Contains(GetTextOfTextBox(sender).ToUpper())).ToArray();
         _addPortfolioFormView.ComboBoxStockSymbols.Items.AddRange(data);
         _addPortfolioFormView.ComboBoxStockSymbols.SelectedItem = data.FirstOrDefault();
 

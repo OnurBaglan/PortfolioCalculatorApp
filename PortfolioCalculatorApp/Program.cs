@@ -1,5 +1,6 @@
 using ExternalDataProvider;
 using PortfolioCalculatorApp.Controller;
+using PortfolioCalculatorApp.Model.BusinessModel;
 using PortfolioCalculatorApp.Model.BusinessModel.API;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Text.Json.Nodes;
@@ -23,8 +24,9 @@ internal static class Program
 		AddPortfolioForm addPortfolioForm = new AddPortfolioForm();
 		IApiValidator apiValidator = new ApiValidator();
 		ICalculator calculator = new Calculator(new CurrencyConverter(), new StockValueProvider());
+		IStockListLoader stockListLoader = new StockListLoader();
 
-		AddPortfolioFormController addPortfolioFormController = new AddPortfolioFormController(addPortfolioForm);
+		AddPortfolioFormController addPortfolioFormController = new AddPortfolioFormController(addPortfolioForm, stockListLoader);
 		MainAppFormController mainAppFormController = new MainAppFormController(mainAppForm, addPortfolioForm, apiValidator, calculator);
 
 		Application.Run(mainAppForm);

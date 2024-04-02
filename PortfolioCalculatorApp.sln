@@ -5,7 +5,9 @@ VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioCalculatorApp", "PortfolioCalculatorApp\PortfolioCalculatorApp.csproj", "{2999F3AE-338E-4C36-ABA4-BB8918482690}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalDataProvider", "ExternalDataProvider\ExternalDataProvider.csproj", "{23CA8321-6750-4540-8FB9-B6FF00A8D83C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalDataProvider", "ExternalDataProvider\ExternalDataProvider.csproj", "{23CA8321-6750-4540-8FB9-B6FF00A8D83C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FetchingRedDays", "FetchingRedDays\FetchingRedDays.csproj", "{EDCF2455-641E-409F-91CC-8DC571991686}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{23CA8321-6750-4540-8FB9-B6FF00A8D83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23CA8321-6750-4540-8FB9-B6FF00A8D83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23CA8321-6750-4540-8FB9-B6FF00A8D83C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDCF2455-641E-409F-91CC-8DC571991686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDCF2455-641E-409F-91CC-8DC571991686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDCF2455-641E-409F-91CC-8DC571991686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDCF2455-641E-409F-91CC-8DC571991686}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
