@@ -1,4 +1,5 @@
 ﻿using ExternalDataProvider;
+using PortfolioCalculatorApp.Model;
 using PortfolioCalculatorApp.Model.DTO;
 
 namespace PortfolioCalculatorApp.BusinessLogic;
@@ -16,7 +17,7 @@ public class Calculator : ICalculator
 		_stockValueProvider = stockValueProvider;
 	}
 
-	public async Task<decimal> CalculatePurchaseCost(Purchase purchase, string currency)
+	public async Task<decimal> CalculatePurchaseCost(PurchaseModel purchase, string currency)
 	{
 		var stockSymbol = purchase.StockSymbol;
 		var date = purchase.PurchaseDate;

@@ -16,12 +16,13 @@ public class AddPortfolioFormController
 
     public static event EventHandler<PortfolioModel> AddValidPortfolio;
 
-    public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView, IStockListLoader stockListLoaderModel)
+    public AddPortfolioFormController(IAddPortfolioFormView addPortfolioFormView, IStockListLoader stockListLoaderModel, ModelAnalyzer modelAnalyzer)
     {
 
 
         _addPortfolioFormView = addPortfolioFormView;
         _stockListLoaderModel = stockListLoaderModel;
+        _modelAnalyzer = modelAnalyzer;
 
         _addPortfolioFormView.InitializeComboBox += OnInitializeComboBox;
         _addPortfolioFormView.SearchStock += OnSearchStock;
@@ -84,9 +85,9 @@ public class AddPortfolioFormController
         }
     }
 
-    private void OnAddPurchase(object? sender, PurchaseModel purchaseModel)
+    private async void OnAddPurchase(object? sender, PurchaseModel purchaseModel)
     {
-        var analyzeResult = _modelAnalyzer.Analyze(purchaseModel);
+        var analyzeResult = await _modelAnalyzer.Analyze(purchaseModel);
 
         if (!analyzeResult.IsModelValid)
         {
@@ -104,23 +105,8 @@ public class AddPortfolioFormController
 
     }
 
-    private string ConvertStockSymbolRawToSymbol(object? selectedItem)
-    {
-        var rawText = (string)selectedItem;
-
-        var splitText = rawText.Split("----");
-
-        return splitText[0];
-    }
-
-    private bool IsPurchaseSelectionsValid()
-    {
-        return _addPortfolioFormView.ComboBoxStockSymbols.SelectedItem is not null &&
-            _addPortfolioFormView.DateTimePickerPurchaseDate.Value <= DateTime.Now &&
-            _addPortfolioFormView.NumericUpDownLots.Value != 0 &&
-            IsWeekday(_addPortfolioFormView.DateTimePickerPurchaseDate.Value);
-    }
-
+  
+   
     private bool IsWeekday(DateTime value)
     {
         return value.DayOfWeek != DayOfWeek.Sunday &&

@@ -6,13 +6,30 @@ using System.Threading.Tasks;
 
 namespace PortfolioCalculatorApp.BusinessLogic.ModelAnalyzer
 {
-	internal class PurchaseAnalyzeResult
-	{
-		public bool IsModelValid { get; }
+    public class PurchaseAnalyzeResult
+    {
+        public bool IsModelValid { get; }
 
-		public void ShowErrors()
-		{
+        private readonly IEnumerable<string> _errors;
 
-		}
-	}
+        public PurchaseAnalyzeResult(bool isModelValid, IEnumerable<string> errors)
+        {
+            IsModelValid = isModelValid;
+            _errors = errors;
+        }
+
+        public void ShowErrors()
+        {
+
+            StringBuilder sb = new StringBuilder();
+            foreach (string error in _errors)
+            {
+                sb.AppendLine(error);
+            }
+
+            MessageBox.Show(sb.ToString());
+
+
+        }
+    }
 }
