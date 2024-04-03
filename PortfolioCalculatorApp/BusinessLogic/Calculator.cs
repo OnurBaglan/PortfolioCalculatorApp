@@ -1,4 +1,5 @@
 ﻿using ExternalDataProvider;
+using PortfolioCalculatorApp.Misc;
 using PortfolioCalculatorApp.Model;
 using PortfolioCalculatorApp.Model.DTO;
 
@@ -9,12 +10,14 @@ public class Calculator : ICalculator
 
 	private readonly ICurrencyConverter _currencyConverter;
 	private readonly IStockValueProvider _stockValueProvider;
+	private readonly IRedDayValidator _redDayValidator;
 
-	public Calculator(ICurrencyConverter currencyConverter, IStockValueProvider stockValueProvider)
+	public Calculator(ICurrencyConverter currencyConverter, IStockValueProvider stockValueProvider, IRedDayValidator redDayValidator)
 	{
 
 		_currencyConverter = currencyConverter;
 		_stockValueProvider = stockValueProvider;
+		_redDayValidator = redDayValidator;
 	}
 
 	public async Task<decimal> CalculatePurchaseCost(PurchaseModel purchase, string currency)
@@ -62,7 +65,7 @@ public class Calculator : ICalculator
 		foreach (var purchase in portfolio.Purchases)
 		{
 
-			var value = await _stockValueProvider.Get(purchase.StockSymbol, SelectClosestWeekdayToNow(DateTime.Now)) * purchase.Lots;
+			var value = await _stockValueProvider.Get(purchase.StockSymbol, await SelectClosestNonRedWeekdayToNow(DateTime.Now)) * purchase.Lots;
 			worthToday += value;
 		}
 
@@ -73,31 +76,31 @@ public class Calculator : ICalculator
 
 		if (currency == "GOLD")
 		{
-			return await _currencyConverter.GetUsdToGramGold(worthToday, SelectClosestWeekdayToNow(DateTime.Now));
+			return await _currencyConverter.GetUsdToGramGold(worthToday, await SelectClosestNonRedWeekdayToNow(DateTime.Now));
 		}
 
-		return await _currencyConverter.GetUsdToCurrency(worthToday, currency, SelectClosestWeekdayToNow(DateTime.Now));
+		return await _currencyConverter.GetUsdToCurrency(worthToday, currency, await SelectClosestNonRedWeekdayToNow(DateTime.Now));
 
 
 	}
 
-	private DateTime SelectClosestWeekdayToNow(DateTime now)
+	private async Task<DateTime> SelectClosestNonRedWeekdayToNow(DateTime now)
 	{
-		if (now.DayOfWeek == DayOfWeek.Saturday)
+		DateTime result = now;
+
+		while (!now.IsWeekday() || await IsRedDay(now))
 		{
-			var result = new DateTime(now.Year, now.Month, now.Day - 1);
-			return result;
+			result.AddDays(-1);
 		}
 
-		if (now.DayOfWeek == DayOfWeek.Sunday)
-		{
-			var result = new DateTime(now.Year, now.Month, now.Day - 2);
-			return result;
-		}
-
-		return now;
+		return result;
 
 
+	}
+
+	private async Task<bool> IsRedDay(DateTime now)
+	{
+		return await _redDayValidator.IsRedDay(now);
 	}
 
 	public async Task<decimal> CalculatePortfolioEarnLoss(PortfolioModel portfolio, string currency)

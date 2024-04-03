@@ -31,7 +31,7 @@ public class MainAppFormController
         _mainAppFormView.SaveApiKey += OnSaveApiKey;
         _mainAppFormView.LoadApiKeys += OnLoadApiKey;
         _mainAppFormView.SavePortfolios += OnSavePortfolios;
-        //_mainAppFormView.LoadSavedPortfolios += OnLoadPortfolios;
+        _mainAppFormView.LoadSavedPortfolios += OnLoadPortfolios;
         _mainAppFormView.OpenAddPortfolioForm += OnOpenAddPortfolioForm;
         _mainAppFormView.DeleteSelectedItem += OnDeleteSelectedItem;
         AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;

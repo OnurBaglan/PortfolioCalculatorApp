@@ -9,66 +9,66 @@ using System.Threading.Tasks;
 
 namespace PortfolioCalculatorApp.BusinessLogic.ModelAnalyzer
 {
-    public class ModelAnalyzer
-    {
-        private readonly IRedDayValidator _redDayValidator;
+	public class ModelAnalyzer
+	{
+		private readonly IRedDayValidator _redDayValidator;
 
-        public ModelAnalyzer(IRedDayValidator redDayValidator)
-        {
-            _redDayValidator = redDayValidator;
-        }
+		public ModelAnalyzer(IRedDayValidator redDayValidator)
+		{
+			_redDayValidator = redDayValidator;
+		}
 
-        internal async Task<PurchaseAnalyzeResult> Analyze(PurchaseModel purchaseModel)
-        {
-            var isPurchaseValid =
-                purchaseModel.StockName is not null &&
-                purchaseModel.Lots != 0 &&
-                IsWeekday(purchaseModel.PurchaseDate) &&
-                !await IsRedDay(purchaseModel.PurchaseDate);
+		public async Task<PurchaseAnalyzeResult> Analyze(PurchaseModel purchaseModel)
+		{
+			var isPurchaseValid =
+				!string.IsNullOrEmpty(purchaseModel.StockName)&&
+				purchaseModel.Lots != 0 &&
+				IsWeekday(purchaseModel.PurchaseDate) &&
+				!await IsRedDay(purchaseModel.PurchaseDate);
 
-            var errors = new List<string>();
+			var errors = new List<string>();
 
-            if(!isPurchaseValid)
-            {
-                if(purchaseModel.StockName is null)
-                {
-                    errors.Add("Please select a stock symbol");
-                }
-                if(purchaseModel.Lots <= 0) 
-                {
-                    errors.Add("Please select at least one lot");
+			if (!isPurchaseValid)
+			{
+				if (string.IsNullOrEmpty(purchaseModel.StockName))
+				{
+					errors.Add("Please select a stock symbol");
+				}
+				if (purchaseModel.Lots <= 0)
+				{
+					errors.Add("Please select at least one lot");
 
-                }
-                if (!IsWeekday(purchaseModel.PurchaseDate))
-                {
-                    errors.Add("Please make sure you selected a week day");
+				}
+				if (!IsWeekday(purchaseModel.PurchaseDate))
+				{
+					errors.Add("Please make sure you selected a week day");
 
-                }
-                if (await IsRedDay(purchaseModel.PurchaseDate))
-                {
-                    errors.Add("Please make sure you did not selected a red day");
+				}
+				if (await IsRedDay(purchaseModel.PurchaseDate) && IsWeekday(purchaseModel.PurchaseDate))
+				{
+					errors.Add("Please make sure you did not selected a red day");
 
-                }
-            }
+				}
+			}
 
-            var resultObject = new PurchaseAnalyzeResult(isPurchaseValid, errors);
-            return resultObject;
+			var resultObject = new PurchaseAnalyzeResult(isPurchaseValid, errors);
+			return resultObject;
 
-            
-        }
 
-        private async Task<bool> IsRedDay(DateTime purchaseDate)
-        {
-            var result = await _redDayValidator.IsRedDay(purchaseDate);
-            return result;
-        }
+		}
 
-        private bool IsWeekday(DateTime purchaseDate)
-        {
-            return 
-                purchaseDate.DayOfWeek != DayOfWeek.Sunday &&
-                purchaseDate.DayOfWeek != DayOfWeek.Saturday;
+		private async Task<bool> IsRedDay(DateTime purchaseDate)
+		{
+			var result = await _redDayValidator.IsRedDay(purchaseDate);
+			return result;
+		}
 
-        }
-    }
+		private bool IsWeekday(DateTime purchaseDate)
+		{
+			return
+				purchaseDate.DayOfWeek != DayOfWeek.Sunday &&
+				purchaseDate.DayOfWeek != DayOfWeek.Saturday;
+
+		}
+	}
 }

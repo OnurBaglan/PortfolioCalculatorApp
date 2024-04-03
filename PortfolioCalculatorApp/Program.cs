@@ -26,9 +26,10 @@ internal static class Program
 		MainAppForm mainAppForm = new MainAppForm();
 		AddPortfolioForm addPortfolioForm = new AddPortfolioForm();
 		IApiValidator apiValidator = new ApiValidator();
-		ICalculator calculator = new Calculator(new CurrencyConverter(), new StockValueProvider());
+		RedDayValidator redDayValidator = new RedDayValidator(new ApiReader());
+		ICalculator calculator = new Calculator(new CurrencyConverter(), new StockValueProvider(), redDayValidator);
 		IStockListLoader stockListLoader = new StockListLoader();
-		ModelAnalyzer modelAnalyzer = new ModelAnalyzer(new RedDayValidator(new ApiReader()));
+		ModelAnalyzer modelAnalyzer = new ModelAnalyzer(redDayValidator);
 
 		AddPortfolioFormController addPortfolioFormController = new AddPortfolioFormController(addPortfolioForm, stockListLoader,modelAnalyzer);
 		MainAppFormController mainAppFormController = new MainAppFormController(mainAppForm, addPortfolioForm, apiValidator, calculator);
