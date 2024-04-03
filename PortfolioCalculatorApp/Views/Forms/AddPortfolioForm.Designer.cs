@@ -3,23 +3,23 @@ namespace PortfolioCalculatorApp;
 
 partial class AddPortfolioForm
 {
-	/// <summary>
-	/// Required designer variable.
-	/// </summary>
-	private System.ComponentModel.IContainer components = null;
+    /// <summary>
+    /// Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
 
-	/// <summary>
-	/// Clean up any resources being used.
-	/// </summary>
-	/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-	protected override void Dispose(bool disposing)
-	{
-		if (disposing && (components != null))
-		{
-			components.Dispose();
-		}
-		base.Dispose(disposing);
-	}
+    /// <summary>
+    /// Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing && (components != null))
+        {
+            components.Dispose();
+        }
+        base.Dispose(disposing);
+    }
 
     #region Windows Form Designer generated code
 
@@ -208,15 +208,15 @@ partial class AddPortfolioForm
     #endregion
 
     private DateTimePicker DateTimePicker_PurchaseDate;
-	private ComboBox ComboBox_StockSymbols;
-	private Label label1;
-	private Label label2;
-	private Label label3;
-	private Button Button_AddPurchase;
-	private Button Button_ResetSelections;
-	private Button Button_DeleteSelectedPurchase;
-	private Button Button_AddPortfolio;
-	private NumericUpDown NumericUpDown_Lots;
+    private ComboBox ComboBox_StockSymbols;
+    private Label label1;
+    private Label label2;
+    private Label label3;
+    private Button Button_AddPurchase;
+    private Button Button_ResetSelections;
+    private Button Button_DeleteSelectedPurchase;
+    private Button Button_AddPortfolio;
+    private NumericUpDown NumericUpDown_Lots;
     private TextBox TextBox_StockSearch;
     private TextBox TextBox_PortfolioName;
     private Label FixedLabelPortfolioName;

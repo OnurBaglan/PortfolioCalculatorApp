@@ -20,16 +20,16 @@ public class ApiGetRequest
 
         DateInFormat = $"{_date.Year}-{_date.Month}-{_date.Day}";
 
-        switch (apiSource)
-        {
-            case ApiSources.MarketDataApp:
-                ArgumentNullException.ThrowIfNull(stockSymbol);
-                break;
-            case ApiSources.CurrencyBeacon:
-                ArgumentNullException.ThrowIfNull(currency);
-                break;
+        //switch (apiSource)
+        //{
+        //    case ApiSources.MarketDataApp:
+        //        ArgumentNullException.ThrowIfNull(stockSymbol);
+        //        break;
+        //    case ApiSources.CurrencyBeacon:
+        //        ArgumentNullException.ThrowIfNull(currency);
+        //        break;
 
-        }
+        //}
 
         StockSymbol = stockSymbol;
         Currency = currency;
