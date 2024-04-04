@@ -9,10 +9,10 @@ namespace PortfolioCalculatorApp.Model;
 public class PurchaseModel
 {
 	private readonly string _rawStockSymbol;
-	public string StockSymbol { get; }
-	public string StockName { get; }
-	public int Lots { get; }
-	public DateTime PurchaseDate { get; }
+	public string StockSymbol { get; set; }
+	public string StockName { get; set; }
+	public int Lots { get; set; }
+	public DateTime PurchaseDate { get; set; }
 
 
 	public PurchaseModel(string rawStockSymbol, int lots, DateTime purchaseDate)
@@ -25,7 +25,12 @@ public class PurchaseModel
 		StockName = GetStockName(_rawStockSymbol);
 	}
 
-	private string GetStockName(string rawStockSymbol)
+    public PurchaseModel()
+    {
+        
+    }
+
+    private string GetStockName(string rawStockSymbol)
 	{
 		var result = rawStockSymbol.Split("----").Last();
 		return result;

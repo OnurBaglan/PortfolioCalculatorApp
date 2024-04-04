@@ -24,8 +24,9 @@ public interface IMainAppFormView
     string LabelTotalInvested { get; set; }
     string LabelCurrentValue { get; set; }
     bool IsApiKey3Valid { get; set; }
-    
-    public event EventHandler ValidateApiKey;
+	ComboBox ComboBoxCurrencies { get; }
+
+	public event EventHandler ValidateApiKey;
     public event EventHandler SaveApiKey;
     public event EventHandler LoadApiKeys;
     event EventHandler<ListBox> SavePortfolios;

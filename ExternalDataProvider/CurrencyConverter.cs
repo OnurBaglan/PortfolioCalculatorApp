@@ -56,9 +56,9 @@ public class CurrencyConverter : ICurrencyConverter
         using (JsonDocument document = JsonDocument.Parse(jsonText))
         {
             JsonElement ratesElement = document.RootElement.GetProperty("rates");
-            double eurRate = ratesElement.GetProperty("EUR").GetDouble();
+            double rate = ratesElement.GetProperty(currencySymbol).GetDouble();
 
-            return (decimal)(eurRate) * usdAmount;
+            return (decimal)(rate) * usdAmount;
 
         }
 

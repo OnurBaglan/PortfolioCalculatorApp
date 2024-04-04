@@ -24,7 +24,8 @@ namespace PortfolioCalculatorApp.BusinessLogic.ModelAnalyzer
 				!string.IsNullOrEmpty(purchaseModel.StockName)&&
 				purchaseModel.Lots != 0 &&
 				IsWeekday(purchaseModel.PurchaseDate) &&
-				!await IsRedDay(purchaseModel.PurchaseDate);
+				!await IsRedDay(purchaseModel.PurchaseDate) &&
+				purchaseModel.PurchaseDate<=DateTime.Now;
 
 			var errors = new List<string>();
 
@@ -32,21 +33,26 @@ namespace PortfolioCalculatorApp.BusinessLogic.ModelAnalyzer
 			{
 				if (string.IsNullOrEmpty(purchaseModel.StockName))
 				{
-					errors.Add("Please select a stock symbol");
+					errors.Add("-Please select a stock symbol");
 				}
 				if (purchaseModel.Lots <= 0)
 				{
-					errors.Add("Please select at least one lot");
+					errors.Add("-Please select at least one lot");
 
 				}
 				if (!IsWeekday(purchaseModel.PurchaseDate))
 				{
-					errors.Add("Please make sure you selected a week day");
+					errors.Add("-Please make sure you selected a week day");
 
 				}
 				if (await IsRedDay(purchaseModel.PurchaseDate) && IsWeekday(purchaseModel.PurchaseDate))
 				{
-					errors.Add("Please make sure you did not selected a red day");
+					errors.Add("-Please make sure you did not selected a red day");
+
+				}
+				if(purchaseModel.PurchaseDate > DateTime.Now)
+				{
+					errors.Add("-You cannot select a date from future");
 
 				}
 			}
