@@ -9,11 +9,6 @@ public class PortfolioModel
 
     public decimal? PortfolioCost {  get; set; }
 
-    public void CalculatePortfolioCost()
-    {
-
-    }
-
     public override string ToString()
     {
        return $"{Name} named portfolio, with {Purchases.Count} purchases";

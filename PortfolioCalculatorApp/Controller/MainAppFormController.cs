@@ -35,14 +35,63 @@ public class MainAppFormController
         _mainAppFormView.OpenAddPortfolioForm += OnOpenAddPortfolioForm;
         _mainAppFormView.DeleteSelectedItem += OnDeleteSelectedItem;
         AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
+        _mainAppFormView.InitializeCurrencyComboBox += OnLoadCurrencies;
+        _mainAppFormView.CalculatePortfolio += OnCalculateEarnLossRatio;
+        //_mainAppFormView.CalculatePortfolio += OnCalculateTotalInvested;
+        //_mainAppFormView.CalculatePortfolio += OnCalculateCurrentValue;
+        //_mainAppFormView.CalculatePortfolio += OnCalculateListedPurchaseDetails;
 
 
+    }
+
+
+
+    private void OnLoadCurrencies(object? sender, ComboBox e)
+    {
+        if (File.Exists("currencies.txt"))
+        {
+            var data = File.ReadAllLines("currencies.txt");
+            e.Items.AddRange(data);
+            e.SelectedItem = data[146]; //USD
+        }
+    }
+
+    private async void OnCalculateEarnLossRatio(object? sender, PortfolioModel e)
+    {
+        var selectedCurrencySymbol = GetCurrencySymbol(sender);
+        var selectedCurrencyName = GetCurrencyName(sender);
+
+        var ratio = await _calculatorModel.CalculatePortfolioEarnLoss(e, selectedCurrencySymbol);
+              //TODO make a proper implementation for this
+        
+    }
+
+    private string GetCurrencyName(object? sender)
+    {
+        var form = sender as MainAppForm;
+
+        var comboBox = (ComboBox)form.GetType().GetProperty("ComboBox_Currencies").GetValue(form);
+
+        var text = comboBox.SelectedItem.ToString();
+
+        return text.Split("----").Last().ToString();
+    }
+
+    private string GetCurrencySymbol(object? sender)
+    {
+        var form = sender as MainAppForm;
+
+        var comboBox = (ComboBox)form.GetType().GetProperty("ComboBox_Currencies").GetValue(form);
+
+        var text = comboBox.SelectedItem.ToString();
+
+        return text.Split("----").First().ToString();
     }
 
     private void OnDeleteSelectedItem(object? sender, ListBox listBox)
     {
 
-        
+
         var itemToDelete = listBox.SelectedItem;
 
         if (itemToDelete == null) return;
@@ -53,7 +102,7 @@ public class MainAppFormController
     private void OnOpenAddPortfolioForm(object? sender, EventArgs e)
     {
         _addPortfolioFormView.ShowDialogWrapper();
-        
+
     }
 
     private void OnLoadPortfolios(object? sender, EventArgs e)
@@ -84,7 +133,7 @@ public class MainAppFormController
         {
             portfoliosToSave.Add((PortfolioModel)item);
         }
-               
+
         var newJsonText = JsonSerializer.Serialize(portfoliosToSave);
 
         File.WriteAllText(PortfoliosPath, newJsonText);
