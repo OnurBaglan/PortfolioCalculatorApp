@@ -15,10 +15,7 @@ public interface IMainAppFormView
 
     public string ApiKeyStatusStrip { get; set; }
     public string MainMenuStatusStrip { get; set; }
-
-    public Label MainMenuBlockerLabel { get; set; }
-    public Panel MainMenuBlockerPanel { get; set; }
-    ListBox ListBoxPortfolios { get; set; }
+        ListBox ListBoxPortfolios { get; set; }
     string ApiKey3 { get; set; }
     string LabelEarnLossRatio { get; set; }
     string LabelTotalInvested { get; set; }
