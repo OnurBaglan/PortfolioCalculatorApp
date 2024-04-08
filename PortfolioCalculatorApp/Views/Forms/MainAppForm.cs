@@ -16,8 +16,6 @@ public partial class MainAppForm : Form, IMainAppFormView
     public string ApiKey1Status { get => Label_StatusApiKey1.Text; set => Label_StatusApiKey1.Text = value; }
     public string ApiKey2Status { get => Label_StatusApiKey2.Text; set => Label_StatusApiKey2.Text = value; }
     public string ApiKey3Status { get => Label_StatusApiKey3.Text; set => Label_StatusApiKey3.Text = value; }
-    public string ApiKeyStatusStrip { get => ToolStripStatusLabel_ApiKey.Text; set => ToolStripStatusLabel_ApiKey.Text = value; }
-    public string MainMenuStatusStrip { get => ToolStripStatusLabel_MainMenu.Text; set => ToolStripStatusLabel_MainMenu.Text = value; }
     public ListBox ListBoxPortfolios { get => ListBox_Portfolios; set => ListBox_Portfolios = value; }
     public Button ButtonAddNewPortfolio { get => Button_AddNewPortfolio; set => Button_AddNewPortfolio = value; }
     public Button ButtonDeleteSelectedPortfolio { get => Button_DeleteSelectedPortfolio; set => Button_DeleteSelectedPortfolio = value; }

@@ -194,8 +194,6 @@ public class MainAppFormController
 
         SetApiKeyStatusLabel(apiSource, isKeyValid);
 
-        SetApiKeyStatusStrip();
-
         SetEnvironmentVariable(apiSource, apiKey, isKeyValid);
 
     }
@@ -207,21 +205,7 @@ public class MainAppFormController
             Environment.SetEnvironmentVariable(apiSource.ToString(), apiKey);
         }
     }
-
-
-    private void SetApiKeyStatusStrip()
-    {
-        if (_mainAppFormView.IsApiKey1Valid && _mainAppFormView.IsApiKey2Valid && _mainAppFormView.IsApiKey3Valid)
-        {
-            _mainAppFormView.ApiKeyStatusStrip = "Api keys are valid.";
-            _mainAppFormView.MainMenuStatusStrip = _mainAppFormView.ApiKeyStatusStrip;
-        }
-        else
-        {
-            _mainAppFormView.ApiKeyStatusStrip = "Please enter valid api keys.";
-            _mainAppFormView.MainMenuStatusStrip = _mainAppFormView.ApiKeyStatusStrip;
-        }
-    }
+     
 
     private void SetApiKeyStatusLabel(ApiSources apiSource, bool isKeyValid)
     {

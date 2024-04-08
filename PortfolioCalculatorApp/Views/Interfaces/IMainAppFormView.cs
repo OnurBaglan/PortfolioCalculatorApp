@@ -12,18 +12,15 @@ public interface IMainAppFormView
 
     public string ApiKey1Status { get; set; }
     public string ApiKey2Status { get; set; }
-
-    public string ApiKeyStatusStrip { get; set; }
-    public string MainMenuStatusStrip { get; set; }
-        ListBox ListBoxPortfolios { get; set; }
+    ListBox ListBoxPortfolios { get; set; }
     string ApiKey3 { get; set; }
     string LabelEarnLossRatio { get; set; }
     string LabelTotalInvested { get; set; }
     string LabelCurrentValue { get; set; }
     bool IsApiKey3Valid { get; set; }
-	ComboBox ComboBoxCurrencies { get; }
+    ComboBox ComboBoxCurrencies { get; }
 
-	public event EventHandler ValidateApiKey;
+    public event EventHandler ValidateApiKey;
     public event EventHandler SaveApiKey;
     public event EventHandler LoadApiKeys;
     event EventHandler<ListBox> SavePortfolios;
