@@ -1,5 +1,4 @@
-﻿using PortfolioCalculatorApp.BusinessModel.API;
-using PortfolioCalculatorApp.Model;
+﻿using PortfolioCalculatorApp.Model;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System.Data;
 using System.Text.Json;
@@ -10,7 +9,6 @@ public class MainAppFormController
 {
     private readonly IMainAppFormView _mainAppFormView;
     private readonly IAddPortfolioFormView _addPortfolioFormView;
-    private readonly IApiValidator _apiValidatorModel;
     private readonly ICalculator _calculatorModel;
 
     private readonly string PortfoliosPath = "portfolios.json";
@@ -18,62 +16,60 @@ public class MainAppFormController
     public MainAppFormController(
         IMainAppFormView mainAppFormView,
         IAddPortfolioFormView addPortfolioFormView,
-        IApiValidator apiValidatorModel,
         ICalculator calculatorModel)
     {
         _mainAppFormView = mainAppFormView;
         _addPortfolioFormView = addPortfolioFormView;
-        _apiValidatorModel = apiValidatorModel;
         _calculatorModel = calculatorModel;
 
 
-        _mainAppFormView.ValidateApiKey += OnValidateApiKeyAsync;
-        _mainAppFormView.SaveApiKey += OnSaveApiKey;
-        _mainAppFormView.LoadApiKeys += OnLoadApiKey;
         _mainAppFormView.SavePortfolios += OnSavePortfolios;
         _mainAppFormView.LoadSavedPortfolios += OnLoadPortfolios;
         _mainAppFormView.OpenAddPortfolioForm += OnOpenAddPortfolioForm;
         _mainAppFormView.DeleteSelectedItem += OnDeleteSelectedItem;
-        AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
         _mainAppFormView.InitializeCurrencyComboBox += OnLoadCurrencies;
         _mainAppFormView.CalculatePortfolio += OnCalculateEarnLossRatio;
         _mainAppFormView.CalculatePortfolio += OnCalculateTotalInvested;
         _mainAppFormView.CalculatePortfolio += OnCalculateCurrentValue;
         //_mainAppFormView.CalculatePortfolio += OnCalculateListedPurchaseDetails;
-
+        AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
 
     }
 
+    private async void OnCalculateEarnLossRatio(object? sender, PortfolioModel e)
+    {
+        //TODO make a proper implementation for this
+        var selectedCurrencySymbol = GetCurrencySymbolFromView();
+        var selectedCurrencyName = GetCurrencyNameFromView();
+
+        var ratio = await _calculatorModel.CalculatePortfolioEarnLoss(e, selectedCurrencySymbol);
+
+        SetRatioInView(_mainAppFormView, ratio);
+    }
     private async void OnCalculateCurrentValue(object? sender, PortfolioModel e)
     {
-        var selectedCurrencySymbol = GetCurrencySymbol(_mainAppFormView);
-        var selectedCurrencyName = GetCurrencyName(_mainAppFormView);
-
+        var selectedCurrencySymbol = GetCurrencySymbolFromView();
+        var selectedCurrencyName = GetCurrencyNameFromView();
         var totalInvested = await _calculatorModel.CalculatePortfolioWorthToday(e, selectedCurrencySymbol);
-
-        SetCurrentValueInView(_mainAppFormView, totalInvested);
+        SetPortfolioCurrentValueInView(totalInvested);
     }
-
-    private void SetCurrentValueInView(IMainAppFormView mainAppFormView, decimal totalInvested)
-    {
-        mainAppFormView.LabelCurrentValue = $"{totalInvested.ToString("F2")}";
-    }
-
     private async void OnCalculateTotalInvested(object? sender, PortfolioModel e)
     {
-        var selectedCurrencySymbol = GetCurrencySymbol(_mainAppFormView);
-        var selectedCurrencyName = GetCurrencyName(_mainAppFormView);
+        var selectedCurrencySymbol = GetCurrencySymbolFromView();
+        var selectedCurrencyName = GetCurrencyNameFromView();
 
         var totalInvested = await _calculatorModel.CalculatePortfolioCost(e, selectedCurrencySymbol);
 
-        SetTotalInvestedInView(_mainAppFormView, totalInvested);
+        SetPortfolioTotalInvestedInView(totalInvested);
     }
-
-    private void SetTotalInvestedInView(IMainAppFormView mainAppFormView, decimal totalInvested)
+    private void SetPortfolioCurrentValueInView(decimal totalInvested)
     {
-        mainAppFormView.LabelTotalInvested = $"{totalInvested.ToString("F2")}";
+        _mainAppFormView.LabelCurrentValue = $"{totalInvested.ToString("F2")}";
     }
-
+    private void SetPortfolioTotalInvestedInView(decimal totalInvested)
+    {
+        _mainAppFormView.LabelTotalInvested = $"{totalInvested.ToString("F2")}";
+    }
     private void OnLoadCurrencies(object? sender, ComboBox e)
     {
         if (File.Exists("currencies.txt"))
@@ -83,55 +79,36 @@ public class MainAppFormController
             e.SelectedItem = data[147]; //USD
         }
     }
-
-    private async void OnCalculateEarnLossRatio(object? sender, PortfolioModel e)
-    {
-        //TODO make a proper implementation for this
-        var selectedCurrencySymbol = GetCurrencySymbol(_mainAppFormView);
-        var selectedCurrencyName = GetCurrencyName(_mainAppFormView);
-
-        var ratio = await _calculatorModel.CalculatePortfolioEarnLoss(e, selectedCurrencySymbol);
-
-        SetRatioInView(_mainAppFormView, ratio);
-    }
-
     private void SetRatioInView(IMainAppFormView mainAppFormView, decimal ratio)
     {
         mainAppFormView.LabelEarnLossRatio = $"{ratio.ToString("F2")} %";
     }
-
-    private string GetCurrencyName(IMainAppFormView view)
+    private string GetCurrencyNameFromView()
     {
 
-        var text = view.ComboBoxCurrencies.SelectedItem.ToString();
+        var text = _mainAppFormView.ComboBoxCurrencies.SelectedItem.ToString();
 
         return text.Split("----").Last().ToString();
     }
-
-    private string GetCurrencySymbol(IMainAppFormView view)
+    private string GetCurrencySymbolFromView()
     {
-        var text = view.ComboBoxCurrencies.SelectedItem.ToString();
+        var text = _mainAppFormView.ComboBoxCurrencies.SelectedItem.ToString();
 
         return text.Split("----").First().ToString();
     }
-
     private void OnDeleteSelectedItem(object? sender, ListBox listBox)
     {
-
-
         var itemToDelete = listBox.SelectedItem;
 
         if (itemToDelete == null) return;
 
         listBox.Items.Remove(itemToDelete);
     }
-
     private void OnOpenAddPortfolioForm(object? sender, EventArgs e)
     {
         _addPortfolioFormView.ShowDialogWrapper();
 
     }
-
     private void OnLoadPortfolios(object? sender, EventArgs e)
     {
         if (File.Exists(PortfoliosPath))
@@ -146,12 +123,8 @@ public class MainAppFormController
 
             }
 
-
-
         }
     }
-
-
     private void OnSavePortfolios(object? sender, ListBox listBox)
     {
         List<PortfolioModel> portfoliosToSave = new();
@@ -166,107 +139,10 @@ public class MainAppFormController
         File.WriteAllText(PortfoliosPath, newJsonText);
 
     }
-
-
-
     private void OnShowPortfolioInMainList(object? sender, PortfolioModel e)
     {
         _mainAppFormView.ListBoxPortfolios.Items.Add(e);
 
     }
-
-    private void OnLoadApiKey(object? sender, EventArgs e)
-    {
-
-        if (File.Exists("apiKey1.txt"))
-        {
-            var apiKey1 = File.ReadAllText("apiKey1.txt");
-            _mainAppFormView.ApiKey1 = apiKey1;
-        }
-        if (File.Exists("apiKey2.txt"))
-        {
-            var apiKey2 = File.ReadAllText("apiKey2.txt");
-            _mainAppFormView.ApiKey2 = apiKey2;
-        }
-        if (File.Exists("apiKey3.txt"))
-        {
-            var apiKey3 = File.ReadAllText("apiKey3.txt");
-            _mainAppFormView.ApiKey3 = apiKey3;
-        }
-
-
-
-    }
-
-    private void OnSaveApiKey(object? sender, EventArgs e)
-    {
-        var apiSource = GetApiSource(sender);
-
-        var apiKey = GetApiKeyValue(apiSource);
-
-        _apiValidatorModel.SaveApiKey(apiKey, apiSource);
-
-        SetApiKeyStatusLabel(apiSource, "Key is saved");
-    }
-
-    public async void OnValidateApiKeyAsync(object? sender, EventArgs? e)
-    {
-
-        ApiSources apiSource = GetApiSource(sender);
-
-        string apiKey = GetApiKeyValue(apiSource);
-
-        var isKeyValid = await _apiValidatorModel.IsApiKeyValid(apiKey, apiSource);
-
-        SetApiKeyStatus(apiSource, isKeyValid);
-
-        SetApiKeyStatusLabel(apiSource, isKeyValid);
-
-        SetEnvironmentVariable(apiSource, apiKey, isKeyValid);
-
-    }
-
-    private static void SetEnvironmentVariable(ApiSources apiSource, string apiKey, bool isKeyValid)
-    {
-        if (isKeyValid)
-        {
-            Environment.SetEnvironmentVariable(apiSource.ToString(), apiKey);
-        }
-    }
-     
-
-    private void SetApiKeyStatusLabel(ApiSources apiSource, bool isKeyValid)
-    {
-        _mainAppFormView
-            .GetType()
-            .GetProperty(string.Format("ApiKey{0}Status", (int)apiSource))
-            .SetValue(_mainAppFormView, string.Format("Api key status correct: {0}", isKeyValid));
-    }
-
-    private void SetApiKeyStatusLabel(ApiSources apiSource, string text)
-    {
-        _mainAppFormView.GetType().GetProperty(string.Format("ApiKey{0}Status", (int)apiSource)).SetValue(_mainAppFormView, text);
-    }
-
-    private void SetApiKeyStatus(ApiSources apiSource, bool isKeyValid)
-    {
-        _mainAppFormView.GetType().GetProperty(string.Format("IsApiKey{0}Valid", (int)apiSource)).SetValue(_mainAppFormView, isKeyValid);
-    }
-
-    private string GetApiKeyValue(ApiSources apiSource)
-    {
-        return (string)_mainAppFormView.GetType().GetProperty(string.Format("ApiKey{0}", (int)apiSource)).GetValue(_mainAppFormView);
-    }
-
-    private ApiSources GetApiSource(object sender)
-    {
-        int apiSourceId = int.Parse(((string)sender.GetType().GetProperty("Name").GetValue(sender)).Last().ToString());
-
-        var result = (ApiSources)apiSourceId;
-
-        return result;
-    }
-
-
 
 }

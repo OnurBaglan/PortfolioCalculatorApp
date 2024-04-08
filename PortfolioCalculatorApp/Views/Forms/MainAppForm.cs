@@ -7,15 +7,7 @@ namespace PortfolioCalculatorApp;
 
 public partial class MainAppForm : Form, IMainAppFormView
 {
-    public string ApiKey1 { get => TextBox_ApiKey1.Text; set => TextBox_ApiKey1.Text = value; }
-    public string ApiKey2 { get => TextBox_ApiKey2.Text; set => TextBox_ApiKey2.Text = value; }
-    public string ApiKey3 { get => TextBox_ApiKey3.Text; set => TextBox_ApiKey3.Text = value; }
-    public bool IsApiKey1Valid { get; set; }
-    public bool IsApiKey2Valid { get; set; }
-    public bool IsApiKey3Valid { get; set; }
-    public string ApiKey1Status { get => Label_StatusApiKey1.Text; set => Label_StatusApiKey1.Text = value; }
-    public string ApiKey2Status { get => Label_StatusApiKey2.Text; set => Label_StatusApiKey2.Text = value; }
-    public string ApiKey3Status { get => Label_StatusApiKey3.Text; set => Label_StatusApiKey3.Text = value; }
+
     public ListBox ListBoxPortfolios { get => ListBox_Portfolios; set => ListBox_Portfolios = value; }
     public Button ButtonAddNewPortfolio { get => Button_AddNewPortfolio; set => Button_AddNewPortfolio = value; }
     public Button ButtonDeleteSelectedPortfolio { get => Button_DeleteSelectedPortfolio; set => Button_DeleteSelectedPortfolio = value; }
@@ -25,9 +17,7 @@ public partial class MainAppForm : Form, IMainAppFormView
     public ComboBox ComboBoxCurrencies { get => ComboBox_Currencies; }
 
 
-    public event EventHandler ValidateApiKey;
-    public event EventHandler SaveApiKey;
-    public event EventHandler LoadApiKeys;
+
     public event EventHandler<ListBox> SavePortfolios;
     public event EventHandler<PortfolioModel> PortfolioSelected;
     public event EventHandler LoadSavedPortfolios;
@@ -49,32 +39,14 @@ public partial class MainAppForm : Form, IMainAppFormView
     private void MainAppForm_Load(object sender, EventArgs e)
     {
         LoadSavedPortfolios?.Invoke(this, EventArgs.Empty);
-        LoadApiKeys?.Invoke(this, EventArgs.Empty);
+
         InitializeCurrencyComboBox?.Invoke(this, ComboBox_Currencies);
-        ValidateApiKeys();
+
 
     }
 
 
-    private void ValidateApiKeys()
-    {
-        Button_ValidateApiKey_Click(Button_ValidateApiKey1, EventArgs.Empty);
-        Button_ValidateApiKey_Click(Button_ValidateApiKey2, EventArgs.Empty);
-        Button_ValidateApiKey_Click(Button_ValidateApiKey3, EventArgs.Empty);
-    }
 
-
-    private void Button_ValidateApiKey_Click(object sender, EventArgs e)
-    {
-
-        ValidateApiKey?.Invoke(sender, e);
-
-    }
-
-    private void Button_SaveApiKey_Click(object sender, EventArgs e)
-    {
-        SaveApiKey?.Invoke(sender, e);
-    }
 
     private void Button_AddNewPortfolio_Click(object sender, EventArgs e)
     {

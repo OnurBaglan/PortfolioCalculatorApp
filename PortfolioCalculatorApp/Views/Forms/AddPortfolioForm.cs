@@ -48,7 +48,6 @@ public partial class AddPortfolioForm : Form, IAddPortfolioFormView
 
 	}
 
-
 	private void Button_DeleteSelectedPurchase_Click(object sender, EventArgs e)
 	{
 		RemovePurchase?.Invoke(this, EventArgs.Empty);

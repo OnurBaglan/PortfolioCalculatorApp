@@ -1,6 +1,5 @@
 ﻿using PortfolioCalculatorApp.BusinessLogic;
 using PortfolioCalculatorApp.BusinessLogic.ModelAnalyzer;
-using PortfolioCalculatorApp.BusinessModel;
 using PortfolioCalculatorApp.Model;
 using PortfolioCalculatorApp.Model.DTO;
 using PortfolioCalculatorApp.Views.Interfaces;
