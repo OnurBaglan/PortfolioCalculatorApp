@@ -37,14 +37,42 @@ public class MainAppFormController
         AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
         _mainAppFormView.InitializeCurrencyComboBox += OnLoadCurrencies;
         _mainAppFormView.CalculatePortfolio += OnCalculateEarnLossRatio;
-        //_mainAppFormView.CalculatePortfolio += OnCalculateTotalInvested;
-        //_mainAppFormView.CalculatePortfolio += OnCalculateCurrentValue;
+        _mainAppFormView.CalculatePortfolio += OnCalculateTotalInvested;
+        _mainAppFormView.CalculatePortfolio += OnCalculateCurrentValue;
         //_mainAppFormView.CalculatePortfolio += OnCalculateListedPurchaseDetails;
 
 
     }
 
+    private async void OnCalculateCurrentValue(object? sender, PortfolioModel e)
+    {
+        var selectedCurrencySymbol = GetCurrencySymbol(_mainAppFormView);
+        var selectedCurrencyName = GetCurrencyName(_mainAppFormView);
 
+        var totalInvested = await _calculatorModel.CalculatePortfolioWorthToday(e, selectedCurrencySymbol);
+
+        SetCurrentValueInView(_mainAppFormView, totalInvested);
+    }
+
+    private void SetCurrentValueInView(IMainAppFormView mainAppFormView, decimal totalInvested)
+    {
+        mainAppFormView.LabelCurrentValue = $"{totalInvested.ToString("F2")}";
+    }
+
+    private async void OnCalculateTotalInvested(object? sender, PortfolioModel e)
+    {
+        var selectedCurrencySymbol = GetCurrencySymbol(_mainAppFormView);
+        var selectedCurrencyName = GetCurrencyName(_mainAppFormView);
+
+        var totalInvested = await _calculatorModel.CalculatePortfolioCost(e, selectedCurrencySymbol);
+
+        SetTotalInvestedInView(_mainAppFormView, totalInvested);
+    }
+
+    private void SetTotalInvestedInView(IMainAppFormView mainAppFormView, decimal totalInvested)
+    {
+        mainAppFormView.LabelTotalInvested = $"{totalInvested.ToString("F2")}";
+    }
 
     private void OnLoadCurrencies(object? sender, ComboBox e)
     {

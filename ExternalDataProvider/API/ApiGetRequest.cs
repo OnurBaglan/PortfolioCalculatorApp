@@ -6,9 +6,7 @@ public class ApiGetRequest : IApiGetRequest
 
     public string? StockSymbol { get; init; }
 
-    private readonly DateTime _date;
-
-    public string DateInFormat { get; init; }
+    public DateTime Date { get; init; }
 
     public string? Currency { get; init; }
 
@@ -16,9 +14,7 @@ public class ApiGetRequest : IApiGetRequest
         DateTime date, string? stockSymbol, string? currency)
     {
         ApiSource = apiSource;
-        _date = date;
-
-        DateInFormat = $"{_date.Year}-{_date.Month}-{_date.Day}";
+        Date = date;
         StockSymbol = stockSymbol;
         Currency = currency;
 

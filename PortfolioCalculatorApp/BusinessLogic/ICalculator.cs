@@ -5,6 +5,6 @@ public interface ICalculator
 {
     Task<decimal> CalculatePortfolioCost(PortfolioModel portfolio, string currency);
     Task<decimal> CalculatePortfolioEarnLoss(PortfolioModel portfolio, string currency);
-    Task<decimal> CalculatePortfoliWorthToday(PortfolioModel portfolio, string currency);
+    Task<decimal> CalculatePortfolioWorthToday(PortfolioModel portfolio, string currency);
     Task<decimal> CalculatePurchaseCost(PurchaseModel purchase, string currency);
 }

@@ -1,4 +1,4 @@
-﻿using ExternalDataProvider;
+﻿using ExternalDataProvider.Services;
 using PortfolioCalculatorApp.Misc;
 using PortfolioCalculatorApp.Model;
 using PortfolioCalculatorApp.Model.DTO;
@@ -24,7 +24,7 @@ public class Calculator : ICalculator
 	{
 		var stockSymbol = purchase.StockSymbol;
 		var date = purchase.PurchaseDate;
-		var costInUsd = await _stockValueProvider.Get(stockSymbol, date);
+		var costInUsd = await _stockValueProvider.Get(stockSymbol, date)*purchase.Lots;
 
 
 		if (currency == "USD")
@@ -55,7 +55,7 @@ public class Calculator : ICalculator
 		return totalCost;
 	}
 
-	public async Task<decimal> CalculatePortfoliWorthToday(PortfolioModel portfolio, string currency)
+	public async Task<decimal> CalculatePortfolioWorthToday(PortfolioModel portfolio, string currency)
 	{
 
 
@@ -107,9 +107,9 @@ public class Calculator : ICalculator
 	{
 		var cost = await CalculatePortfolioCost(portfolio, currency);
 
-		var worth = await CalculatePortfoliWorthToday(portfolio, currency);
+		var worth = await CalculatePortfolioWorthToday(portfolio, currency);
 
-		return worth / cost - 1;
+		return ((worth / cost) - 1)*100;
 
 
 	}

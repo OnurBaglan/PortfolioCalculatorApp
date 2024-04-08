@@ -1,4 +1,4 @@
-﻿using ExternalDataProvider;
+﻿using ExternalDataProvider.Services;
 using PortfolioCalculatorApp.Model;
 using PortfolioCalculatorApp.Views.Interfaces;
 using System;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PortfolioCalculatorApp.BusinessLogic.ModelAnalyzer
 {
-	public class ModelAnalyzer
+    public class ModelAnalyzer
 	{
 		private readonly IRedDayValidator _redDayValidator;
 

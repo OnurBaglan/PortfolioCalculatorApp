@@ -3,7 +3,7 @@ namespace ExternalDataProvider.API
 {
     public interface IApiReader
     {
-        Task<string> ReadDayMarketStatus(IApiGetRequest request);
-        Task<string> ReadRawData(IApiGetRequest request);
+        Task<bool> ReadDayMarketStatus(IApiGetRequest request);
+        Task<string> ReadData(IApiGetRequest request);
     }
 }

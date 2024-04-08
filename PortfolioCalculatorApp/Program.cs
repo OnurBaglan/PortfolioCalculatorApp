@@ -1,5 +1,6 @@
 using ExternalDataProvider;
 using ExternalDataProvider.API;
+using ExternalDataProvider.Services;
 using PortfolioCalculatorApp.BusinessLogic;
 using PortfolioCalculatorApp.BusinessLogic.ModelAnalyzer;
 using PortfolioCalculatorApp.BusinessModel;
@@ -29,8 +30,9 @@ internal static class Program
         MainAppForm mainAppForm = new MainAppForm();
         AddPortfolioForm addPortfolioForm = new AddPortfolioForm();
         IApiValidator apiValidator = new ApiValidator();
-        IApiReader apiReader = new ApiReader();
-        RedDayValidator redDayValidator = new RedDayValidator(new ApiReader());
+        IDataFormatter formatter = new DataFormatter();
+        IApiReader apiReader = new ApiReader(formatter);
+        RedDayValidator redDayValidator = new RedDayValidator(new ApiReader(formatter));
         ICalculator calculator = new Calculator(new CurrencyConverter(apiReader), new StockValueProvider(apiReader), redDayValidator);
         IStockListLoader stockListLoader = new StockListLoader();
         ModelAnalyzer modelAnalyzer = new ModelAnalyzer(redDayValidator);

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using ExternalDataProvider.Misc;
+using Microsoft.VisualBasic;
 using static System.Net.WebRequestMethods;
 
 namespace ExternalDataProvider.API;
@@ -6,7 +7,8 @@ namespace ExternalDataProvider.API;
 public class ApiReader : IApiReader
 {
     private readonly Dictionary<int, string> _urls;
-    public ApiReader()
+    private readonly IDataFormatter _rawDataFormatter;
+    public ApiReader(IDataFormatter rawDataFormatter)
     {
         _urls = new Dictionary<int, string>()
 {
@@ -14,14 +16,17 @@ public class ApiReader : IApiReader
     {2,"https://query1.finance.yahoo.com/v7/finance/download/{0}{1}=X?period1={2}&period2={3}&interval=1d&events=history&includeAdjustedClose=true" },
     {3,"https://query1.finance.yahoo.com/v7/finance/download/GC%3DF=X?period1={0}&period2={1}&interval=1d&events=history&includeAdjustedClose=true" },
 
-    
+
 };
+        _rawDataFormatter = rawDataFormatter;
     }
 
-    public async Task<string> ReadRawData(IApiGetRequest request)
+    public async Task<string> ReadData(IApiGetRequest request)
     {
 
-        string date = request.DateInFormat;
+        string dateInFormat = request.Date.AsUnixFormat();
+        string dateInFormat_10DaysPrior = request.Date.AddDays(-10).AsUnixFormat();
+
         string? stockSymbol = request.StockSymbol;
         string? currency = request.Currency;
         QueryType source = request.ApiSource;
@@ -31,26 +36,25 @@ public class ApiReader : IApiReader
         {
             if (source == QueryType.QuoteStock)
             {
-                var response = await client.GetAsync
-                    (string.Format(_urls[(int)source], stockSymbol, date, Environment.GetEnvironmentVariable(source.ToString())));
-                response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadAsStringAsync();
+                var response = await client.GetStringAsync
+                     (string.Format(_urls[(int)source], stockSymbol, dateInFormat_10DaysPrior, dateInFormat));
+                var result = _rawDataFormatter.GetValueFromCsvString(response);
                 return result;
             }
             if (source == QueryType.QuoteCurrency)
             {
-                var response = await client.GetAsync
-                    (string.Format(_urls[(int)source], date, stockSymbol, Environment.GetEnvironmentVariable(source.ToString())));
-                response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadAsStringAsync();
+                var usdSymbol = "USD";
+
+                var response = await client.GetStringAsync
+                    (string.Format(_urls[(int)source], usdSymbol,currency, dateInFormat_10DaysPrior, dateInFormat));
+                var result = _rawDataFormatter.GetValueFromCsvString(response);
                 return result;
             }
             if (source == QueryType.QuoteGold)
             {
-                var response = await client.GetAsync
-                    (string.Format(_urls[(int)source], date, Environment.GetEnvironmentVariable(source.ToString())));
-                response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadAsStringAsync();
+                var response = await client.GetStringAsync
+                      (string.Format(_urls[(int)source], dateInFormat_10DaysPrior, dateInFormat));
+                var result = _rawDataFormatter.GetValueFromCsvString(response);
                 return result;
 
             }
@@ -63,21 +67,25 @@ public class ApiReader : IApiReader
 
     }
 
-    public async Task<string> ReadDayMarketStatus(IApiGetRequest request)
+    public async Task<bool> ReadDayMarketStatus(IApiGetRequest request)
     {
-        string date = request.DateInFormat;
-        QueryType source = QueryType.QuoteStock;
-        var url = "https://api.marketdata.app/v1/markets/status/?from={0}&to={0}&token={1}";
+        string dateInFormat = request.Date.AsUnixFormat();
+        string dateInFormat_10DaysPrior = request.Date.AddDays(-10).AsUnixFormat();
+        string dateInUsFormat = request.Date.AsUsShortFormat();
+
+        string? stockSymbol = request.StockSymbol;
+        string? currency = request.Currency;
+        QueryType source = request.ApiSource;
+
 
         using HttpClient client = new HttpClient();
         {
-            var response = await client.GetAsync(string.Format(url, date, Environment.GetEnvironmentVariable(source.ToString())));
-            response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
+            var response = await client.GetStringAsync
+                     (string.Format(_urls[1], "AMZN", dateInFormat_10DaysPrior, dateInFormat));
+            var result = _rawDataFormatter.IsRedDay(response, dateInUsFormat);
             return result;
 
         }
     }
 
 }
-

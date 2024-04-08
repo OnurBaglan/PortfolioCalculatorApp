@@ -1,5 +1,4 @@
-﻿
-namespace ExternalDataProvider
+﻿namespace ExternalDataProvider.Services
 {
     public interface ICurrencyConverter
     {
