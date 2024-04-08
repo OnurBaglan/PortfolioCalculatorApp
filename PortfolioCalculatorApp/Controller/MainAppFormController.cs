@@ -80,7 +80,7 @@ public class MainAppFormController
         {
             var data = File.ReadAllLines("currencies.txt");
             e.Items.AddRange(data);
-            e.SelectedItem = data[146]; //USD
+            e.SelectedItem = data[147]; //USD
         }
     }
 

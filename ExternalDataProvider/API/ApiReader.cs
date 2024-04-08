@@ -14,7 +14,7 @@ public class ApiReader : IApiReader
 {
     {1,"https://query1.finance.yahoo.com/v7/finance/download/{0}?period1={1}&period2={2}&interval=1d&events=history&includeAdjustedClose=true" },
     {2,"https://query1.finance.yahoo.com/v7/finance/download/{0}{1}=X?period1={2}&period2={3}&interval=1d&events=history&includeAdjustedClose=true" },
-    {3,"https://query1.finance.yahoo.com/v7/finance/download/GC%3DF=X?period1={0}&period2={1}&interval=1d&events=history&includeAdjustedClose=true" },
+    {3,"https://query1.finance.yahoo.com/v7/finance/download/GC=F?period1={0}&period2={1}&interval=1d&events=history&includeAdjustedClose=true" },
 
 
 };
