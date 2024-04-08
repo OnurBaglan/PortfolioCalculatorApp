@@ -9,15 +9,15 @@ namespace ExternalDataProvider;
 
 public class RedDayValidator : IRedDayValidator
 {
-    private readonly ApiReader _apiReader;
+    private readonly IApiReader _apiReader;
 
-    public RedDayValidator(ApiReader apiReader)
+    public RedDayValidator(IApiReader apiReader)
     {
         _apiReader = apiReader;
     }
     public async Task<bool> IsRedDay(DateTime date)
     {
-        var request = new ApiGetRequest(ApiSources.MarketDataApp, date, null, null);
+        var request = new ApiGetRequest(QueryType.QuoteStock, date, null, null);
 
         var rawResult = await _apiReader.ReadDayMarketStatus(request);
 

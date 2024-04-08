@@ -5,20 +5,20 @@ namespace ExternalDataProvider;
 
 public class CurrencyConverter : ICurrencyConverter
 {
-    private readonly ApiReader _apiReader;
+    private readonly IApiReader _apiReader;
 
     private const double OunceToGram = 28.3495;
 
-    public CurrencyConverter()
+    public CurrencyConverter(IApiReader apiReader)
     {
-        _apiReader = new ApiReader();
+        _apiReader = apiReader;
     }
 
 
     public async Task<decimal> GetUsdToGramGold(decimal usdAmount, DateTime date)
     {
 
-        var request = new ApiGetRequest(ApiSources.MetalDev, date, null, null);
+        var request = new ApiGetRequest(QueryType.QuoteGold, date, null, null);
 
         var jsonText = await _apiReader.ReadRawData(request);
 
@@ -46,7 +46,7 @@ public class CurrencyConverter : ICurrencyConverter
 
     public async Task<decimal> GetUsdToCurrency(decimal usdAmount, string currencySymbol, DateTime date)
     {
-        var request = new ApiGetRequest(ApiSources.CurrencyBeacon, date, null, currencySymbol);
+        var request = new ApiGetRequest(QueryType.QuoteCurrency, date, null, currencySymbol);
 
         var jsonText = await _apiReader.ReadRawData(request);
 

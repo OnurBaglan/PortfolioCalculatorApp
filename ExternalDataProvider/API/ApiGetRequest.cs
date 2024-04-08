@@ -1,8 +1,8 @@
 ﻿namespace ExternalDataProvider.API;
 
-public class ApiGetRequest
+public class ApiGetRequest : IApiGetRequest
 {
-    public ApiSources ApiSource { get; init; }
+    public QueryType ApiSource { get; init; }
 
     public string? StockSymbol { get; init; }
 
@@ -12,25 +12,13 @@ public class ApiGetRequest
 
     public string? Currency { get; init; }
 
-    public ApiGetRequest(ApiSources apiSource,
+    public ApiGetRequest(QueryType apiSource,
         DateTime date, string? stockSymbol, string? currency)
     {
         ApiSource = apiSource;
         _date = date;
 
         DateInFormat = $"{_date.Year}-{_date.Month}-{_date.Day}";
-
-        //switch (apiSource)
-        //{
-        //    case ApiSources.MarketDataApp:
-        //        ArgumentNullException.ThrowIfNull(stockSymbol);
-        //        break;
-        //    case ApiSources.CurrencyBeacon:
-        //        ArgumentNullException.ThrowIfNull(currency);
-        //        break;
-
-        //}
-
         StockSymbol = stockSymbol;
         Currency = currency;
 

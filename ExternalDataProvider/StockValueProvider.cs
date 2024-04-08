@@ -6,15 +6,15 @@ namespace ExternalDataProvider;
 
 public class StockValueProvider : IStockValueProvider
 {
-    private readonly ApiReader _apiReader;
-    public StockValueProvider()
+    private readonly IApiReader _apiReader;
+    public StockValueProvider(IApiReader apiReader)
     {
-        _apiReader = new ApiReader();
+        _apiReader = apiReader;
     }
 
     public async Task<decimal> Get(string stockSymbol, DateTime date)
     {
-        var request = new ApiGetRequest(ApiSources.MarketDataApp, date, stockSymbol, null);
+        var request = new ApiGetRequest(QueryType.QuoteStock, date, stockSymbol, null);
 
         var jsonText = await _apiReader.ReadRawData(request);
 
