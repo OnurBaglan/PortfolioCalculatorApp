@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PortfolioCalculatorApp", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExternalDataProvider", "ExternalDataProvider\ExternalDataProvider.csproj", "{23CA8321-6750-4540-8FB9-B6FF00A8D83C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codetryouts", "Codetryouts\Codetryouts.csproj", "{6C84DCF0-4F34-4AC4-A2F7-0F2EC996B039}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{23CA8321-6750-4540-8FB9-B6FF00A8D83C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23CA8321-6750-4540-8FB9-B6FF00A8D83C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23CA8321-6750-4540-8FB9-B6FF00A8D83C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C84DCF0-4F34-4AC4-A2F7-0F2EC996B039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C84DCF0-4F34-4AC4-A2F7-0F2EC996B039}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C84DCF0-4F34-4AC4-A2F7-0F2EC996B039}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C84DCF0-4F34-4AC4-A2F7-0F2EC996B039}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

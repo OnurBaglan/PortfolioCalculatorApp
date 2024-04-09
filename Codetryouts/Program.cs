@@ -1,10 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
-namespace PortfolioCalculatorApp.Model;
+
+var portfolio = new PortfolioModel("onur", new List<PurchaseModel>()
+{
+	new PurchaseModel("a",29,DateTime.Now),
+	new PurchaseModel("a",29,DateTime.Now),
+	new PurchaseModel("a",29,DateTime.Now),
+	new PurchaseModel("a",29,DateTime.Now)
+});
+
+Console.WriteLine(portfolio.ToString());
+
+Console.ReadKey();
+
+
+
 
 public class PurchaseModel
 {
@@ -27,7 +37,7 @@ public class PurchaseModel
 
 	public PurchaseModel()
 	{
-		
+
 	}
 
 	private string GetStockName(string rawStockSymbol)
@@ -41,9 +51,28 @@ public class PurchaseModel
 		var result = rawStockSymbol.Split("----").First();
 		return result;
 	}
+}
+
+public class PortfolioModel
+{
+	public string Name { get; set; }
+	public List<PurchaseModel> Purchases { get; set; }
+
+	public PortfolioModel(string name, List<PurchaseModel> purchases)
+	{
+		Name = name;
+		Purchases = purchases;
+	}
+
 
 	public override string ToString()
 	{
-		return $"Stock name: {StockName} --- total lots: {Lots} --- purchased on {PurchaseDate.ToString("d")}";
+		return $"Portfolio name: {Name}, total transaction counts: {Purchases.Count}, total lot amount: {GetLotAmount()} ";
+	}
+
+	private string GetLotAmount()
+	{
+		var result = Purchases.Select(purchase => purchase.Lots).Sum().ToString();
+		return result;
 	}
 }

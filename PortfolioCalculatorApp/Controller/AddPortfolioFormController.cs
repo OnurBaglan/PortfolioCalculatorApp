@@ -53,11 +53,11 @@ public class AddPortfolioFormController
 
 
 
-		var portfolio = new PortfolioModel()
-		{
-			Purchases = _purchases,
-			Name = _addPortfolioFormView.TextBoxPortfolioName.Text
-		};
+		var portfolio = new PortfolioModel
+			(
+			name:_addPortfolioFormView.TextBoxPortfolioName.Text,
+			purchases:_purchases
+			);
 
 		_addPortfolioFormView.CloseWrapperWithMessage("Portfolio added.");
 

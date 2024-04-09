@@ -1,5 +1,6 @@
 ﻿
 
+
 namespace PortfolioCalculatorApp.Model;
 
 public class PortfolioModel
@@ -7,10 +8,21 @@ public class PortfolioModel
     public string Name { get; set; }
     public List<PurchaseModel> Purchases { get; set; }
 
-    public decimal? PortfolioCost {  get; set; }
+	public PortfolioModel(string name, List<PurchaseModel> purchases)
+	{
+		Name = name;
+		Purchases = purchases;
+	}
 
-    public override string ToString()
+
+	public override string ToString()
     {
-       return $"{Name} named portfolio, with {Purchases.Count} purchases";
+       return $"Portfolio name: {Name}, total transactions: {Purchases.Count}, total lot amount: {GetLotAmount()} ";
     }
+
+	private string GetLotAmount()
+	{
+		var result = Purchases.Select(purchase=>purchase.Lots).Sum().ToString();
+		return result;
+	}
 }
