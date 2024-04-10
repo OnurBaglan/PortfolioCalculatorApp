@@ -15,6 +15,7 @@ public partial class MainAppForm : Form, IMainAppFormView
 	public string LabelTotalInvested { get => Label_TotalInvested.Text; set => Label_TotalInvested.Text = value; }
 	public string LabelCurrentValue { get => Label_CurrentValue.Text; set => Label_CurrentValue.Text = value; }
 	public ComboBox ComboBoxCurrencies { get => ComboBox_Currencies; }
+	public DataGridView DataGridViewPortfolioDetails { get => DataGridView_PortfolioDetails; set => DataGridView_PortfolioDetails = value; }	
 
 
 
@@ -24,6 +25,7 @@ public partial class MainAppForm : Form, IMainAppFormView
 	public event EventHandler OpenAddPortfolioForm;
 	public event EventHandler<ListBox> DeleteSelectedItem;
 	public event EventHandler<PortfolioModel> CalculatePortfolio;
+	public event EventHandler<PortfolioModel> ShowPortfolioDetails;
 	public event EventHandler<ComboBox> InitializeCurrencyComboBox;
 
 
@@ -82,6 +84,12 @@ public partial class MainAppForm : Form, IMainAppFormView
 
 	}
 
+	private void ListBox_Portfolios_SelectedIndexChanged(object sender, EventArgs e)
+	{
+		var selectedPortfolio = ListBoxPortfolios.SelectedItem as PortfolioModel;
+		if (selectedPortfolio is not null) { ShowPortfolioDetails?.Invoke(this, selectedPortfolio); }
+
+	}
 }
 
 

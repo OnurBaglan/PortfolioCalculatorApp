@@ -32,11 +32,34 @@ public class MainAppFormController
         _mainAppFormView.CalculatePortfolio += OnCalculateTotalInvested;
         _mainAppFormView.CalculatePortfolio += OnCalculateCurrentValue;
         //_mainAppFormView.CalculatePortfolio += OnCalculateListedPurchaseDetails;
+        _mainAppFormView.ShowPortfolioDetails += OnShowPortfolioDetails;
         AddPortfolioFormController.AddValidPortfolio += OnShowPortfolioInMainList;
 
     }
 
-    private async void OnCalculateEarnLossRatio(object? sender, PortfolioModel e)
+	private void OnShowPortfolioDetails(object? sender, PortfolioModel e)
+	{
+        var dataTable = new DataTable();
+        
+        dataTable.Columns.Add("Stock symbol", typeof(string));
+        dataTable.Columns.Add("Stock name", typeof(string));
+        dataTable.Columns.Add("Lots", typeof(int));
+        dataTable.Columns.Add("Purchase date", typeof(string));
+        dataTable.Columns.Add("Total cost", typeof(string));
+        dataTable.Columns.Add("Current value", typeof(string));
+
+        foreach(var purchase in e.Purchases)
+        {
+            dataTable.Rows.Add
+                (purchase.StockSymbol,purchase.StockName, purchase.Lots, purchase.PurchaseDate.ToString("d"), "na", "na");
+        }
+
+		_mainAppFormView.DataGridViewPortfolioDetails.DataSource = dataTable;
+
+
+	}
+
+	private async void OnCalculateEarnLossRatio(object? sender, PortfolioModel e)
     {
         //TODO make a proper implementation for this
         var selectedCurrencySymbol = GetCurrencySymbolFromView();

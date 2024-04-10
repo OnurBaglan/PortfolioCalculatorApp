@@ -34,9 +34,7 @@ partial class MainAppForm
 		Button_DeleteSelectedPortfolio = new Button();
 		FixedLabel_PortfolioList = new Label();
 		GroupBox_PortfolioDetails = new GroupBox();
-		dataGridView1 = new DataGridView();
-		column1 = new DataGridViewTextBoxColumn();
-		column2 = new DataGridViewTextBoxColumn();
+		DataGridView_PortfolioDetails = new DataGridView();
 		label1 = new Label();
 		portfolioBindingSource1 = new BindingSource(components);
 		GroupBox_EarnLossInfo = new GroupBox();
@@ -53,7 +51,7 @@ partial class MainAppForm
 		Button_ShowPortfolioDetails = new Button();
 		Button_SavePortfolios = new Button();
 		GroupBox_PortfolioDetails.SuspendLayout();
-		((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+		((System.ComponentModel.ISupportInitialize)DataGridView_PortfolioDetails).BeginInit();
 		((System.ComponentModel.ISupportInitialize)portfolioBindingSource1).BeginInit();
 		GroupBox_EarnLossInfo.SuspendLayout();
 		TabControl.SuspendLayout();
@@ -68,6 +66,7 @@ partial class MainAppForm
 		ListBox_Portfolios.Name = "ListBox_Portfolios";
 		ListBox_Portfolios.Size = new Size(368, 214);
 		ListBox_Portfolios.TabIndex = 0;
+		ListBox_Portfolios.SelectedIndexChanged += ListBox_Portfolios_SelectedIndexChanged;
 		// 
 		// Button_AddNewPortfolio
 		// 
@@ -100,7 +99,7 @@ partial class MainAppForm
 		// 
 		// GroupBox_PortfolioDetails
 		// 
-		GroupBox_PortfolioDetails.Controls.Add(dataGridView1);
+		GroupBox_PortfolioDetails.Controls.Add(DataGridView_PortfolioDetails);
 		GroupBox_PortfolioDetails.Controls.Add(label1);
 		GroupBox_PortfolioDetails.Location = new Point(8, 31);
 		GroupBox_PortfolioDetails.Name = "GroupBox_PortfolioDetails";
@@ -109,31 +108,16 @@ partial class MainAppForm
 		GroupBox_PortfolioDetails.TabStop = false;
 		GroupBox_PortfolioDetails.Text = "Portfolio Details";
 		// 
-		// dataGridView1
+		// DataGridView_PortfolioDetails
 		// 
-		dataGridView1.BackgroundColor = SystemColors.ButtonFace;
-		dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-		dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2 });
-		dataGridView1.Cursor = Cursors.Hand;
-		dataGridView1.Location = new Point(25, 37);
-		dataGridView1.Name = "dataGridView1";
-		dataGridView1.RowHeadersWidth = 51;
-		dataGridView1.Size = new Size(902, 129);
-		dataGridView1.TabIndex = 2;
-		// 
-		// column1
-		// 
-		column1.HeaderText = "Name";
-		column1.MinimumWidth = 6;
-		column1.Name = "column1";
-		column1.Width = 125;
-		// 
-		// column2
-		// 
-		column2.HeaderText = "Surname";
-		column2.MinimumWidth = 6;
-		column2.Name = "column2";
-		column2.Width = 125;
+		DataGridView_PortfolioDetails.BackgroundColor = SystemColors.ButtonFace;
+		DataGridView_PortfolioDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+		DataGridView_PortfolioDetails.Cursor = Cursors.Hand;
+		DataGridView_PortfolioDetails.Location = new Point(25, 37);
+		DataGridView_PortfolioDetails.Name = "DataGridView_PortfolioDetails";
+		DataGridView_PortfolioDetails.RowHeadersWidth = 51;
+		DataGridView_PortfolioDetails.Size = new Size(902, 129);
+		DataGridView_PortfolioDetails.TabIndex = 2;
 		// 
 		// label1
 		// 
@@ -301,7 +285,7 @@ partial class MainAppForm
 		Load += MainAppForm_Load;
 		GroupBox_PortfolioDetails.ResumeLayout(false);
 		GroupBox_PortfolioDetails.PerformLayout();
-		((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+		((System.ComponentModel.ISupportInitialize)DataGridView_PortfolioDetails).EndInit();
 		((System.ComponentModel.ISupportInitialize)portfolioBindingSource1).EndInit();
 		GroupBox_EarnLossInfo.ResumeLayout(false);
 		GroupBox_EarnLossInfo.PerformLayout();
@@ -332,9 +316,7 @@ partial class MainAppForm
 	private LinkLabel linkLabel1;
     private Button Button_SavePortfolios;
     private Label label1;
-    private DataGridView dataGridView1;
+    private DataGridView DataGridView_PortfolioDetails;
     private BindingSource portfolioBindingSource1;
-    private DataGridViewTextBoxColumn column1;
-    private DataGridViewTextBoxColumn column2;
     private Button Button_ShowPortfolioDetails;
 }
